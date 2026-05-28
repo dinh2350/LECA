@@ -6,30 +6,34 @@
   <title>LECA — UI Wireframes · All Screens</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Lora:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #080C18;
-      --s1: #0E1527;
-      --s2: #151D35;
-      --s3: #1D2542;
-      --border: rgba(255,255,255,0.07);
-      --border-h: rgba(255,255,255,0.14);
-      --amber: #F5A623;
-      --amber-s: rgba(245,166,35,0.12);
-      --cream: #EAE4D8;
-      --cream-d: #B8B2A8;
-      --cream-m: #6B6760;
-      --green: #48C9A0;
-      --green-s: rgba(72,201,160,0.15);
-      --yellow: #F5C118;
-      --yellow-s: rgba(245,193,24,0.15);
-      --red: #EF6060;
-      --red-s: rgba(239,96,96,0.15);
-      --blue: #5B8DEF;
-      --fd: 'Syne', sans-serif;
+      --bg:      #0C0907;
+      --s1:      #141008;
+      --s2:      #1C160B;
+      --s3:      #25200F;
+      --border:  rgba(255,235,190,0.06);
+      --border-h:rgba(255,235,190,0.13);
+
+      --amber:   #F0622A;
+      --amber-s: rgba(240,98,42,0.12);
+
+      --cream:   #F0EAE0;
+      --cream-d: #B5ADA4;
+      --cream-m: #6A6258;
+
+      --green:   #3CB887;
+      --green-s: rgba(60,184,135,0.14);
+      --yellow:  #E8A820;
+      --yellow-s:rgba(232,168,32,0.14);
+      --red:     #E85050;
+      --red-s:   rgba(232,80,80,0.14);
+      --blue:    #5F90EE;
+
+      --fd: 'Bricolage Grotesque', sans-serif;
       --fb: 'Lora', serif;
       --fm: 'JetBrains Mono', monospace;
     }
@@ -39,24 +43,24 @@
     /* ── NAVIGATOR ── */
     .wf-nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      background: rgba(8,12,24,0.92); backdrop-filter: blur(20px);
+      background: rgba(12,9,7,0.94); backdrop-filter: blur(24px);
       border-bottom: 1px solid var(--border);
-      padding: 0 20px; display: flex; align-items: center; gap: 3px; height: 50px; overflow-x: auto;
+      padding: 0 20px; display: flex; align-items: center; gap: 2px; height: 50px; overflow-x: auto;
     }
     .wf-nav::-webkit-scrollbar { display: none; }
     .wf-label {
       font-family: var(--fm); font-size: 10px; color: var(--cream-m);
-      letter-spacing: 0.1em; text-transform: uppercase;
+      letter-spacing: 0.12em; text-transform: uppercase;
       padding-right: 14px; border-right: 1px solid var(--border);
-      margin-right: 6px; white-space: nowrap; flex-shrink: 0;
+      margin-right: 8px; white-space: nowrap; flex-shrink: 0;
     }
     .wf-btn {
-      font-family: var(--fm); font-size: 11px; color: var(--cream-d);
-      background: none; border: 1px solid transparent; border-radius: 6px;
-      padding: 5px 11px; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: all 0.15s;
+      font-family: var(--fm); font-size: 10.5px; color: var(--cream-m);
+      background: none; border: 1px solid transparent; border-radius: 5px;
+      padding: 5px 10px; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: all 0.12s;
     }
-    .wf-btn:hover { color: var(--cream); border-color: var(--border-h); }
-    .wf-btn.active { color: var(--amber); background: var(--amber-s); border-color: rgba(245,166,35,0.3); }
+    .wf-btn:hover { color: var(--cream); border-color: var(--border-h); background: rgba(255,235,190,0.04); }
+    .wf-btn.active { color: var(--amber); background: var(--amber-s); border-color: rgba(240,98,42,0.35); }
 
     /* ── LAYOUT ── */
     .wf-content { padding-top: 50px; min-height: 100vh; }
@@ -68,19 +72,24 @@
       flex: 1; display: flex; align-items: center; justify-content: center;
       padding: 36px 24px;
       background:
-        radial-gradient(ellipse at 20% 50%, rgba(245,166,35,0.04) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 20%, rgba(91,141,239,0.03) 0%, transparent 60%);
+        radial-gradient(ellipse 70% 80% at 15% 55%, rgba(240,98,42,0.07) 0%, transparent 65%),
+        radial-gradient(ellipse 55% 60% at 82% 18%, rgba(60,184,135,0.04) 0%, transparent 65%),
+        radial-gradient(ellipse 45% 50% at 65% 85%, rgba(95,144,238,0.03) 0%, transparent 65%);
     }
     .phone-frame {
       width: 390px; height: 844px;
-      background: var(--s1); border-radius: 48px;
-      border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: 0 0 0 8px rgba(255,255,255,0.03), 0 40px 100px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08);
+      background: var(--s1); border-radius: 50px;
+      border: 1px solid rgba(255,235,190,0.09);
+      box-shadow:
+        0 0 0 8px rgba(255,235,190,0.025),
+        0 52px 130px rgba(0,0,0,0.85),
+        0 0 90px rgba(240,98,42,0.05),
+        inset 0 1px 0 rgba(255,235,190,0.07);
       overflow: hidden; display: flex; flex-direction: column;
     }
     .phone-notch {
       width: 120px; height: 34px; background: var(--bg);
-      border-radius: 0 0 20px 20px; margin: 0 auto; flex-shrink: 0;
+      border-radius: 0 0 22px 22px; margin: 0 auto; flex-shrink: 0;
     }
     .phone-screen { flex: 1; overflow-y: auto; overflow-x: hidden; display: flex; flex-direction: column; }
     .phone-screen::-webkit-scrollbar { display: none; }
@@ -88,35 +97,39 @@
     /* ── ANNOTATION ── */
     .ann {
       background: var(--s1); border-top: 1px solid var(--border);
-      padding: 14px 32px; display: flex; gap: 20px; flex-wrap: wrap;
+      padding: 14px 32px; display: flex; gap: 18px; flex-wrap: wrap;
     }
-    .ann-item { display: flex; align-items: center; gap: 8px; font-family: var(--fm); font-size: 11px; color: var(--cream-m); }
+    .ann-item { display: flex; align-items: center; gap: 8px; font-family: var(--fm); font-size: 10.5px; color: var(--cream-m); }
     .ann-item .req { color: var(--amber); }
 
     /* ── SCREEN TITLE ── */
     .stitle { text-align: center; padding: 20px 0 6px; }
-    .stitle h2 { font-family: var(--fd); font-size: 12px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cream-m); }
-    .stitle span { font-family: var(--fm); font-size: 11px; color: var(--cream-m); opacity: 0.5; }
+    .stitle h2 { font-family: var(--fd); font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-m); }
+    .stitle span { font-family: var(--fm); font-size: 10px; color: var(--cream-m); opacity: 0.45; margin-top: 3px; display: block; }
 
     /* ── SHARED ── */
     .sbar { display: flex; justify-content: space-between; padding: 12px 20px 0; font-family: var(--fm); font-size: 11px; font-weight: 500; color: var(--cream); flex-shrink: 0; }
     .pill { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 999px; font-family: var(--fm); font-size: 11px; font-weight: 500; }
-    .p-amber { background: var(--amber-s); color: var(--amber); border: 1px solid rgba(245,166,35,0.25); }
-    .p-green { background: var(--green-s); color: var(--green); border: 1px solid rgba(72,201,160,0.25); }
-    .p-yellow { background: var(--yellow-s); color: var(--yellow); border: 1px solid rgba(245,193,24,0.25); }
-    .p-red { background: var(--red-s); color: var(--red); border: 1px solid rgba(239,96,96,0.25); }
-    .p-blue { background: rgba(91,141,239,0.12); color: var(--blue); border: 1px solid rgba(91,141,239,0.25); }
+    .p-amber { background: var(--amber-s); color: var(--amber); border: 1px solid rgba(240,98,42,0.28); }
+    .p-green { background: var(--green-s); color: var(--green); border: 1px solid rgba(60,184,135,0.28); }
+    .p-yellow { background: var(--yellow-s); color: var(--yellow); border: 1px solid rgba(232,168,32,0.28); }
+    .p-red { background: var(--red-s); color: var(--red); border: 1px solid rgba(232,80,80,0.28); }
+    .p-blue { background: rgba(95,144,238,0.12); color: var(--blue); border: 1px solid rgba(95,144,238,0.28); }
     .btn-p {
-      background: var(--amber); color: var(--bg); border: none; border-radius: 999px;
-      font-family: var(--fd); font-size: 15px; font-weight: 700; padding: 14px 28px;
-      cursor: pointer; width: 100%; letter-spacing: 0.02em;
+      background: var(--amber); color: #0C0907; border: none; border-radius: 999px;
+      font-family: var(--fd); font-size: 15px; font-weight: 700; padding: 15px 28px;
+      cursor: pointer; width: 100%; letter-spacing: 0.01em;
+      box-shadow: 0 4px 28px rgba(240,98,42,0.38), 0 1px 0 rgba(255,200,180,0.18) inset;
+      transition: opacity 0.15s, transform 0.1s;
     }
+    .btn-p:hover { opacity: 0.92; transform: translateY(-1px); }
     .btn-s {
       background: transparent; color: var(--cream); border: 1px solid var(--border-h);
       border-radius: 999px; font-family: var(--fd); font-size: 15px; font-weight: 600;
-      padding: 14px 28px; cursor: pointer; width: 100%;
+      padding: 15px 28px; cursor: pointer; width: 100%; transition: border-color 0.15s, background 0.15s;
     }
-    .sec-title { font-family: var(--fd); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream-m); padding: 18px 20px 8px; }
+    .btn-s:hover { border-color: rgba(255,235,190,0.25); background: rgba(255,235,190,0.04); }
+    .sec-title { font-family: var(--fd); font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-m); padding: 18px 20px 8px; }
     .bnav { display: flex; border-top: 1px solid var(--border); padding: 8px 0 20px; flex-shrink: 0; }
     .bni { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px; cursor: pointer; }
     .bni-icon { font-size: 21px; }
@@ -124,38 +137,50 @@
 
     /* ── WAVEFORM ── */
     .wave-row { display: flex; align-items: center; justify-content: center; gap: 3px; height: 48px; }
-    .wbar { width: 3px; background: var(--amber); border-radius: 2px; opacity: 0.7; animation: wv 1.4s ease-in-out infinite; }
-    @keyframes wv { 0%,100% { transform: scaleY(0.2); opacity: 0.3; } 50% { transform: scaleY(1); opacity: 0.85; } }
+    .wbar { width: 3px; background: var(--amber); border-radius: 2px; opacity: 0.65; animation: wv 1.6s ease-in-out infinite; }
+    @keyframes wv { 0%,100% { transform: scaleY(0.18); opacity: 0.22; } 50% { transform: scaleY(1); opacity: 0.9; } }
 
     /* ════════════════════════════════
        SCREEN 01 — SPLASH
     ════════════════════════════════ */
     .splash { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 60px 28px 48px; position: relative; overflow: hidden; }
-    .splash::before { content: ''; position: absolute; top: -120px; left: 50%; transform: translateX(-50%); width: 380px; height: 380px; background: radial-gradient(ellipse, rgba(245,166,35,0.13) 0%, transparent 70%); pointer-events: none; }
-    .splash-wm { font-family: var(--fd); font-size: 76px; font-weight: 800; letter-spacing: -0.04em; color: var(--cream); line-height: 1; }
+    .splash::before {
+      content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+      width: 440px; height: 440px;
+      background: radial-gradient(ellipse, rgba(240,98,42,0.18) 0%, rgba(240,98,42,0.05) 50%, transparent 75%);
+      pointer-events: none;
+    }
+    .splash::after {
+      content: ''; position: absolute; bottom: -80px; left: 5%;
+      width: 240px; height: 240px;
+      background: radial-gradient(ellipse, rgba(60,184,135,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .splash-wm { font-family: var(--fd); font-size: 82px; font-weight: 800; letter-spacing: -0.05em; color: var(--cream); line-height: 1; }
     .splash-wm em { color: var(--amber); font-style: normal; }
-    .splash-sub { font-family: var(--fm); font-size: 10px; color: var(--cream-m); letter-spacing: 0.18em; margin-top: 6px; text-align: center; }
-    .splash-tag { font-family: var(--fb); font-style: italic; font-size: 19px; color: var(--cream-d); text-align: center; line-height: 1.55; }
-    .splash-acts { width: 100%; display: flex; flex-direction: column; gap: 12px; }
+    .splash-sub { font-family: var(--fm); font-size: 10px; color: var(--cream-m); letter-spacing: 0.2em; margin-top: 8px; text-align: center; }
+    .splash-tag { font-family: var(--fb); font-style: italic; font-size: 19px; color: var(--cream-d); text-align: center; line-height: 1.6; }
+    .splash-acts { width: 100%; display: flex; flex-direction: column; gap: 11px; }
     .splash-fine { text-align: center; font-family: var(--fm); font-size: 10px; color: var(--cream-m); margin-top: 6px; }
 
     /* ════════════════════════════════
        SCREEN 02 — HOME
     ════════════════════════════════ */
     .home-hdr { padding: 18px 20px 0; flex-shrink: 0; }
-    .greet { font-family: var(--fd); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-m); }
+    .greet { font-family: var(--fd); font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-m); }
     .greet-name { font-family: var(--fd); font-size: 26px; font-weight: 800; color: var(--cream); margin-top: 2px; }
     .streak { display: flex; align-items: center; gap: 8px; margin-top: 10px; padding: 10px 14px; background: var(--s2); border-radius: 12px; border: 1px solid var(--border); }
     .streak-ct { font-family: var(--fd); font-size: 18px; font-weight: 800; color: var(--amber); margin-left: auto; }
     .streak-tx { font-family: var(--fm); font-size: 12px; color: var(--cream-d); }
-    .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 20px; }
-    .mcard { background: var(--s2); border: 1px solid var(--border); border-radius: 20px; padding: 20px 16px; cursor: pointer; }
-    .mcard.feat { background: linear-gradient(135deg, rgba(245,166,35,0.13) 0%, var(--s2) 100%); border-color: rgba(245,166,35,0.28); }
+    .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; padding: 0 20px; }
+    .mcard { background: var(--s2); border: 1px solid var(--border); border-radius: 18px; padding: 20px 16px; cursor: pointer; transition: border-color 0.15s, transform 0.15s; }
+    .mcard:hover { transform: translateY(-1px); border-color: var(--border-h); }
+    .mcard.feat { background: linear-gradient(145deg, rgba(240,98,42,0.14) 0%, var(--s2) 60%); border-color: rgba(240,98,42,0.3); }
     .mcard-ic { font-size: 28px; margin-bottom: 10px; display: block; }
     .mcard-t { font-family: var(--fd); font-size: 15px; font-weight: 700; color: var(--cream); margin-bottom: 4px; }
-    .mcard-d { font-size: 11px; color: var(--cream-m); line-height: 1.4; }
+    .mcard-d { font-size: 11.5px; color: var(--cream-m); line-height: 1.45; }
     .rsess { display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-bottom: 1px solid var(--border); }
-    .rsess-ic { width: 36px; height: 36px; border-radius: 8px; background: var(--s3); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+    .rsess-ic { width: 36px; height: 36px; border-radius: 9px; background: var(--s3); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
     .rsess-inf { flex: 1; min-width: 0; }
     .rsess-t { font-family: var(--fd); font-size: 13px; font-weight: 600; color: var(--cream); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .rsess-m { font-family: var(--fm); font-size: 10px; color: var(--cream-m); margin-top: 2px; }
@@ -169,38 +194,40 @@
     .conv-si { flex: 1; }
     .conv-st { font-family: var(--fd); font-size: 14px; font-weight: 700; color: var(--cream); }
     .conv-sm { font-family: var(--fm); font-size: 10px; color: var(--cream-m); }
-    .conv-timer { font-family: var(--fm); font-size: 13px; color: var(--amber); background: var(--amber-s); padding: 4px 10px; border-radius: 999px; }
+    .conv-timer { font-family: var(--fm); font-size: 13px; color: var(--amber); background: var(--amber-s); padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(240,98,42,0.25); }
     .conv-msgs { flex: 1; overflow-y: auto; padding: 8px 20px; display: flex; flex-direction: column; gap: 16px; }
     .msg { display: flex; flex-direction: column; gap: 4px; }
     .msg.ai { align-items: flex-start; }
     .msg.usr { align-items: flex-end; }
-    .msg-who { font-family: var(--fm); font-size: 9px; color: var(--cream-m); letter-spacing: 0.07em; text-transform: uppercase; }
-    .mbubble { max-width: 82%; padding: 12px 16px; border-radius: 14px; font-size: 14px; line-height: 1.6; }
+    .msg-who { font-family: var(--fm); font-size: 9px; color: var(--cream-m); letter-spacing: 0.08em; text-transform: uppercase; }
+    .mbubble { max-width: 82%; padding: 12px 16px; border-radius: 14px; font-size: 14px; line-height: 1.65; }
     .msg.ai .mbubble { background: var(--s2); border: 1px solid var(--border); color: var(--cream); border-radius: 4px 14px 14px 14px; }
-    .msg.usr .mbubble { background: var(--amber); color: var(--bg); font-family: var(--fd); font-weight: 500; border-radius: 14px 4px 14px 14px; }
+    .msg.usr .mbubble { background: var(--amber); color: #0C0907; font-family: var(--fd); font-weight: 600; border-radius: 14px 4px 14px 14px; font-size: 13.5px; }
     .fb-chip { display: inline-flex; align-items: center; gap: 5px; background: var(--s3); border: 1px solid var(--border); border-radius: 999px; padding: 3px 12px; font-family: var(--fm); font-size: 10px; color: var(--green); cursor: pointer; margin-top: 4px; }
     .ptt-area { padding: 14px 20px 22px; display: flex; flex-direction: column; align-items: center; gap: 10px; flex-shrink: 0; }
     .live-wave { display: flex; align-items: center; gap: 2px; height: 22px; }
-    .lbar { width: 2px; background: var(--amber); border-radius: 1px; animation: wv 0.4s ease-in-out infinite; }
+    .lbar { width: 2px; background: var(--amber); border-radius: 1px; animation: wv 0.45s ease-in-out infinite; }
     .ptt-btn {
       width: 80px; height: 80px; border-radius: 50%; background: var(--amber);
       border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
-      font-size: 28px; box-shadow: 0 0 0 0 rgba(245,166,35,0.4), 0 8px 32px rgba(245,166,35,0.3);
-      position: relative;
+      font-size: 28px;
+      box-shadow: 0 0 0 0 rgba(240,98,42,0.5), 0 8px 36px rgba(240,98,42,0.42), inset 0 1px 0 rgba(255,200,180,0.2);
+      position: relative; transition: transform 0.1s;
     }
-    .ptt-btn::after { content: ''; position: absolute; inset: -8px; border-radius: 50%; border: 2px solid rgba(245,166,35,0.35); animation: pring 2s ease-in-out infinite; }
-    @keyframes pring { 0%,100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.1); opacity: 0.15; } }
+    .ptt-btn:active { transform: scale(0.95); }
+    .ptt-btn::after { content: ''; position: absolute; inset: -10px; border-radius: 50%; border: 2px solid rgba(240,98,42,0.3); animation: pring 2.2s ease-in-out infinite; }
+    @keyframes pring { 0%,100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.12); opacity: 0.1; } }
     .ptt-hint { font-family: var(--fm); font-size: 10px; color: var(--cream-m); }
     .fb-toggle { display: flex; align-items: center; gap: 8px; font-family: var(--fm); font-size: 10px; color: var(--cream-m); }
-    .toggle { width: 34px; height: 18px; background: var(--amber); border-radius: 999px; position: relative; flex-shrink: 0; }
+    .toggle { width: 34px; height: 18px; background: var(--amber); border-radius: 999px; position: relative; flex-shrink: 0; box-shadow: 0 1px 8px rgba(240,98,42,0.32); }
     .toggle::after { content: ''; position: absolute; right: 2px; top: 2px; width: 14px; height: 14px; background: white; border-radius: 50%; }
 
     /* ════════════════════════════════
        SCREEN 04 — PRONUNCIATION
     ════════════════════════════════ */
     .pron-hdr { padding: 18px 20px 0; flex-shrink: 0; }
-    .pron-title { font-family: var(--fd); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream-m); margin-bottom: 14px; }
-    .utt { padding: 16px; background: var(--s2); border: 1px solid var(--border); border-radius: 20px; margin: 0 20px; line-height: 2.2; font-size: 18px; }
+    .pron-title { font-family: var(--fd); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-m); margin-bottom: 14px; }
+    .utt { padding: 16px; background: var(--s2); border: 1px solid var(--border); border-radius: 18px; margin: 0 20px; line-height: 2.3; font-size: 18px; }
     .w { display: inline-block; margin: 0 2px; padding: 2px 6px; border-radius: 6px; cursor: pointer; }
     .w-g { background: var(--green-s); color: var(--green); }
     .w-y { background: var(--yellow-s); color: var(--yellow); }
@@ -209,14 +236,14 @@
     .phn-box { margin: 10px 20px 0; padding: 14px 16px; background: var(--s3); border-radius: 12px; border: 1px solid var(--border); }
     .phn-lbl { font-family: var(--fm); font-size: 10px; color: var(--cream-m); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.08em; }
     .phns { display: flex; gap: 8px; flex-wrap: wrap; }
-    .ph { font-family: var(--fm); font-size: 13px; padding: 4px 9px; border-radius: 6px; }
+    .ph { font-family: var(--fm); font-size: 13px; padding: 4px 10px; border-radius: 7px; }
     .ph-g { background: var(--green-s); color: var(--green); }
     .ph-y { background: var(--yellow-s); color: var(--yellow); }
     .ph-r { background: var(--red-s); color: var(--red); }
     .fb-secs { padding: 12px 20px; display: flex; flex-direction: column; gap: 8px; }
     .fb-sec { background: var(--s2); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; }
-    .fb-sec-lbl { font-family: var(--fm); font-size: 9px; color: var(--cream-m); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 5px; }
-    .fb-sec-tx { font-size: 13px; color: var(--cream-d); line-height: 1.5; }
+    .fb-sec-lbl { font-family: var(--fm); font-size: 9px; color: var(--cream-m); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 5px; }
+    .fb-sec-tx { font-size: 13px; color: var(--cream-d); line-height: 1.6; }
     .fb-sec-tx strong { color: var(--cream); }
 
     /* ════════════════════════════════
@@ -227,12 +254,14 @@
     .sum-t { font-family: var(--fd); font-size: 28px; font-weight: 800; color: var(--cream); margin-bottom: 4px; }
     .sum-st { font-size: 13px; font-style: italic; color: var(--cream-d); }
     .score-ring {
-      width: 96px; height: 96px; border-radius: 50%; border: 3px solid var(--green);
+      width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--green);
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      margin: 16px auto; background: var(--green-s); box-shadow: 0 0 30px rgba(72,201,160,0.18);
+      margin: 16px auto;
+      background: radial-gradient(ellipse, var(--green-s) 0%, transparent 70%);
+      box-shadow: 0 0 40px rgba(60,184,135,0.22), 0 0 0 8px rgba(60,184,135,0.06);
     }
-    .score-n { font-family: var(--fd); font-size: 32px; font-weight: 800; color: var(--green); line-height: 1; }
-    .score-l { font-family: var(--fm); font-size: 9px; color: var(--green); letter-spacing: 0.08em; text-transform: uppercase; }
+    .score-n { font-family: var(--fd); font-size: 34px; font-weight: 800; color: var(--green); line-height: 1; }
+    .score-l { font-family: var(--fm); font-size: 9px; color: var(--green); letter-spacing: 0.1em; text-transform: uppercase; }
     .stats-g { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 0 20px; }
     .stat-c { background: var(--s2); border: 1px solid var(--border); border-radius: 12px; padding: 14px 8px; text-align: center; }
     .stat-v { font-family: var(--fd); font-size: 22px; font-weight: 800; color: var(--amber); }
@@ -255,16 +284,17 @@
     .srch-ph { font-family: var(--fb); font-size: 14px; color: var(--cream-m); font-style: italic; }
     .filt { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
     .filt::-webkit-scrollbar { display: none; }
-    .fchip { white-space: nowrap; padding: 6px 14px; border-radius: 999px; font-family: var(--fm); font-size: 11px; border: 1px solid var(--border); color: var(--cream-d); cursor: pointer; flex-shrink: 0; }
-    .fchip.on { background: var(--amber-s); border-color: rgba(245,166,35,0.3); color: var(--amber); }
-    .scen-list { flex: 1; overflow-y: auto; padding: 14px 20px; display: flex; flex-direction: column; gap: 11px; }
-    .scard { background: var(--s2); border: 1px solid var(--border); border-radius: 20px; padding: 16px; cursor: pointer; display: flex; flex-direction: column; gap: 8px; }
-    .scard:first-child { border-color: rgba(245,166,35,0.25); background: linear-gradient(135deg, rgba(245,166,35,0.07) 0%, var(--s2) 100%); }
+    .fchip { white-space: nowrap; padding: 6px 14px; border-radius: 999px; font-family: var(--fm); font-size: 11px; border: 1px solid var(--border); color: var(--cream-d); cursor: pointer; flex-shrink: 0; transition: all 0.12s; }
+    .fchip.on { background: var(--amber-s); border-color: rgba(240,98,42,0.35); color: var(--amber); }
+    .scen-list { flex: 1; overflow-y: auto; padding: 14px 20px; display: flex; flex-direction: column; gap: 10px; }
+    .scard { background: var(--s2); border: 1px solid var(--border); border-radius: 18px; padding: 16px; cursor: pointer; display: flex; flex-direction: column; gap: 8px; transition: border-color 0.15s, transform 0.15s; }
+    .scard:hover { transform: translateY(-1px); border-color: var(--border-h); }
+    .scard:first-child { border-color: rgba(240,98,42,0.28); background: linear-gradient(145deg, rgba(240,98,42,0.08) 0%, var(--s2) 60%); }
     .scard-hd { display: flex; align-items: flex-start; justify-content: space-between; }
     .scard-t { font-family: var(--fd); font-size: 15px; font-weight: 700; color: var(--cream); line-height: 1.3; }
     .scard-r { font-family: var(--fm); font-size: 12px; color: var(--amber); white-space: nowrap; margin-left: 8px; }
-    .scard-d { font-size: 13px; color: var(--cream-m); line-height: 1.4; }
-    .scard-ft { display: flex; align-items: center; gap: 8px; }
+    .scard-d { font-size: 12.5px; color: var(--cream-m); line-height: 1.45; }
+    .scard-ft { display: flex; align-items: center; gap: 7px; }
     .scard-plays { margin-left: auto; font-family: var(--fm); font-size: 10px; color: var(--cream-m); }
 
     /* ════════════════════════════════
@@ -306,7 +336,7 @@
     .edu-brand span { color: var(--amber); }
     .edu-links { display: flex; gap: 2px; }
     .edu-link { font-family: var(--fm); font-size: 12px; padding: 6px 14px; border-radius: 6px; color: var(--cream-d); cursor: pointer; border: 1px solid transparent; }
-    .edu-link.on { background: var(--amber-s); color: var(--amber); border-color: rgba(245,166,35,0.25); }
+    .edu-link.on { background: var(--amber-s); color: var(--amber); border-color: rgba(240,98,42,0.25); }
     .edu-usr { display: flex; align-items: center; gap: 10px; font-family: var(--fm); font-size: 12px; color: var(--cream-d); }
     .edu-av { width: 32px; height: 32px; border-radius: 50%; background: var(--amber-s); border: 2px solid var(--amber); display: flex; align-items: center; justify-content: center; font-size: 14px; }
     .edu-body { display: flex; flex: 1; overflow: hidden; }
@@ -353,9 +383,9 @@
     .fld { margin-bottom: 16px; }
     .fld-lbl { font-family: var(--fm); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--cream-m); margin-bottom: 6px; }
     .fld-inp { width: 100%; background: var(--s2); border: 1px solid var(--border-h); border-radius: 12px; padding: 13px 16px; font-family: var(--fb); font-size: 15px; color: var(--cream); }
-    .fld-inp.focus { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(245,166,35,0.1); }
+    .fld-inp.focus { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(240,98,42,0.1); }
     .age-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
-    .chk { width: 18px; height: 18px; border: 2px solid var(--border-h); border-radius: 5px; background: var(--amber-s); border-color: rgba(245,166,35,0.5); flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; }
+    .chk { width: 18px; height: 18px; border: 2px solid var(--border-h); border-radius: 5px; background: var(--amber-s); border-color: rgba(240,98,42,0.5); flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; }
     .chk::after { content: '✓'; font-size: 11px; color: var(--amber); font-weight: 700; }
     .chk-tx { font-family: var(--fm); font-size: 11px; color: var(--cream-d); line-height: 1.5; }
     .chk-tx a { color: var(--amber); text-decoration: underline; }
@@ -393,7 +423,7 @@
     .sdet-stars { display: flex; align-items: center; gap: 6px; font-family: var(--fm); font-size: 12px; color: var(--amber); }
     .sdet-ctx-lbl { font-family: var(--fd); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--cream-m); margin-bottom: 6px; }
     .sdet-ctx { font-size: 13px; color: var(--cream-d); line-height: 1.6; background: var(--s2); border-radius: 12px; border: 1px solid var(--border); padding: 14px; margin-bottom: 14px; }
-    .role-box { background: var(--amber-s); border: 1px solid rgba(245,166,35,0.25); border-radius: 12px; padding: 12px 14px; margin-bottom: 14px; }
+    .role-box { background: var(--amber-s); border: 1px solid rgba(240,98,42,0.25); border-radius: 12px; padding: 12px 14px; margin-bottom: 14px; }
     .role-lbl { font-family: var(--fm); font-size: 9px; color: var(--amber); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 4px; }
     .role-tx { font-family: var(--fd); font-size: 13px; color: var(--cream); font-weight: 600; }
     .vocab-sec { padding: 0 20px 16px; }
@@ -412,13 +442,13 @@
     .drill-tag { font-family: var(--fm); font-size: 10px; color: var(--amber); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 6px; }
     .drill-t { font-family: var(--fd); font-size: 20px; font-weight: 800; color: var(--cream); margin-bottom: 4px; }
     .drill-sub { font-size: 12px; color: var(--cream-m); font-style: italic; }
-    .ph-focus { margin: 16px 20px; background: var(--s2); border: 1px solid rgba(245,166,35,0.3); border-radius: 20px; padding: 18px; text-align: center; }
+    .ph-focus { margin: 16px 20px; background: var(--s2); border: 1px solid rgba(240,98,42,0.3); border-radius: 20px; padding: 18px; text-align: center; }
     .ph-sym-big { font-family: var(--fm); font-size: 52px; color: var(--amber); line-height: 1; margin-bottom: 6px; }
     .ph-eg { font-family: var(--fb); font-size: 13px; color: var(--cream-m); font-style: italic; }
-    .ph-audio { display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; padding: 8px 18px; border-radius: 999px; border: 1px solid rgba(245,166,35,0.35); font-family: var(--fm); font-size: 11px; color: var(--amber); cursor: pointer; background: var(--amber-s); }
+    .ph-audio { display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; padding: 8px 18px; border-radius: 999px; border: 1px solid rgba(240,98,42,0.35); font-family: var(--fm); font-size: 11px; color: var(--amber); cursor: pointer; background: var(--amber-s); }
     .pair-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 20px; }
     .pair-card { background: var(--s2); border: 1px solid var(--border); border-radius: 16px; padding: 16px 14px; text-align: center; cursor: pointer; }
-    .pair-card.target { border-color: rgba(245,166,35,0.4); background: var(--amber-s); }
+    .pair-card.target { border-color: rgba(240,98,42,0.4); background: var(--amber-s); }
     .pair-word { font-family: var(--fd); font-size: 20px; font-weight: 800; color: var(--cream); margin-bottom: 4px; }
     .pair-card.target .pair-word { color: var(--amber); }
     .pair-ipa { font-family: var(--fm); font-size: 12px; color: var(--cream-m); }
@@ -460,7 +490,7 @@
     .code-input { display: flex; gap: 8px; justify-content: center; margin-bottom: 20px; }
     .code-cell { width: 42px; height: 52px; background: var(--s2); border: 2px solid var(--border-h); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: var(--fm); font-size: 22px; font-weight: 700; color: var(--cream); }
     .code-cell.filled { background: var(--amber-s); border-color: var(--amber); color: var(--amber); }
-    .code-cell.active { border-color: rgba(245,166,35,0.7); box-shadow: 0 0 0 3px rgba(245,166,35,0.12); }
+    .code-cell.active { border-color: rgba(240,98,42,0.7); box-shadow: 0 0 0 3px rgba(240,98,42,0.12); }
     .join-info { background: var(--s2); border: 1px solid var(--border); border-radius: 12px; padding: 14px; font-family: var(--fm); font-size: 11px; color: var(--cream-m); line-height: 1.6; margin-bottom: 24px; width: 100%; text-align: left; }
     .join-info strong { color: var(--cream-d); }
 
@@ -474,13 +504,13 @@
     }
     .adm-brand { font-family: var(--fd); font-size: 22px; font-weight: 800; color: var(--cream); }
     .adm-brand span { color: var(--amber); }
-    .adm-badge { font-family: var(--fm); font-size: 9px; padding: 2px 8px; border-radius: 999px; background: var(--green-s); border: 1px solid rgba(72,201,160,0.3); color: var(--green); margin-left: 8px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .adm-badge { font-family: var(--fm); font-size: 9px; padding: 2px 8px; border-radius: 999px; background: var(--green-s); border: 1px solid rgba(60,184,135,0.3); color: var(--green); margin-left: 8px; letter-spacing: 0.08em; text-transform: uppercase; }
     .adm-links { display: flex; gap: 2px; }
     .adm-link { font-family: var(--fm); font-size: 12px; padding: 6px 14px; border-radius: 6px; color: var(--cream-d); cursor: pointer; border: 1px solid transparent; }
-    .adm-link.on { background: var(--amber-s); color: var(--amber); border-color: rgba(245,166,35,0.25); }
+    .adm-link.on { background: var(--amber-s); color: var(--amber); border-color: rgba(240,98,42,0.25); }
     .adm-body { display: flex; flex: 1; overflow: hidden; }
     .adm-side { width: 220px; border-right: 1px solid var(--border); padding: 20px 16px; flex-shrink: 0; overflow-y: auto; }
-    .adm-sys { background: var(--green-s); border: 1px solid rgba(72,201,160,0.25); border-radius: 10px; padding: 10px 12px; margin-bottom: 14px; }
+    .adm-sys { background: var(--green-s); border: 1px solid rgba(60,184,135,0.25); border-radius: 10px; padding: 10px 12px; margin-bottom: 14px; }
     .adm-sys-lbl { font-family: var(--fm); font-size: 9px; color: var(--green); text-transform: uppercase; letter-spacing: 0.1em; }
     .adm-sys-v { font-family: var(--fm); font-size: 13px; color: var(--green); font-weight: 600; margin-top: 2px; }
     .adm-nav { display: flex; flex-direction: column; gap: 2px; }
@@ -500,9 +530,9 @@
     .adm-cfg-t { font-family: var(--fd); font-size: 13px; font-weight: 700; color: var(--cream); margin-bottom: 12px; }
     .cfg-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
     .cfg-lbl { font-family: var(--fm); font-size: 11px; color: var(--cream-d); }
-    .cfg-val { font-family: var(--fm); font-size: 11px; color: var(--amber); background: var(--amber-s); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(245,166,35,0.25); }
-    .cfg-val.ok { color: var(--green); background: var(--green-s); border-color: rgba(72,201,160,0.25); }
-    .cfg-val.warn { color: var(--yellow); background: var(--yellow-s); border-color: rgba(245,193,24,0.25); }
+    .cfg-val { font-family: var(--fm); font-size: 11px; color: var(--amber); background: var(--amber-s); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(240,98,42,0.25); }
+    .cfg-val.ok { color: var(--green); background: var(--green-s); border-color: rgba(60,184,135,0.25); }
+    .cfg-val.warn { color: var(--yellow); background: var(--yellow-s); border-color: rgba(232,168,32,0.25); }
     .adm-usr-tbl { width: 100%; border-collapse: collapse; }
     .adm-usr-tbl th { font-family: var(--fm); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--cream-m); padding: 8px 14px; text-align: left; border-bottom: 1px solid var(--border); }
     .adm-usr-tbl td { padding: 11px 14px; border-bottom: 1px solid var(--border); font-family: var(--fm); font-size: 12px; color: var(--cream-d); vertical-align: middle; }
@@ -523,12 +553,12 @@
     .phrase-count-note { font-family: var(--fm); font-size: 10px; color: var(--cream-m); margin-bottom: 10px; }
     .phrase-list { flex: 1; overflow-y: auto; padding: 0 20px; display: flex; flex-direction: column; gap: 10px; }
     .phrase-card { background: var(--s2); border: 1px solid var(--border); border-radius: 16px; padding: 14px 16px; cursor: pointer; transition: border-color 0.15s; }
-    .phrase-card:hover { border-color: rgba(245,166,35,0.3); }
-    .phrase-card:first-child { border-color: rgba(245,166,35,0.25); background: linear-gradient(135deg, rgba(245,166,35,0.07) 0%, var(--s2) 100%); }
+    .phrase-card:hover { border-color: rgba(240,98,42,0.3); }
+    .phrase-card:first-child { border-color: rgba(240,98,42,0.25); background: linear-gradient(135deg, rgba(240,98,42,0.07) 0%, var(--s2) 100%); }
     .phrase-text { font-family: var(--fd); font-size: 16px; font-weight: 700; color: var(--cream); margin-bottom: 5px; line-height: 1.3; }
     .phrase-ex { font-size: 12px; color: var(--cream-m); font-style: italic; line-height: 1.5; margin-bottom: 8px; }
     .phrase-ft { display: flex; align-items: center; justify-content: space-between; }
-    .phrase-tts { display: inline-flex; align-items: center; gap: 5px; font-family: var(--fm); font-size: 12px; color: var(--amber); background: var(--amber-s); border: 1px solid rgba(245,166,35,0.3); border-radius: 12px; padding: 10px 16px; min-height: 48px; cursor: pointer; }
+    .phrase-tts { display: inline-flex; align-items: center; gap: 5px; font-family: var(--fm); font-size: 12px; color: var(--amber); background: var(--amber-s); border: 1px solid rgba(240,98,42,0.3); border-radius: 12px; padding: 10px 16px; min-height: 48px; cursor: pointer; }
     .phrase-tap { font-family: var(--fm); font-size: 10px; color: var(--cream-m); }
     .phrases-acts { padding: 14px 20px 24px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; border-top: 1px solid var(--border); }
 
@@ -541,11 +571,11 @@
     .sheet-handle { width: 36px; height: 4px; background: var(--border-h); border-radius: 2px; margin: 14px auto 20px; }
     .sheet-phrase { font-family: var(--fd); font-size: 26px; font-weight: 800; color: var(--cream); line-height: 1.25; padding: 0 24px; margin-bottom: 6px; }
     .sheet-sit { display: inline-flex; margin: 0 24px 16px; }
-    .tts-big { display: flex; align-items: center; gap: 14px; margin: 0 24px 18px; padding: 16px; background: var(--amber-s); border: 1px solid rgba(245,166,35,0.3); border-radius: 16px; cursor: pointer; }
+    .tts-big { display: flex; align-items: center; gap: 14px; margin: 0 24px 18px; padding: 16px; background: var(--amber-s); border: 1px solid rgba(240,98,42,0.3); border-radius: 16px; cursor: pointer; }
     .tts-play { width: 48px; height: 48px; border-radius: 50%; background: var(--amber); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
     .tts-inf { flex: 1; }
     .tts-label { font-family: var(--fd); font-size: 13px; font-weight: 700; color: var(--amber); }
-    .tts-sub { font-family: var(--fm); font-size: 10px; color: rgba(245,166,35,0.7); margin-top: 2px; }
+    .tts-sub { font-family: var(--fm); font-size: 10px; color: rgba(240,98,42,0.7); margin-top: 2px; }
     .ex-box { margin: 0 24px 16px; background: var(--s2); border-left: 3px solid var(--amber); border-radius: 0 12px 12px 0; padding: 12px 14px; }
     .ex-lbl { font-family: var(--fm); font-size: 9px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--amber); margin-bottom: 6px; }
     .ex-sent { font-size: 14px; color: var(--cream-d); line-height: 1.6; }
@@ -562,14 +592,14 @@
     .vg-t { font-family: var(--fd); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream-m); margin-bottom: 10px; }
     .vg-used { display: flex; flex-direction: column; gap: 7px; margin-bottom: 14px; }
     .vg-used-lbl { font-family: var(--fm); font-size: 10px; color: var(--green); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
-    .vg-chip-used { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: var(--green-s); border: 1px solid rgba(72,201,160,0.25); border-radius: 999px; font-family: var(--fd); font-size: 12px; color: var(--green); margin: 0 4px 6px 0; }
-    .vg-missed { background: var(--s2); border: 1px solid rgba(245,166,35,0.25); border-radius: 16px; padding: 14px; }
+    .vg-chip-used { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: var(--green-s); border: 1px solid rgba(60,184,135,0.25); border-radius: 999px; font-family: var(--fd); font-size: 12px; color: var(--green); margin: 0 4px 6px 0; }
+    .vg-missed { background: var(--s2); border: 1px solid rgba(240,98,42,0.25); border-radius: 16px; padding: 14px; }
     .vg-missed-lbl { font-family: var(--fm); font-size: 10px; color: var(--amber); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
     .vg-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
     .vg-row:last-child { border-bottom: none; padding-bottom: 0; }
     .vg-phrase { flex: 1; font-family: var(--fd); font-size: 13px; font-weight: 600; color: var(--cream); }
     .vg-row-hint { font-family: var(--fm); font-size: 10px; color: var(--cream-m); margin-top: 1px; }
-    .vg-practice { font-family: var(--fm); font-size: 10px; color: var(--amber); background: var(--amber-s); border: 1px solid rgba(245,166,35,0.3); border-radius: 999px; padding: 4px 10px; white-space: nowrap; cursor: pointer; }
+    .vg-practice { font-family: var(--fm); font-size: 10px; color: var(--amber); background: var(--amber-s); border: 1px solid rgba(240,98,42,0.3); border-radius: 999px; padding: 4px 10px; white-space: nowrap; cursor: pointer; }
 
     /* ════════════════════════════════
        SCREEN 19 — LIBRARY: SITUATION FILTER
@@ -579,6 +609,50 @@
     .sit-tab.on { background: var(--amber); color: var(--bg); font-weight: 700; }
     .scard-phrases { display: flex; align-items: center; gap: 5px; font-family: var(--fm); font-size: 10px; color: var(--cream-m); margin-left: auto; }
     .phrase-badge { background: rgba(91,141,239,0.12); border: 1px solid rgba(91,141,239,0.2); color: var(--blue); border-radius: 999px; padding: 2px 8px; font-family: var(--fm); font-size: 10px; }
+
+    /* ════════════════════════════════
+       SCREEN 18 — VOCAB GAPS (summary-level)
+       SCREEN 19 — SITUATION FILTER
+       SCREEN 25 — CORE COMPETENCIES PROGRESS (BRD §7)
+    ════════════════════════════════ */
+
+    /* 4-competency grid used in Screens 18 & 25 */
+    .comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 0 20px; }
+    .comp-card { background: var(--s2); border: 1px solid var(--border); border-radius: 16px; padding: 14px 12px; }
+    .comp-ic { font-size: 18px; margin-bottom: 6px; display: block; }
+    .comp-name { font-family: var(--fd); font-size: 11px; font-weight: 700; color: var(--cream); margin-bottom: 6px; line-height: 1.3; }
+    .comp-score { font-family: var(--fd); font-size: 26px; font-weight: 800; line-height: 1; }
+    .comp-bar-wrap { height: 4px; background: var(--s3); border-radius: 2px; overflow: hidden; margin: 6px 0 4px; }
+    .comp-bar { height: 100%; border-radius: 2px; }
+    .comp-prog-lbl { font-family: var(--fm); font-size: 9px; color: var(--cream-m); }
+
+    /* Skill Improvement Lifecycle strip */
+    .lifecycle-strip { margin: 12px 20px; background: var(--s2); border: 1px solid var(--border); border-radius: 16px; padding: 14px 10px 12px; }
+    .lifecycle-lbl { font-family: var(--fd); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-m); margin-bottom: 12px; text-align: center; }
+    .lifecycle-stages { display: flex; align-items: flex-start; }
+    .lc-stage { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .lc-dot { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; border: 2px solid transparent; flex-shrink: 0; }
+    .lc-dot.done { background: var(--green-s); border-color: var(--green); color: var(--green); }
+    .lc-dot.active { background: var(--amber-s); border-color: var(--amber); color: var(--amber); }
+    .lc-dot.upcoming { background: var(--s3); border-color: var(--border-h); color: var(--cream-m); }
+    .lc-name { font-family: var(--fm); font-size: 8px; color: var(--cream-m); text-align: center; line-height: 1.4; }
+    .lc-name.active { color: var(--amber); font-weight: 600; }
+    .lc-name.done { color: var(--green); }
+    .lc-conn { flex-shrink: 0; width: 12px; height: 2px; margin-top: 11px; }
+    .lc-conn.done { background: var(--green); }
+    .lc-conn.pending { background: var(--border); }
+
+    /* Acceptance Standard rows */
+    .accept-sec { padding: 10px 20px 4px; }
+    .accept-t { font-family: var(--fd); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream-m); margin-bottom: 10px; }
+    .accept-row { background: var(--s2); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; margin-bottom: 8px; }
+    .accept-row-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+    .accept-label { font-family: var(--fd); font-size: 12px; font-weight: 700; color: var(--cream); }
+    .accept-val { font-family: var(--fd); font-size: 15px; font-weight: 800; }
+    .accept-sub { font-family: var(--fm); font-size: 10px; color: var(--cream-m); margin-bottom: 5px; }
+    .accept-bar-wrap { height: 5px; background: var(--s3); border-radius: 3px; overflow: hidden; position: relative; }
+    .accept-bar-fill { height: 100%; border-radius: 3px; }
+    .accept-target-tick { position: absolute; right: 0; top: -2px; width: 2px; height: 9px; background: var(--cream-m); border-radius: 1px; }
 
     @media (max-width: 900px) {
       .edu-side { display: none; }
@@ -615,6 +689,9 @@
   <button class="wf-btn" onclick="go(19,this)">22 L1 Redirect</button>
   <button class="wf-btn" onclick="go(20,this)">23 Share Report</button>
   <button class="wf-btn" onclick="go(21,this)">24 Submit Scenario</button>
+  <button class="wf-btn" onclick="go(22,this)">18 Vocab Gaps</button>
+  <button class="wf-btn" onclick="go(23,this)">19 Situation Filter</button>
+  <button class="wf-btn" onclick="go(24,this)">25 Competencies</button>
 </nav>
 
 <div class="wf-content">
@@ -895,6 +972,29 @@
             <div class="score-n">78</div>
             <div class="score-l">pron. score</div>
           </div>
+          <!-- 4 Core Competency scores — BRD §7.1 -->
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:0 16px 4px">
+            <div style="text-align:center;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:8px 4px">
+              <div style="font-size:13px">🗣️</div>
+              <div style="font-family:var(--fd);font-size:16px;font-weight:800;color:var(--green);line-height:1.1">74</div>
+              <div style="font-family:var(--fm);font-size:8px;color:var(--cream-m);text-transform:uppercase;margin-top:2px">Fluency</div>
+            </div>
+            <div style="text-align:center;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:8px 4px">
+              <div style="font-size:13px">🔊</div>
+              <div style="font-family:var(--fd);font-size:16px;font-weight:800;color:var(--yellow);line-height:1.1">61</div>
+              <div style="font-family:var(--fm);font-size:8px;color:var(--cream-m);text-transform:uppercase;margin-top:2px">Pron.</div>
+            </div>
+            <div style="text-align:center;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:8px 4px">
+              <div style="font-size:13px">📖</div>
+              <div style="font-family:var(--fd);font-size:16px;font-weight:800;color:var(--amber);line-height:1.1">68</div>
+              <div style="font-family:var(--fm);font-size:8px;color:var(--cream-m);text-transform:uppercase;margin-top:2px">Vocab</div>
+            </div>
+            <div style="text-align:center;background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:8px 4px">
+              <div style="font-size:13px">👂</div>
+              <div style="font-family:var(--fd);font-size:16px;font-weight:800;color:var(--blue);line-height:1.1">82</div>
+              <div style="font-family:var(--fm);font-size:8px;color:var(--cream-m);text-transform:uppercase;margin-top:2px">Listen</div>
+            </div>
+          </div>
           <div style="font-family:var(--fm);font-size:11px;color:var(--green)">↑ +4 from last session</div>
         </div>
         <div class="stats-g">
@@ -981,11 +1081,11 @@
     </div>
   </div>
   <div class="ann">
+    <div class="ann-item"><span class="req">BRD §7.1</span> 4 competencies scored per session: Fluency · Pronunciation · Vocab in Context · Listening</div>
+    <div class="ann-item"><span class="req">BRD §7.3 Stage 3+4</span> Immediate specific feedback + Progress Visibility — both represented in this screen</div>
     <div class="ann-item"><span class="req">FR-CONV-08</span> Summary: duration · turns · top areas · pron. score · actions</div>
-    <div class="ann-item"><span class="req">BRD §7.6 AC-2</span> Post-session: shows phrases used naturally + flags up to 3 missed</div>
-    <div class="ann-item"><span class="req">BRD §7.6 Tech</span> Gap detection = set diff: scenario phrases minus detected in transcript</div>
+    <div class="ann-item"><span class="req">BRD §7.6 AC-2</span> Post-session: shows phrases used naturally + flags up to 3 missed with practice CTAs</div>
     <div class="ann-item"><span class="req">FR-PRON-04</span> Minimal pair drill offered when phoneme error ≥3× in session</div>
-    <div class="ann-item"><span class="req">FR-DASH-01</span> Session persisted to history on completion</div>
     <div class="ann-item"><span class="req">FR-DASH-04</span> "Share my progress report" → generates PDF/link with 30-day expiry</div>
   </div>
 </div>
@@ -1041,7 +1141,7 @@
             <div class="scard-d">Describe symptoms and understand medical advice. Essential vocabulary included.</div>
             <div class="scard-ft">
               <div class="pill p-green">Beginner</div>
-              <div class="pill" style="background:rgba(72,201,160,0.1);color:var(--green);border:1px solid rgba(72,201,160,0.2)">🏥 Medical</div>
+              <div class="pill" style="background:rgba(60,184,135,0.1);color:var(--green);border:1px solid rgba(60,184,135,0.2)">🏥 Medical</div>
               <div class="scard-phrases"><span class="phrase-badge">📝 6 phrases</span></div>
             </div>
           </div>
@@ -1109,8 +1209,8 @@
             <svg viewBox="0 0 320 96" preserveAspectRatio="none">
               <defs>
                 <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#48C9A0" stop-opacity="0.28"/>
-                  <stop offset="100%" stop-color="#48C9A0" stop-opacity="0"/>
+                  <stop offset="0%" stop-color="#3CB887" stop-opacity="0.28"/>
+                  <stop offset="100%" stop-color="#3CB887" stop-opacity="0"/>
                 </linearGradient>
               </defs>
               <line x1="0" y1="20" x2="320" y2="20" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
@@ -1120,10 +1220,10 @@
               <text x="3" y="47" fill="rgba(255,255,255,0.22)" font-size="8" font-family="monospace">75</text>
               <text x="3" y="75" fill="rgba(255,255,255,0.22)" font-size="8" font-family="monospace">50</text>
               <path d="M20,74 L45,70 L70,66 L90,72 L110,63 L130,58 L150,56 L170,61 L190,52 L210,47 L230,43 L250,39 L270,34 L290,28 L308,22 L308,96 L20,96 Z" fill="url(#cg)"/>
-              <path d="M20,74 L45,70 L70,66 L90,72 L110,63 L130,58 L150,56 L170,61 L190,52 L210,47 L230,43 L250,39 L270,34 L290,28 L308,22" fill="none" stroke="#48C9A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="308" cy="22" r="4" fill="#48C9A0"/>
-              <circle cx="308" cy="22" r="9" fill="rgba(72,201,160,0.2)"/>
-              <text x="278" y="17" fill="#48C9A0" font-size="9" font-family="monospace" font-weight="bold">78</text>
+              <path d="M20,74 L45,70 L70,66 L90,72 L110,63 L130,58 L150,56 L170,61 L190,52 L210,47 L230,43 L250,39 L270,34 L290,28 L308,22" fill="none" stroke="#3CB887" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="308" cy="22" r="4" fill="#3CB887"/>
+              <circle cx="308" cy="22" r="9" fill="rgba(60,184,135,0.2)"/>
+              <text x="278" y="17" fill="#3CB887" font-size="9" font-family="monospace" font-weight="bold">78</text>
             </svg>
           </div>
           <div style="display:flex;justify-content:space-between;font-family:var(--fm);font-size:10px;color:var(--cream-m);margin-top:4px">
@@ -1812,7 +1912,7 @@
           <div class="adm-kpi-v" style="font-size:16px;margin-top:8px"><span class="cfg-val ok">llama3-8b</span></div>
           <div class="adm-kpi-sub">Mac Mini M4 · Ollama</div>
         </div>
-        <div class="adm-kpi-c" style="border-color:rgba(245,193,24,0.25)">
+        <div class="adm-kpi-c" style="border-color:rgba(232,168,32,0.25)">
           <div class="adm-kpi-l">Flagged students</div>
           <div class="adm-kpi-v" style="color:var(--yellow)">7</div>
           <div class="adm-kpi-sub">score declined &gt;10 pts</div>
@@ -2041,7 +2141,7 @@
           <div style="font-size:18px;color:var(--cream-d);cursor:pointer">←</div>
           <div style="font-family:var(--fd);font-size:13px;font-weight:600;color:var(--cream)">Job Interview Practice</div>
         </div>
-        <div style="background:rgba(245,193,24,0.1);border:1px solid rgba(245,193,24,0.3);border-radius:14px;margin:0 20px 16px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
+        <div style="background:rgba(232,168,32,0.1);border:1px solid rgba(232,168,32,0.3);border-radius:14px;margin:0 20px 16px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
           <div style="font-size:20px">⚠️</div>
           <div>
             <div style="font-family:var(--fd);font-size:13px;font-weight:700;color:var(--yellow);margin-bottom:4px">Microphone unavailable</div>
@@ -2056,7 +2156,7 @@
             <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m);padding-left:4px">AI · Hiring Manager</div>
           </div>
           <div style="margin-bottom:16px;display:flex;flex-direction:column;align-items:flex-end">
-            <div style="background:var(--amber-s);border:1px solid rgba(245,166,35,0.25);border-radius:14px 14px 4px 14px;padding:14px 16px;max-width:85%">
+            <div style="background:var(--amber-s);border:1px solid rgba(240,98,42,0.25);border-radius:14px 14px 4px 14px;padding:14px 16px;max-width:85%">
               <div style="font-family:var(--fb);font-size:14px;color:var(--cream);line-height:1.6">Sure! I'm a software engineer with five years of experience, mostly in backend systems and cloud infrastructure...</div>
             </div>
             <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m);padding-right:4px;margin-top:4px">You · typed</div>
@@ -2316,6 +2416,378 @@
     <div class="ann-item"><span class="req">FR-SCEN-04</span> Optional: key phrases field extends scenario schema per BRD §7.6</div>
     <div class="ann-item"><span class="req">NFR-OSS-02</span> Submitted content licensed CC BY-SA 4.0 — disclosed to user before submit</div>
     <div class="ann-item"><span class="req">NFR-USE-03</span> All tappable form elements ≥48px tall — accessible on mobile</div>
+  </div>
+</div>
+
+</div><!-- /wf-content -->
+
+<!-- ════════════════════════════════════════
+     SCREEN 18 — SESSION SUMMARY + VOCABULARY GAPS
+════════════════════════════════════════ -->
+<div class="screen" id="s22">
+  <div class="stitle"><h2>18 — Session Summary · 4 Competencies + Vocab Gaps</h2><span>Mobile · Post-session · BRD §7.1 competencies · §7.6 AC-2 vocab gaps</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="sbar"><span>10:18</span><span>●●●● WiFi 🔋</span></div>
+        <div class="sum-hero" style="padding:18px 20px 10px">
+          <div class="sum-em">🎯</div>
+          <div class="sum-t">Session Complete</div>
+          <div class="sum-st">Tech Company Job Interview · 14 min · 8 turns</div>
+        </div>
+
+        <!-- 4 Core Competency scores — BRD §7.1 -->
+        <div style="padding:4px 20px 4px">
+          <div class="sec-title" style="padding:8px 0 8px">This session — 4 skills</div>
+        </div>
+        <div class="comp-grid">
+          <div class="comp-card">
+            <span class="comp-ic">🗣️</span>
+            <div class="comp-name">Speaking Fluency</div>
+            <div class="comp-score" style="color:var(--green)">74</div>
+            <div class="comp-bar-wrap"><div class="comp-bar" style="width:74%;background:var(--green)"></div></div>
+            <div class="comp-prog-lbl">↑ +4 vs. last session</div>
+          </div>
+          <div class="comp-card">
+            <span class="comp-ic">🔊</span>
+            <div class="comp-name">Pronunciation</div>
+            <div class="comp-score" style="color:var(--yellow)">61</div>
+            <div class="comp-bar-wrap"><div class="comp-bar" style="width:61%;background:var(--yellow)"></div></div>
+            <div class="comp-prog-lbl">/z/ errors · Fair · stable</div>
+          </div>
+          <div class="comp-card">
+            <span class="comp-ic">📖</span>
+            <div class="comp-name">Vocab in Context</div>
+            <div class="comp-score" style="color:var(--amber)">68</div>
+            <div class="comp-bar-wrap"><div class="comp-bar" style="width:68%;background:var(--amber)"></div></div>
+            <div class="comp-prog-lbl">3 missed phrases</div>
+          </div>
+          <div class="comp-card">
+            <span class="comp-ic">👂</span>
+            <div class="comp-name">Listening</div>
+            <div class="comp-score" style="color:var(--blue)">82</div>
+            <div class="comp-bar-wrap"><div class="comp-bar" style="width:82%;background:var(--blue)"></div></div>
+            <div class="comp-prog-lbl">↑ Strong · keep going</div>
+          </div>
+        </div>
+
+        <!-- Vocabulary gaps — BRD §7.6 AC-2 -->
+        <div class="vocab-gap-sec" style="margin-top:12px">
+          <div class="vg-t">Vocabulary · This session</div>
+          <div class="vg-used">
+            <div class="vg-used-lbl">✓ Used naturally</div>
+            <div style="display:flex;flex-wrap:wrap">
+              <span class="vg-chip-used">✓ "walk you through"</span>
+              <span class="vg-chip-used">✓ "key contribution"</span>
+              <span class="vg-chip-used">✓ "in my previous role"</span>
+            </div>
+          </div>
+          <div class="vg-missed">
+            <div class="vg-missed-lbl">Could have used (up to 3)</div>
+            <div class="vg-row">
+              <div>
+                <div class="vg-phrase">"That's a great question. Let me think…"</div>
+                <div class="vg-row-hint">Buys thinking time naturally · sounds professional</div>
+              </div>
+              <div class="vg-practice">Practice →</div>
+            </div>
+            <div class="vg-row">
+              <div>
+                <div class="vg-phrase">"The biggest challenge was…"</div>
+                <div class="vg-row-hint">STAR method opener · great for structured answers</div>
+              </div>
+              <div class="vg-practice">Practice →</div>
+            </div>
+            <div class="vg-row" style="border-bottom:none;padding-bottom:0">
+              <div>
+                <div class="vg-phrase">"I'd be happy to elaborate…"</div>
+                <div class="vg-row-hint">Signals eagerness without over-explaining</div>
+              </div>
+              <div class="vg-practice">Practice →</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sum-acts">
+          <button class="btn-p">Practice again →</button>
+          <button class="btn-s" style="font-size:13px;padding:12px">New scenario</button>
+        </div>
+        <div class="bnav">
+          <div class="bni"><div class="bni-icon">🏠</div><div class="bni-lbl">Home</div></div>
+          <div class="bni"><div class="bni-icon">📚</div><div class="bni-lbl">Scenarios</div></div>
+          <div class="bni"><div class="bni-icon">📊</div><div class="bni-lbl" style="color:var(--amber)">Progress</div></div>
+          <div class="bni"><div class="bni-icon">⚙️</div><div class="bni-lbl">Settings</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">BRD §7.1</span> 4 competencies scored per session: Fluency · Pronunciation · Vocab in Context · Listening</div>
+    <div class="ann-item"><span class="req">BRD §7.3 Stage 3</span> Immediate, specific feedback · "what sounded unnatural and WHY" per turn</div>
+    <div class="ann-item"><span class="req">BRD §7.3 Stage 4</span> Progress visibility · competency scores feed Week 8 improvement trends</div>
+    <div class="ann-item"><span class="req">BRD §7.6 AC-2</span> Post-session summary flags up to 3 unused scenario-relevant phrases with practice CTAs</div>
+    <div class="ann-item"><span class="req">BRD §7.4</span> Non-negotiable: sessions ≤20 min · 14 min shown — within constraint</div>
+    <div class="ann-item"><span class="req">NFR-USE-05</span> Competency scores use color + numeric + text label — colorblind-safe</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCREEN 19 — SCENARIO LIBRARY: SITUATION FILTER
+════════════════════════════════════════ -->
+<div class="screen" id="s23">
+  <div class="stitle"><h2>19 — Scenario Library · Work vs. Everyday Filter</h2><span>Mobile · BRD §7.6 AC-3 · Vocabulary in Context competency</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="sbar"><span>9:52</span><span>●●●● WiFi 🔋</span></div>
+        <div class="lib-hdr">
+          <div class="lib-t">Scenarios</div>
+          <div class="srch">
+            <span style="font-size:14px">🔍</span>
+            <div class="srch-ph">Search scenarios…</div>
+          </div>
+          <!-- Situation tabs — BRD §7.6 Must: Everyday vs. Work -->
+          <div class="sit-tabs">
+            <div class="sit-tab">All</div>
+            <div class="sit-tab on">💼 Work</div>
+            <div class="sit-tab">🏠 Everyday</div>
+          </div>
+          <div class="filt">
+            <div class="fchip on">All levels</div>
+            <div class="fchip">Beginner</div>
+            <div class="fchip">Intermediate</div>
+            <div class="fchip">Advanced</div>
+          </div>
+        </div>
+        <div class="scen-list">
+          <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m);padding:4px 0 6px">Showing 12 Work scenarios · ordered by popularity</div>
+          <div class="scard">
+            <div class="scard-hd">
+              <div class="scard-t">💼 Tech Company Job Interview</div>
+              <div class="scard-r">★ 4.8</div>
+            </div>
+            <div class="scard-d">Practice self-introduction, experience stories, and behavioral questions.</div>
+            <div class="scard-ft">
+              <span class="pill p-amber">Intermediate</span>
+              <span class="phrase-badge">📝 7 phrases</span>
+              <div class="scard-plays">1,240 plays</div>
+            </div>
+          </div>
+          <div class="scard">
+            <div class="scard-hd">
+              <div class="scard-t">📊 Presenting to Stakeholders</div>
+              <div class="scard-r">★ 4.6</div>
+            </div>
+            <div class="scard-d">Walk through a project update, handle questions, summarize next steps.</div>
+            <div class="scard-ft">
+              <span class="pill p-amber">Intermediate</span>
+              <span class="phrase-badge">📝 6 phrases</span>
+              <div class="scard-plays">890 plays</div>
+            </div>
+          </div>
+          <div class="scard">
+            <div class="scard-hd">
+              <div class="scard-t">💰 Salary Negotiation</div>
+              <div class="scard-r">★ 4.7</div>
+            </div>
+            <div class="scard-d">Negotiate compensation confidently. Counter-offers and professional framing.</div>
+            <div class="scard-ft">
+              <span class="pill p-red">Advanced</span>
+              <span class="phrase-badge">📝 8 phrases</span>
+              <div class="scard-plays">640 plays</div>
+            </div>
+          </div>
+          <div class="scard">
+            <div class="scard-hd">
+              <div class="scard-t">📞 Client Status Call</div>
+              <div class="scard-r">★ 4.4</div>
+            </div>
+            <div class="scard-d">Update a client on progress, manage expectations, handle difficult questions.</div>
+            <div class="scard-ft">
+              <span class="pill p-green">Beginner</span>
+              <span class="phrase-badge">📝 5 phrases</span>
+              <div class="scard-plays">420 plays</div>
+            </div>
+          </div>
+        </div>
+        <div class="bnav">
+          <div class="bni"><div class="bni-icon">🏠</div><div class="bni-lbl">Home</div></div>
+          <div class="bni"><div class="bni-icon">📚</div><div class="bni-lbl" style="color:var(--amber)">Scenarios</div></div>
+          <div class="bni"><div class="bni-icon">📊</div><div class="bni-lbl">Progress</div></div>
+          <div class="bni"><div class="bni-icon">⚙️</div><div class="bni-lbl">Settings</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">BRD §7.6 Must</span> Situations categorised as Everyday vs. Work · tab filter shown and active on 💼 Work</div>
+    <div class="ann-item"><span class="req">BRD §7.6 AC-3</span> Filter by situation type · phrase count badge visible per card</div>
+    <div class="ann-item"><span class="req">BRD §7.1 Competency</span> Vocabulary in Context: scenario selection is how learners practice contextual language</div>
+    <div class="ann-item"><span class="req">FR-SCEN-02</span> Searchable, filterable by category and difficulty · phrase count displayed per card</div>
+    <div class="ann-item"><span class="req">BRD §7.4</span> Non-negotiable: ≤20 min sessions · scenario list shows scenario length hint (implied by difficulty)</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCREEN 25 — CORE COMPETENCIES PROGRESS DASHBOARD
+     (BRD §7 — New: 4 competencies + lifecycle + Week 8 targets)
+════════════════════════════════════════ -->
+<div class="screen" id="s24">
+  <div class="stitle"><h2>25 — Core Competencies Progress</h2><span>Mobile · BRD §7 — 4 competencies · skill lifecycle · Week 8 acceptance targets</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="sbar"><span>9:41</span><span>●●●● WiFi 🔋</span></div>
+
+        <div style="padding:16px 20px 0">
+          <div style="font-family:var(--fd);font-size:22px;font-weight:800;color:var(--cream);line-height:1.2">Your 4 Skills</div>
+          <div style="font-family:var(--fb);font-size:13px;font-style:italic;color:var(--cream-m);margin-top:4px">Week 4 of 8 · 3 sessions this week</div>
+        </div>
+
+        <!-- Skill Improvement Lifecycle — BRD §7.3 -->
+        <div class="lifecycle-strip">
+          <div class="lifecycle-lbl">Skill Improvement Lifecycle</div>
+          <div class="lifecycle-stages">
+            <div class="lc-stage">
+              <div class="lc-dot done">✓</div>
+              <div class="lc-name done">Baseline<br>Assessment</div>
+            </div>
+            <div class="lc-conn done"></div>
+            <div class="lc-stage">
+              <div class="lc-dot done">✓</div>
+              <div class="lc-name done">Deliberate<br>Practice</div>
+            </div>
+            <div class="lc-conn done"></div>
+            <div class="lc-stage">
+              <div class="lc-dot done">✓</div>
+              <div class="lc-name done">Immediate<br>Feedback</div>
+            </div>
+            <div class="lc-conn pending"></div>
+            <div class="lc-stage">
+              <div class="lc-dot active">▶</div>
+              <div class="lc-name active">Progress<br>Visibility</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Competency cards — BRD §7.1 -->
+        <div style="padding:0 20px 6px"><div class="sec-title" style="padding:8px 0 8px">4 Core Competencies</div></div>
+        <div class="comp-grid">
+          <div class="comp-card" style="border-color:rgba(60,184,135,0.25);background:linear-gradient(135deg,rgba(60,184,135,0.06) 0%,var(--s2) 100%)">
+            <span class="comp-ic">🗣️</span>
+            <div class="comp-name">Speaking Fluency</div>
+            <div class="comp-score" style="color:var(--green)">72</div>
+            <div class="comp-bar-wrap"><div class="comp-bar" style="width:72%;background:var(--green)"></div></div>
+            <div class="comp-prog-lbl">↑ +8 pts since Week 1</div>
+          </div>
+          <div class="comp-card" style="border-color:rgba(232,168,32,0.2)">
+            <span class="comp-ic">🔊</span>
+            <div class="comp-name">Pronunciation</div>
+            <div class="comp-score" style="color:var(--yellow)">59</div>
+            <div class="comp-bar-wrap"><div class="comp-bar" style="width:59%;background:var(--yellow)"></div></div>
+            <div class="comp-prog-lbl">↑ +5 pts · /z/ focus</div>
+          </div>
+          <div class="comp-card">
+            <span class="comp-ic">📖</span>
+            <div class="comp-name">Vocab in Context</div>
+            <div class="comp-score" style="color:var(--amber)">65</div>
+            <div class="comp-bar-wrap"><div class="comp-bar" style="width:65%;background:var(--amber)"></div></div>
+            <div class="comp-prog-lbl">42 phrases practiced</div>
+          </div>
+          <div class="comp-card">
+            <span class="comp-ic">👂</span>
+            <div class="comp-name">Listening</div>
+            <div class="comp-score" style="color:var(--blue)">78</div>
+            <div class="comp-bar-wrap"><div class="comp-bar" style="width:78%;background:var(--blue)"></div></div>
+            <div class="comp-prog-lbl">↑ +12 pts · strongest</div>
+          </div>
+        </div>
+
+        <!-- Week 8 Acceptance Targets — BRD §7.5 -->
+        <div class="accept-sec" style="margin-top:10px">
+          <div class="accept-t">Week 8 Targets · Where you're headed</div>
+
+          <!-- Confidence improvement target: ≥60% of users · you: on track -->
+          <div class="accept-row">
+            <div class="accept-row-hd">
+              <div class="accept-label">Speaking confidence</div>
+              <div class="accept-val" style="color:var(--green)">↑ On track</div>
+            </div>
+            <div class="accept-sub">Self-reported improvement goal: ≥60% of users by Week 8</div>
+            <div class="accept-bar-wrap">
+              <div class="accept-bar-fill" style="width:62%;background:var(--green)"></div>
+              <div class="accept-target-tick"></div>
+            </div>
+            <div style="font-family:var(--fm);font-size:9px;color:var(--cream-m);margin-top:4px">Confidence survey: Week 8 · 4 weeks remaining</div>
+          </div>
+
+          <!-- Pronunciation +10% target -->
+          <div class="accept-row">
+            <div class="accept-row-hd">
+              <div class="accept-label">Pronunciation score</div>
+              <div class="accept-val" style="color:var(--yellow)">+5% / 10%</div>
+            </div>
+            <div class="accept-sub">Target: ≥+10% vs. your baseline by Week 8</div>
+            <div class="accept-bar-wrap">
+              <div class="accept-bar-fill" style="width:50%;background:var(--yellow)"></div>
+              <div class="accept-target-tick"></div>
+            </div>
+            <div style="font-family:var(--fm);font-size:9px;color:var(--cream-m);margin-top:4px">Halfway · improve /z/ and /θ/ to hit target</div>
+          </div>
+
+          <!-- Fluency +15% target -->
+          <div class="accept-row">
+            <div class="accept-row-hd">
+              <div class="accept-label">Conversation fluency</div>
+              <div class="accept-val" style="color:var(--amber)">+8% / 15%</div>
+            </div>
+            <div class="accept-sub">Target: ≥+15% words/min, ↓ correction rate by Week 8</div>
+            <div class="accept-bar-wrap">
+              <div class="accept-bar-fill" style="width:53%;background:var(--amber)"></div>
+              <div class="accept-target-tick"></div>
+            </div>
+            <div style="font-family:var(--fm);font-size:9px;color:var(--cream-m);margin-top:4px">Pause frequency decreasing · 4 more sessions to goal</div>
+          </div>
+        </div>
+
+        <!-- Non-negotiable constraints reminder — BRD §7.4 -->
+        <div style="margin:4px 20px 16px;background:var(--s2);border:1px solid var(--border);border-radius:14px;padding:12px 14px">
+          <div style="font-family:var(--fd);font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream-m);margin-bottom:8px">Practice reminders</div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;gap:8px;align-items:center">
+              <span style="color:var(--amber);font-size:14px">⏱</span>
+              <span style="font-family:var(--fm);font-size:11px;color:var(--cream-d)">Keep sessions ≤ 20 min — focused beats marathon</span>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <span style="color:var(--blue);font-size:14px">💬</span>
+              <span style="font-family:var(--fm);font-size:11px;color:var(--cream-d)">Goal is intelligibility, not a native accent</span>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <span style="color:var(--green);font-size:14px">📅</span>
+              <span style="font-family:var(--fm);font-size:11px;color:var(--cream-d)">≥ 3 sessions/week to hit Week 8 targets</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bnav">
+          <div class="bni"><div class="bni-icon">🏠</div><div class="bni-lbl">Home</div></div>
+          <div class="bni"><div class="bni-icon">📚</div><div class="bni-lbl">Scenarios</div></div>
+          <div class="bni"><div class="bni-icon">📊</div><div class="bni-lbl" style="color:var(--amber)">Progress</div></div>
+          <div class="bni"><div class="bni-icon">⚙️</div><div class="bni-lbl">Settings</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">BRD §7.1</span> 4 core competencies: Speaking Fluency · Pronunciation Accuracy · Vocabulary in Context · Listening Comprehension</div>
+    <div class="ann-item"><span class="req">BRD §7.3</span> Skill lifecycle visual: Assessment ✓ → Practice ✓ → Feedback ✓ → Progress Visibility ▶ (current stage)</div>
+    <div class="ann-item"><span class="req">BRD §7.5</span> Week 8 targets: ≥60% confidence improvement · ≥+10% pronunciation · ≥+15% fluency · progress bars toward each</div>
+    <div class="ann-item"><span class="req">BRD §7.4</span> Non-negotiable constraints visible: ≤20 min sessions · intelligibility not accent · ≥3 sessions/week</div>
+    <div class="ann-item"><span class="req">FR-DASH-02</span> Competency trend lines feed this view — pronunciation score chart + fluency rate tracked across sessions</div>
+    <div class="ann-item"><span class="req">BRD §4</span> Primary objective reflected: measurable improvement in 8 weeks of consistent use</div>
   </div>
 </div>
 
