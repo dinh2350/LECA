@@ -79,25 +79,66 @@ function Form() {
 
   return (
     <FormProvider {...methods}>
-      <div className="max-w-xs mx-auto px-4">
-        <form onSubmit={onSubmit}>
-          <div className="flex flex-col gap-4 mb-4">
-            <div className="mt-6">
-              <h2 className="text-lg font-semibold text-[var(--color-foreground)]">
-                {t('forgot-password:title')}
-              </h2>
+      <div
+        style={{
+          minHeight: 'calc(100vh - 64px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '40px 16px',
+        }}
+      >
+        <div
+          style={{
+            width: '100%',
+            maxWidth: '400px',
+            background: 'var(--s1)',
+            border: '1px solid var(--border-h)',
+            borderRadius: 'var(--r-lg)',
+            boxShadow: '0 24px 80px rgba(0,0,0,0.4)',
+            padding: '40px 36px',
+          }}
+        >
+          <div style={{ marginBottom: '32px' }}>
+            <div
+              style={{
+                fontFamily: 'var(--fd)',
+                fontSize: '20px',
+                fontWeight: 800,
+                letterSpacing: '-0.04em',
+                color: 'var(--cream)',
+                marginBottom: '4px',
+              }}
+            >
+              L<span style={{ color: 'var(--amber)' }}>E</span>CA
             </div>
-            <FormTextInput<ForgotPasswordFormData>
-              name="email"
-              label={t('forgot-password:inputs.email.label')}
-              type="email"
-              testId="email"
-            />
-            <div>
-              <FormActions />
-            </div>
+            <h1
+              style={{
+                fontFamily: 'var(--fd)',
+                fontSize: '28px',
+                fontWeight: 800,
+                letterSpacing: '-0.03em',
+                color: 'var(--cream)',
+                margin: 0,
+              }}
+            >
+              {t('forgot-password:title')}
+            </h1>
           </div>
-        </form>
+          <form onSubmit={onSubmit}>
+            <div className="flex flex-col gap-4">
+              <FormTextInput<ForgotPasswordFormData>
+                name="email"
+                label={t('forgot-password:inputs.email.label')}
+                type="email"
+                testId="email"
+              />
+              <div>
+                <FormActions />
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </FormProvider>
   );
