@@ -5,6 +5,9 @@
   "author": "",
   "private": true,
   "license": "MIT",
+  "prisma": {
+    "seed": "ts-node -r tsconfig-paths/register prisma/seed.ts"
+  },
   "scripts": {
     "typeorm": "env-cmd -- ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "migration:generate": "pnpm run typeorm -- --dataSource=src/database/data-source.ts migration:generate",
