@@ -21,7 +21,7 @@ services:
 
   maildev:
     build:
-      context: .
+      context: ./apps/api
       dockerfile: maildev.Dockerfile
     expose:
       - 1080
@@ -29,11 +29,11 @@ services:
 
   api:
     build:
-      context: .
+      context: ./apps/api
       dockerfile: relational.test.Dockerfile
     env_file:
-      - env-example-relational
+      - ./apps/api/env-example-relational
     volumes:
-      - ./src:/usr/src/app/src
-      - ./test:/usr/src/app/test
-      - ./test/generators/startup.relational.test.sh:/opt/startup.relational.test.sh
+      - ./apps/api/src:/usr/src/app/src
+      - ./apps/api/test:/usr/src/app/test
+      - ./apps/api/test/generators/startup.relational.test.sh:/opt/startup.relational.test.sh

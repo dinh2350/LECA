@@ -10,7 +10,7 @@ services:
 
   maildev:
     build:
-      context: .
+      context: ./apps/api
       dockerfile: maildev.Dockerfile
     expose:
       - 1080
@@ -24,7 +24,7 @@ services:
 
   api:
     build:
-      context: .
+      context: ./apps/api
       dockerfile: relational.e2e.Dockerfile
     env_file:
-      - env-example-relational
+      - ./apps/api/env-example-relational

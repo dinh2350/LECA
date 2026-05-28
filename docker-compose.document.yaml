@@ -1,7 +1,7 @@
 services:
   maildev:
     build:
-      context: .
+      context: ./apps/api
       dockerfile: maildev.Dockerfile
     ports:
       - ${MAIL_CLIENT_PORT}:1080
@@ -36,7 +36,7 @@ services:
 
   api:
     build:
-      context: .
+      context: ./apps/api
       dockerfile: document.Dockerfile
     ports:
       - ${APP_PORT}:${APP_PORT}
