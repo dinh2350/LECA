@@ -1,0 +1,72 @@
+<h2>Design — Section 4: Users & Roles Page</h2>
+<p class="subtitle">/admin-panel/users — this page already exists. Minimal changes needed.</p>
+
+<div class="mockup">
+  <div class="mockup-header">/admin-panel/users (existing, with one change)</div>
+  <div class="mockup-body" style="padding:0;background:#0d0d1a;">
+    <div style="padding:16px;font-size:12px;color:#ccc;">
+
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+        <div>
+          <div style="font-size:16px;font-weight:600;color:#fff;">Users &amp; Roles</div>
+          <div style="font-size:11px;color:#666;">Manage user accounts and role assignments</div>
+        </div>
+        <div style="background:#7c3aed;border-radius:6px;padding:7px 14px;font-size:11px;color:#fff;font-weight:500;">+ Create User</div>
+      </div>
+
+      <!-- Filters row -->
+      <div style="display:flex;gap:8px;margin-bottom:14px;">
+        <div style="background:#1a1a2e;border:1px solid #2a2a4e;border-radius:6px;padding:6px 12px;font-size:11px;color:#888;flex:1;">🔍 Search by name or email...</div>
+        <div style="background:#1a1a2e;border:1px solid #2a2a4e;border-radius:6px;padding:6px 12px;font-size:11px;color:#888;">Role ▾</div>
+      </div>
+
+      <!-- Table header -->
+      <div style="display:grid;grid-template-columns:2fr 2fr 1fr 1fr;gap:8px;padding:6px 10px;margin-bottom:4px;">
+        <div style="font-size:9px;color:#555;text-transform:uppercase;">Name</div>
+        <div style="font-size:9px;color:#555;text-transform:uppercase;">Email</div>
+        <div style="font-size:9px;color:#555;text-transform:uppercase;">Role</div>
+        <div style="font-size:9px;color:#555;text-transform:uppercase;">Actions</div>
+      </div>
+
+      <!-- Rows -->
+      <div style="display:grid;grid-template-columns:2fr 2fr 1fr 1fr;gap:8px;background:#1a1a2e;border-radius:6px;padding:8px 10px;margin-bottom:4px;align-items:center;border:1px solid #2a2a4e;">
+        <div style="font-size:11px;color:#ddd;">John Smith</div>
+        <div style="font-size:11px;color:#aaa;">john@example.com</div>
+        <div style="font-size:9px;background:#3b1a6e;color:#c4b5fd;padding:2px 8px;border-radius:9px;text-align:center;width:fit-content;">Admin</div>
+        <div style="display:flex;gap:6px;font-size:10px;color:#888;">✏️ 🗑</div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:2fr 2fr 1fr 1fr;gap:8px;background:#1a1a2e;border-radius:6px;padding:8px 10px;margin-bottom:4px;align-items:center;border:1px solid #2a2a4e;">
+        <div style="font-size:11px;color:#ddd;">Jane Doe</div>
+        <div style="font-size:11px;color:#aaa;">jane@example.com</div>
+        <div style="font-size:9px;background:#1e1e3f;color:#818cf8;padding:2px 8px;border-radius:9px;text-align:center;width:fit-content;">User</div>
+        <div style="display:flex;gap:6px;font-size:10px;color:#888;">✏️ 🗑</div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:2fr 2fr 1fr 1fr;gap:8px;background:#1a1a2e;border-radius:6px;padding:8px 10px;align-items:center;border:1px solid #2a2a4e;">
+        <div style="font-size:11px;color:#ddd;">Bob Wilson</div>
+        <div style="font-size:11px;color:#aaa;">bob@example.com</div>
+        <div style="font-size:9px;background:#1e1e3f;color:#818cf8;padding:2px 8px;border-radius:9px;text-align:center;width:fit-content;">User</div>
+        <div style="display:flex;gap:6px;font-size:10px;color:#888;">✏️ 🗑</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:16px;">
+  <h3>Only one change needed</h3>
+  <ul>
+    <li><strong>Sidebar label</strong> — rename "Users" → "Users &amp; Roles" in <code>layout.tsx</code> NAV_ITEMS</li>
+    <li><strong>Page heading</strong> — update from "Users" → "Users &amp; Roles" with updated subtitle</li>
+    <li><strong>No logic changes</strong> — create, edit, delete, role filter all already work</li>
+    <li><strong>Translation keys</strong> — update label in <code>admin-panel-users.json</code> for en/uk/vi</li>
+  </ul>
+</div>
+
+<div style="background:#1a2e1a;border:1px solid #2a5a2a;border-radius:8px;padding:12px;margin-top:8px;">
+  <div style="font-size:12px;color:#86efac;font-weight:600;">✓ This page is already fully functional</div>
+  <div style="font-size:11px;color:#6ee7b7;margin-top:4px;">No new API calls, no new components — just a label rename.</div>
+</div>
+
+<p class="subtitle" style="margin-top:16px;">Does this look right? Tell me in the terminal.</p>

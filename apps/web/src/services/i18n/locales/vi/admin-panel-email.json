@@ -1,0 +1,39 @@
+{
+  "title": "Email",
+  "sendForm": {
+    "heading": "Gửi Email Thử",
+    "to": "Đến",
+    "toPlaceholder": "nguoinhan@example.com",
+    "subject": "Chủ đề",
+    "subjectPlaceholder": "Chủ đề email",
+    "body": "Nội dung",
+    "bodyPlaceholder": "Nội dung email...",
+    "submit": "Gửi Email",
+    "sending": "Đang gửi...",
+    "errors": {
+      "required": "Trường này là bắt buộc.",
+      "invalidEmail": "Vui lòng nhập địa chỉ email hợp lệ."
+    }
+  },
+  "log": {
+    "heading": "Nhật ký Email",
+    "refresh": "Làm mới",
+    "columns": {
+      "recipient": "Người nhận",
+      "subject": "Chủ đề",
+      "status": "Trạng thái",
+      "sentAt": "Thời gian gửi"
+    },
+    "status": {
+      "sent": "Đã gửi",
+      "failed": "Thất bại",
+      "pending": "Đang chờ"
+    },
+    "empty": "Chưa có email nào được gửi."
+  },
+  "alerts": {
+    "sendSuccess": "Email đã được gửi thành công.",
+    "sendError": "Gửi email thất bại.",
+    "fetchError": "Không thể tải nhật ký email."
+  }
+}

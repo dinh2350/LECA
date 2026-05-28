@@ -1,0 +1,35 @@
+{
+  "title": "n2base — Full-Stack Boilerplate",
+  "description": "Welcome to the reactjs-boilerplate example app. Full documentation can be found <0>here</0>.",
+  "nav": {
+    "features": "Features",
+    "stack": "Stack",
+    "quickstart": "Quick Start",
+    "signin": "Sign In"
+  },
+  "hero": {
+    "badge": "Full-Stack Monorepo Boilerplate",
+    "title": "Ship your product faster with n2base",
+    "subtitle": "NestJS API + Next.js frontend — pre-wired with authentication, file uploads, i18n, Swagger, Docker, and CI. Both relational and document databases supported.",
+    "cta-admin": "Open Admin Panel",
+    "cta-docs": "View API Docs"
+  },
+  "features": {
+    "label": "What's Included",
+    "title": "Everything pre-wired",
+    "subtitle": "No boilerplate hunting. The hard parts are already done.",
+    "backend-title": "Backend — NestJS API",
+    "frontend-title": "Frontend — Next.js"
+  },
+  "stack": {
+    "label": "Tech Stack",
+    "title": "Carefully chosen tools",
+    "subtitle": "Modern, production-proven, and actively maintained."
+  },
+  "quickstart": {
+    "label": "Quick Start",
+    "title": "Up and running in minutes",
+    "subtitle": "Clone, configure, and start developing.",
+    "full-guide": "Full setup guide"
+  }
+}

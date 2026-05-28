@@ -1,0 +1,116 @@
+<h2>3 Approaches for Admin Panel Feature Tabs</h2>
+<p class="subtitle">Each approach adds File Manager, Email, and User Management. Pick what feels right.</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#1a1a2e;border-radius:8px;overflow:hidden;font-size:11px;color:#ccc;">
+        <div style="background:#0f0f23;padding:8px 12px;color:#888;font-size:10px;letter-spacing:1px;">ADMIN PANEL</div>
+        <div style="display:flex;min-height:120px;">
+          <div style="background:#111;width:90px;padding:8px;flex-shrink:0;">
+            <div style="color:#888;font-size:9px;margin-bottom:6px;">NAVIGATE</div>
+            <div style="background:#7c3aed;color:#fff;padding:4px 6px;border-radius:4px;margin-bottom:3px;font-size:9px;">📊 Dashboard</div>
+            <div style="padding:4px 6px;margin-bottom:3px;font-size:9px;">📁 File Manager</div>
+            <div style="padding:4px 6px;margin-bottom:3px;font-size:9px;">✉️ Email</div>
+            <div style="padding:4px 6px;margin-bottom:3px;font-size:9px;">👥 Users & Roles</div>
+          </div>
+          <div style="padding:10px;flex:1;">
+            <div style="background:#1e1e3f;border-radius:4px;padding:8px;margin-bottom:6px;">
+              <div style="font-size:9px;color:#888;">📁 FILE MANAGER</div>
+              <div style="font-size:10px;margin-top:4px;">Browse · Upload · Delete</div>
+            </div>
+            <div style="display:flex;gap:4px;">
+              <div style="background:#1e1e3f;border-radius:4px;padding:5px;flex:1;font-size:9px;">img_001.png<br><span style="color:#888">240KB</span></div>
+              <div style="background:#1e1e3f;border-radius:4px;padding:5px;flex:1;font-size:9px;">doc.pdf<br><span style="color:#888">1.2MB</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Extend the Sidebar</h3>
+      <p>Add File Manager, Email, and Users & Roles as new top-level sidebar links. Each gets its own full page. Follows the existing pattern exactly.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Matches current architecture</li><li>No new components needed</li><li>Easy to deep-link</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Sidebar grows long</li><li>Less cohesive "feature testing" feel</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#1a1a2e;border-radius:8px;overflow:hidden;font-size:11px;color:#ccc;">
+        <div style="background:#0f0f23;padding:8px 12px;color:#888;font-size:10px;letter-spacing:1px;">ADMIN PANEL</div>
+        <div style="display:flex;min-height:120px;">
+          <div style="background:#111;width:90px;padding:8px;flex-shrink:0;">
+            <div style="color:#888;font-size:9px;margin-bottom:6px;">NAVIGATE</div>
+            <div style="padding:4px 6px;margin-bottom:3px;font-size:9px;">📊 Dashboard</div>
+            <div style="background:#7c3aed;color:#fff;padding:4px 6px;border-radius:4px;margin-bottom:3px;font-size:9px;">🧪 Features</div>
+            <div style="padding:4px 6px;margin-bottom:3px;font-size:9px;">👥 Users</div>
+          </div>
+          <div style="padding:10px;flex:1;">
+            <div style="display:flex;gap:0;margin-bottom:8px;border-bottom:1px solid #333;">
+              <div style="padding:4px 8px;font-size:9px;border-bottom:2px solid #7c3aed;color:#7c3aed;">📁 Files</div>
+              <div style="padding:4px 8px;font-size:9px;color:#888;">✉️ Email</div>
+              <div style="padding:4px 8px;font-size:9px;color:#888;">👥 Roles</div>
+            </div>
+            <div style="background:#1e1e3f;border-radius:4px;padding:8px;">
+              <div style="font-size:9px;color:#888;">FILE MANAGER</div>
+              <div style="display:flex;gap:4px;margin-top:4px;">
+                <div style="background:#2a2a4e;border-radius:3px;padding:4px;flex:1;font-size:8px;">img.png<br><span style="color:#888">240KB</span></div>
+                <div style="background:#2a2a4e;border-radius:3px;padding:4px;flex:1;font-size:8px;">doc.pdf<br><span style="color:#888">1.2MB</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Feature Hub Page with Tabs ⭐ Recommended</h3>
+      <p>A single "Features" sidebar item leads to a page with 3 horizontal tabs: File Manager | Email | Users & Roles. Clean grouping of new capabilities.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Cleanest UX for testing 3 features</li><li>Sidebar stays lean</li><li>Tabs = shadcn Tabs component (one install)</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Requires new Tabs component</li><li>Users & Roles duplicates existing /users page</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#1a1a2e;border-radius:8px;overflow:hidden;font-size:11px;color:#ccc;">
+        <div style="background:#0f0f23;padding:8px 12px;color:#888;font-size:10px;letter-spacing:1px;">ADMIN PANEL</div>
+        <div style="display:flex;min-height:120px;">
+          <div style="background:#111;width:90px;padding:8px;flex-shrink:0;">
+            <div style="color:#888;font-size:9px;margin-bottom:6px;">NAVIGATE</div>
+            <div style="padding:4px 6px;margin-bottom:3px;font-size:9px;">📊 Dashboard</div>
+            <div style="background:#7c3aed;color:#fff;padding:4px 6px;border-radius:4px;margin-bottom:3px;font-size:9px;">👥 Users & Roles</div>
+          </div>
+          <div style="padding:10px;flex:1;">
+            <div style="display:flex;gap:0;margin-bottom:8px;border-bottom:1px solid #333;">
+              <div style="padding:4px 8px;font-size:9px;border-bottom:2px solid #7c3aed;color:#7c3aed;">👥 Users</div>
+              <div style="padding:4px 8px;font-size:9px;color:#888;">📁 Files</div>
+              <div style="padding:4px 8px;font-size:9px;color:#888;">✉️ Email</div>
+            </div>
+            <div style="font-size:9px;color:#aaa;margin-bottom:4px;">5 users found</div>
+            <div style="background:#1e1e3f;border-radius:3px;padding:5px;font-size:8px;margin-bottom:3px;display:flex;justify-content:space-between;"><span>john@mail.com</span><span style="color:#7c3aed;">Admin</span></div>
+            <div style="background:#1e1e3f;border-radius:3px;padding:5px;font-size:8px;display:flex;justify-content:space-between;"><span>jane@mail.com</span><span style="color:#888;">User</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Enhance Existing Users Page with Tabs</h3>
+      <p>Rename the existing Users page to "Users & Roles" and add File Manager and Email as tabs alongside the existing user list. Everything lives under one page.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>No duplicate users page</li><li>Reuses existing users page</li></ul></div>
+        <div class="cons"><h4>Cons</h4>
+          <ul><li>Weird grouping (files + email under "users")</li><li>Loses the "feature testing" concept</li></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:16px;">Click an option, or tell me in the terminal which direction you want to go.</p>

@@ -1,0 +1,54 @@
+<h2>Section 1 — Infrastructure Setup</h2>
+<p class="subtitle">What gets removed, what gets added, and how the two coexist during migration</p>
+
+<div class="split">
+  <div class="mockup">
+    <div class="mockup-header" style="background:#7f1d1d;color:#fecaca;">REMOVE — MUI Stack</div>
+    <div class="mockup-body" style="font-family:monospace;font-size:12px;line-height:1.8;">
+      <div style="color:#f87171;">✕ @mui/material</div>
+      <div style="color:#f87171;">✕ @mui/icons-material</div>
+      <div style="color:#f87171;">✕ @mui/x-date-pickers</div>
+      <div style="color:#f87171;">✕ mui-tiptap</div>
+      <div style="color:#f87171;">✕ @emotion/react</div>
+      <div style="color:#f87171;">✕ @emotion/styled</div>
+      <div style="color:#f87171;">✕ @emotion/cache</div>
+      <div style="color:#f87171;">✕ @emotion/server</div>
+      <br/>
+      <div style="color:#6b7280;font-size:11px;">Also removes:</div>
+      <div style="color:#f87171;">✕ src/components/theme/registry.tsx (Emotion SSR)</div>
+      <div style="color:#f87171;">✕ MUI ThemeProvider + createTheme()</div>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-header" style="background:#14532d;color:#bbf7d0;">ADD — shadcn + Tailwind Stack</div>
+    <div class="mockup-body" style="font-family:monospace;font-size:12px;line-height:1.8;">
+      <div style="color:#4ade80;">+ tailwindcss</div>
+      <div style="color:#4ade80;">+ shadcn/ui (CLI-installed components)</div>
+      <div style="color:#4ade80;">+ next-themes (dark/light toggle)</div>
+      <div style="color:#4ade80;">+ lucide-react (icon set)</div>
+      <div style="color:#4ade80;">+ react-day-picker (replaces MUI date pickers)</div>
+      <div style="color:#4ade80;">+ @tiptap/react + extensions (replaces mui-tiptap)</div>
+      <div style="color:#4ade80;">+ clsx + tailwind-merge (cn() utility)</div>
+      <br/>
+      <div style="color:#6b7280;font-size:11px;">New files:</div>
+      <div style="color:#4ade80;">+ tailwind.config.ts</div>
+      <div style="color:#4ade80;">+ src/lib/utils.ts (cn() helper)</div>
+      <div style="color:#4ade80;">+ src/components/theme/theme-provider.tsx (next-themes)</div>
+      <div style="color:#4ade80;">+ globals.css (CSS variables for design tokens)</div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:16px;">
+  <h3>Coexistence Strategy (during migration)</h3>
+  <p>MUI and shadcn will coexist in the codebase until all components are migrated. This works because:</p>
+  <ul style="font-size:13px;line-height:1.8;color:var(--text-secondary,#71717a);">
+    <li>Tailwind uses utility classes — no conflict with MUI's CSS-in-JS (Emotion)</li>
+    <li>shadcn components are just files in <code>src/components/ui/</code> — no global style injection</li>
+    <li>MUI ThemeProvider stays until the last MUI component is removed</li>
+    <li>next-themes ThemeProvider wraps MUI ThemeProvider temporarily</li>
+  </ul>
+</div>
+
+<p style="margin-top:12px;font-size:12px;color:#6b7280;">Does this infrastructure plan look right? Reply in terminal.</p>

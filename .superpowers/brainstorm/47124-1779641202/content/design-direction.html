@@ -1,0 +1,108 @@
+<h2>What design direction after migration?</h2>
+<p class="subtitle">You're replacing the UI library — do you also want to change the look?</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#18181b;border-radius:8px;padding:12px;font-family:sans-serif;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <div style="width:28px;height:28px;background:#3f3f46;border-radius:4px;"></div>
+          <span style="color:#fafafa;font-size:13px;font-weight:600;">n2base Admin</span>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:8px;">
+          <div style="background:#27272a;border-radius:6px;padding:6px 10px;color:#a1a1aa;font-size:11px;">Dashboard</div>
+          <div style="background:#3f3f46;border-radius:6px;padding:6px 10px;color:#fafafa;font-size:11px;">Users</div>
+          <div style="background:#27272a;border-radius:6px;padding:6px 10px;color:#a1a1aa;font-size:11px;">Roles</div>
+        </div>
+        <div style="background:#27272a;border-radius:6px;padding:8px;margin-bottom:6px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="color:#fafafa;font-size:11px;font-weight:500;">Users</span>
+            <div style="background:#fafafa;border-radius:4px;padding:3px 8px;font-size:10px;color:#18181b;font-weight:600;">+ Add</div>
+          </div>
+          <div style="margin-top:6px;display:flex;flex-direction:column;gap:3px;">
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #3f3f46;">
+              <span style="color:#a1a1aa;font-size:10px;">John Doe</span><span style="color:#71717a;font-size:10px;">Admin</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0;">
+              <span style="color:#a1a1aa;font-size:10px;">Jane Smith</span><span style="color:#71717a;font-size:10px;">User</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — shadcn Default (Dark)</h3>
+      <p>Keep shadcn's clean zinc/slate palette as-is. Fast to implement — no custom tokens needed. Looks modern, minimal.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#fff;border:1px solid #e4e4e7;border-radius:8px;padding:12px;font-family:sans-serif;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <div style="width:28px;height:28px;background:#6366f1;border-radius:4px;"></div>
+          <span style="color:#18181b;font-size:13px;font-weight:600;">n2base Admin</span>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:8px;">
+          <div style="background:#f4f4f5;border-radius:6px;padding:6px 10px;color:#71717a;font-size:11px;">Dashboard</div>
+          <div style="background:#6366f1;border-radius:6px;padding:6px 10px;color:#fff;font-size:11px;">Users</div>
+          <div style="background:#f4f4f5;border-radius:6px;padding:6px 10px;color:#71717a;font-size:11px;">Roles</div>
+        </div>
+        <div style="background:#f4f4f5;border-radius:6px;padding:8px;margin-bottom:6px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="color:#18181b;font-size:11px;font-weight:500;">Users</span>
+            <div style="background:#6366f1;border-radius:4px;padding:3px 8px;font-size:10px;color:#fff;font-weight:600;">+ Add</div>
+          </div>
+          <div style="margin-top:6px;display:flex;flex-direction:column;gap:3px;">
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #e4e4e7;">
+              <span style="color:#18181b;font-size:10px;">John Doe</span><span style="color:#6366f1;font-size:10px;font-weight:500;">Admin</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0;">
+              <span style="color:#18181b;font-size:10px;">Jane Smith</span><span style="color:#71717a;font-size:10px;">User</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Custom Brand Color</h3>
+      <p>shadcn base + your own primary color (e.g. indigo). Light mode default, dark mode supported. A bit more setup.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="background:#fff;border:1px solid #e4e4e7;border-radius:8px;padding:12px;font-family:sans-serif;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <div style="width:28px;height:28px;background:#0ea5e9;border-radius:50%;"></div>
+          <span style="color:#18181b;font-size:13px;font-weight:600;">n2base Admin</span>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:8px;">
+          <div style="border-bottom:2px solid transparent;padding:5px 10px;color:#71717a;font-size:11px;">Dashboard</div>
+          <div style="border-bottom:2px solid #0ea5e9;padding:5px 10px;color:#0ea5e9;font-size:11px;font-weight:600;">Users</div>
+          <div style="border-bottom:2px solid transparent;padding:5px 10px;color:#71717a;font-size:11px;">Roles</div>
+        </div>
+        <div style="border:1px solid #e4e4e7;border-radius:6px;padding:8px;margin-bottom:6px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="color:#18181b;font-size:11px;font-weight:500;">Users</span>
+            <div style="border:1px solid #0ea5e9;border-radius:4px;padding:3px 8px;font-size:10px;color:#0ea5e9;font-weight:600;">+ Add</div>
+          </div>
+          <div style="margin-top:6px;display:flex;flex-direction:column;gap:3px;">
+            <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f4f4f5;">
+              <span style="color:#18181b;font-size:10px;">John Doe</span><span style="background:#e0f2fe;color:#0ea5e9;padding:1px 5px;border-radius:3px;font-size:9px;">Admin</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:4px 0;">
+              <span style="color:#18181b;font-size:10px;">Jane Smith</span><span style="background:#f4f4f5;color:#71717a;padding:1px 5px;border-radius:3px;font-size:9px;">User</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Full Custom Design</h3>
+      <p>Use shadcn as primitives only, design everything from scratch with Tailwind. Maximum flexibility, most work.</p>
+    </div>
+  </div>
+
+</div>

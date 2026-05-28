@@ -1,0 +1,39 @@
+{
+  "title": "Email",
+  "sendForm": {
+    "heading": "Send Test Email",
+    "to": "To",
+    "toPlaceholder": "recipient@example.com",
+    "subject": "Subject",
+    "subjectPlaceholder": "Email subject",
+    "body": "Body",
+    "bodyPlaceholder": "Email body...",
+    "submit": "Send Email",
+    "sending": "Sending...",
+    "errors": {
+      "required": "This field is required.",
+      "invalidEmail": "Please enter a valid email address."
+    }
+  },
+  "log": {
+    "heading": "Email Log",
+    "refresh": "Refresh",
+    "columns": {
+      "recipient": "Recipient",
+      "subject": "Subject",
+      "status": "Status",
+      "sentAt": "Sent At"
+    },
+    "status": {
+      "sent": "Sent",
+      "failed": "Failed",
+      "pending": "Pending"
+    },
+    "empty": "No emails sent yet."
+  },
+  "alerts": {
+    "sendSuccess": "Email sent successfully.",
+    "sendError": "Failed to send email.",
+    "fetchError": "Failed to load email log."
+  }
+}

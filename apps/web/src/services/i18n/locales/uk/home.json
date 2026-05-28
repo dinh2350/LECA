@@ -1,0 +1,35 @@
+{
+  "title": "n2base — Full-Stack Бойлерплейт",
+  "description": "Ласкаво просимо до прикладу додатку reactjs-boilerplate. Повну документацію можна знайти <0>тут</0>.",
+  "nav": {
+    "features": "Функції",
+    "stack": "Стек",
+    "quickstart": "Швидкий старт",
+    "signin": "Увійти"
+  },
+  "hero": {
+    "badge": "Full-Stack Monorepo Бойлерплейт",
+    "title": "Запускайте продукт швидше з n2base",
+    "subtitle": "NestJS API + Next.js frontend — вже налаштовані автентифікація, завантаження файлів, i18n, Swagger, Docker та CI. Підтримуються реляційні та документні бази даних.",
+    "cta-admin": "Відкрити Admin Panel",
+    "cta-docs": "Переглянути API Docs"
+  },
+  "features": {
+    "label": "Що включено",
+    "title": "Все налаштовано заздалегідь",
+    "subtitle": "Не потрібно шукати бойлерплейт. Складні частини вже зроблені.",
+    "backend-title": "Backend — NestJS API",
+    "frontend-title": "Frontend — Next.js"
+  },
+  "stack": {
+    "label": "Технологічний стек",
+    "title": "Ретельно підібрані інструменти",
+    "subtitle": "Сучасні, перевірені у виробництві та активно підтримувані."
+  },
+  "quickstart": {
+    "label": "Швидкий старт",
+    "title": "Запуск за кілька хвилин",
+    "subtitle": "Клонуйте, налаштуйте та починайте розробку.",
+    "full-guide": "Повний посібник"
+  }
+}

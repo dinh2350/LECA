@@ -1,0 +1,27 @@
+{
+  "title": "File Manager",
+  "description": "Browse, upload, and delete system files.",
+  "upload": "Upload",
+  "filter": {
+    "all": "All",
+    "images": "Images",
+    "documents": "Documents",
+    "other": "Other"
+  },
+  "confirm": {
+    "delete": {
+      "title": "Delete File",
+      "message": "Are you sure you want to delete this file? This action cannot be undone."
+    }
+  },
+  "actions": {
+    "delete": "Delete"
+  },
+  "alerts": {
+    "fetchError": "Failed to load files.",
+    "uploadError": "Failed to upload file.",
+    "deleteError": "Failed to delete file."
+  },
+  "empty": "No files found.",
+  "dropzone": "Drag & drop files here"
+}

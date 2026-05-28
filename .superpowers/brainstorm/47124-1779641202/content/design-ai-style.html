@@ -1,0 +1,81 @@
+<h2>AI-Style Design Direction</h2>
+<p class="subtitle">Admin panel rebuilt with dark-first, terminal-aesthetic — inspired by agentskill.sh</p>
+
+<div class="section">
+  <h3>Design Tokens</h3>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;">
+    <div style="background:#09090b;border:1px solid #27272a;border-radius:6px;padding:10px 16px;font-size:11px;font-family:monospace;color:#fafafa;">bg: #09090b</div>
+    <div style="background:#18181b;border:1px solid #27272a;border-radius:6px;padding:10px 16px;font-size:11px;font-family:monospace;color:#fafafa;">surface: #18181b</div>
+    <div style="background:#27272a;border:1px solid #3f3f46;border-radius:6px;padding:10px 16px;font-size:11px;font-family:monospace;color:#fafafa;">border: #27272a</div>
+    <div style="background:#22c55e;border-radius:6px;padding:10px 16px;font-size:11px;font-family:monospace;color:#09090b;font-weight:700;">accent: #22c55e</div>
+    <div style="background:#f97316;border-radius:6px;padding:10px 16px;font-size:11px;font-family:monospace;color:#09090b;font-weight:700;">warn: #f97316</div>
+    <div style="background:#3f3f46;border-radius:6px;padding:10px 16px;font-size:11px;font-family:monospace;color:#a1a1aa;">muted: #71717a</div>
+  </div>
+</div>
+
+<!-- Admin Panel Mockup -->
+<div class="mockup" style="background:#09090b;border:1px solid #27272a;">
+  <div class="mockup-header" style="background:#09090b;border-bottom:1px solid #27272a;color:#71717a;font-family:monospace;font-size:11px;letter-spacing:0.05em;">
+    &gt;_ n2base / admin
+  </div>
+  <div class="mockup-body" style="padding:0;">
+
+    <!-- Top nav -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid #27272a;">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <span style="font-family:monospace;font-size:12px;color:#fafafa;font-weight:700;">&gt;_ n2base</span>
+        <span style="font-family:monospace;font-size:11px;color:#22c55e;">admin</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="background:#18181b;border:1px solid #27272a;border-radius:4px;padding:3px 10px;font-family:monospace;font-size:10px;color:#71717a;">⌘K Search...</div>
+        <div style="background:#27272a;border-radius:4px;padding:3px 8px;font-size:10px;color:#fafafa;">JD</div>
+      </div>
+    </div>
+
+    <!-- Content area -->
+    <div style="display:flex;min-height:180px;">
+      <!-- Sidebar -->
+      <div style="width:140px;border-right:1px solid #27272a;padding:10px 8px;flex-shrink:0;">
+        <div style="font-family:monospace;font-size:9px;color:#52525b;margin-bottom:8px;letter-spacing:0.1em;">NAVIGATION</div>
+        <div style="display:flex;flex-direction:column;gap:2px;">
+          <div style="padding:5px 8px;border-radius:4px;font-size:11px;color:#71717a;font-family:monospace;">dashboard</div>
+          <div style="padding:5px 8px;border-radius:4px;font-size:11px;color:#fafafa;background:#18181b;border:1px solid #27272a;font-family:monospace;">users <span style="color:#22c55e;font-size:9px;float:right;">42</span></div>
+          <div style="padding:5px 8px;border-radius:4px;font-size:11px;color:#71717a;font-family:monospace;">roles</div>
+          <div style="padding:5px 8px;border-radius:4px;font-size:11px;color:#71717a;font-family:monospace;">files</div>
+        </div>
+      </div>
+
+      <!-- Main content -->
+      <div style="flex:1;padding:10px 12px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <div>
+            <span style="font-family:monospace;font-size:13px;color:#fafafa;font-weight:600;">Users</span>
+            <span style="background:#18181b;border:1px solid #27272a;border-radius:4px;padding:1px 6px;font-family:monospace;font-size:9px;color:#22c55e;margin-left:6px;">42 total</span>
+          </div>
+          <div style="background:#22c55e;border-radius:4px;padding:4px 10px;font-family:monospace;font-size:10px;color:#09090b;font-weight:700;">+ new user</div>
+        </div>
+
+        <!-- Table -->
+        <div style="border:1px solid #27272a;border-radius:6px;overflow:hidden;">
+          <div style="display:grid;grid-template-columns:1fr 80px 70px;background:#111113;padding:5px 10px;border-bottom:1px solid #27272a;">
+            <span style="font-family:monospace;font-size:9px;color:#52525b;letter-spacing:0.1em;">USER</span>
+            <span style="font-family:monospace;font-size:9px;color:#52525b;letter-spacing:0.1em;">ROLE</span>
+            <span style="font-family:monospace;font-size:9px;color:#52525b;letter-spacing:0.1em;">STATUS</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 80px 70px;padding:6px 10px;border-bottom:1px solid #1a1a1d;">
+            <span style="font-family:monospace;font-size:11px;color:#fafafa;">john.doe</span>
+            <span style="background:#1a1f2e;border:1px solid #1e3a5f;border-radius:3px;padding:1px 6px;font-family:monospace;font-size:9px;color:#60a5fa;display:inline-block;">admin</span>
+            <span style="color:#22c55e;font-family:monospace;font-size:10px;">● active</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 80px 70px;padding:6px 10px;">
+            <span style="font-family:monospace;font-size:11px;color:#fafafa;">jane.smith</span>
+            <span style="background:#1a1f1a;border:1px solid #1e3d1e;border-radius:3px;padding:1px 6px;font-family:monospace;font-size:9px;color:#4ade80;display:inline-block;">user</span>
+            <span style="color:#22c55e;font-family:monospace;font-size:10px;">● active</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p style="margin-top:16px;font-size:12px;color:#6b7280;">Đây là hướng style AI/terminal bạn muốn không? Hay cần điều chỉnh màu sắc / font / layout? Reply in terminal.</p>

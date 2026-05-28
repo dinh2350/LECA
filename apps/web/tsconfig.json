@@ -1,0 +1,18 @@
+{
+  "extends": "@n2base/tsconfig/nextjs.json",
+  "compilerOptions": {
+    "incremental": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/proxy.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": ["node_modules", "**/*.stories.ts", "**/*.stories.tsx"]
+}

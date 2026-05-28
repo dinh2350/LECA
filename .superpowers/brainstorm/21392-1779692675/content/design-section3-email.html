@@ -1,0 +1,102 @@
+<h2>Design — Section 3: Email Page</h2>
+<p class="subtitle">/admin-panel/email — send test emails and view email history</p>
+
+<div class="mockup">
+  <div class="mockup-header">/admin-panel/email</div>
+  <div class="mockup-body" style="padding:0;background:#0d0d1a;">
+    <div style="padding:16px;font-size:12px;color:#ccc;">
+
+      <div style="font-size:16px;font-weight:600;color:#fff;margin-bottom:4px;">Email</div>
+      <div style="font-size:11px;color:#666;margin-bottom:18px;">Send test emails and monitor delivery history</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:16px;">
+
+        <!-- Send Test Email -->
+        <div style="background:#1a1a2e;border-radius:8px;padding:14px;border:1px solid #2a2a4e;">
+          <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:12px;">✉️ Send Test Email</div>
+
+          <div style="margin-bottom:10px;">
+            <div style="font-size:10px;color:#888;margin-bottom:4px;">To</div>
+            <div style="background:#0d0d1a;border:1px solid #2a2a4e;border-radius:6px;padding:7px 10px;font-size:11px;color:#666;">recipient@example.com</div>
+          </div>
+
+          <div style="margin-bottom:10px;">
+            <div style="font-size:10px;color:#888;margin-bottom:4px;">Subject</div>
+            <div style="background:#0d0d1a;border:1px solid #2a2a4e;border-radius:6px;padding:7px 10px;font-size:11px;color:#666;">Test email from Admin Panel</div>
+          </div>
+
+          <div style="margin-bottom:14px;">
+            <div style="font-size:10px;color:#888;margin-bottom:4px;">Body</div>
+            <div style="background:#0d0d1a;border:1px solid #2a2a4e;border-radius:6px;padding:7px 10px;font-size:11px;color:#666;min-height:60px;">This is a test email sent from the admin panel to verify the email service is working correctly.</div>
+          </div>
+
+          <div style="background:#7c3aed;border-radius:6px;padding:8px;text-align:center;font-size:11px;color:#fff;font-weight:500;">Send Email</div>
+
+          <!-- Success state hint -->
+          <div style="margin-top:10px;background:#1a2e1a;border:1px solid #2a5a2a;border-radius:6px;padding:7px 10px;font-size:10px;color:#86efac;">
+            ✓ Email sent successfully to recipient@example.com
+          </div>
+        </div>
+
+        <!-- Email Log -->
+        <div style="background:#1a1a2e;border-radius:8px;padding:14px;border:1px solid #2a2a4e;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <div style="font-size:13px;font-weight:600;color:#fff;">📋 Email Log</div>
+            <div style="font-size:10px;color:#7c3aed;cursor:pointer;">Refresh</div>
+          </div>
+
+          <!-- Log table header -->
+          <div style="display:grid;grid-template-columns:1.5fr 1.2fr 0.7fr 0.8fr;gap:6px;padding:0 6px;margin-bottom:6px;">
+            <div style="font-size:9px;color:#555;text-transform:uppercase;">Recipient</div>
+            <div style="font-size:9px;color:#555;text-transform:uppercase;">Subject</div>
+            <div style="font-size:9px;color:#555;text-transform:uppercase;">Status</div>
+            <div style="font-size:9px;color:#555;text-transform:uppercase;">Sent At</div>
+          </div>
+
+          <!-- Log rows -->
+          <div style="display:grid;grid-template-columns:1.5fr 1.2fr 0.7fr 0.8fr;gap:6px;background:#0d0d1a;border-radius:6px;padding:7px 6px;margin-bottom:4px;align-items:center;">
+            <div style="font-size:10px;color:#ddd;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">john@example.com</div>
+            <div style="font-size:10px;color:#aaa;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Welcome to N2Base</div>
+            <div style="font-size:9px;background:#1a3a1a;color:#86efac;padding:2px 6px;border-radius:9px;text-align:center;">Sent</div>
+            <div style="font-size:9px;color:#666;">2h ago</div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1.5fr 1.2fr 0.7fr 0.8fr;gap:6px;background:#0d0d1a;border-radius:6px;padding:7px 6px;margin-bottom:4px;align-items:center;">
+            <div style="font-size:10px;color:#ddd;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">jane@example.com</div>
+            <div style="font-size:10px;color:#aaa;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Password Reset</div>
+            <div style="font-size:9px;background:#1a3a1a;color:#86efac;padding:2px 6px;border-radius:9px;text-align:center;">Sent</div>
+            <div style="font-size:9px;color:#666;">5h ago</div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1.5fr 1.2fr 0.7fr 0.8fr;gap:6px;background:#0d0d1a;border-radius:6px;padding:7px 6px;margin-bottom:4px;align-items:center;">
+            <div style="font-size:10px;color:#ddd;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">bad@nomail</div>
+            <div style="font-size:10px;color:#aaa;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Confirm Email</div>
+            <div style="font-size:9px;background:#3a1a1a;color:#f87171;padding:2px 6px;border-radius:9px;text-align:center;">Failed</div>
+            <div style="font-size:9px;color:#666;">1d ago</div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1.5fr 1.2fr 0.7fr 0.8fr;gap:6px;background:#0d0d1a;border-radius:6px;padding:7px 6px;align-items:center;">
+            <div style="font-size:10px;color:#ddd;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">admin@n2base.com</div>
+            <div style="font-size:10px;color:#aaa;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Test email from Admin</div>
+            <div style="font-size:9px;background:#2a2a1a;color:#fde68a;padding:2px 6px;border-radius:9px;text-align:center;">Pending</div>
+            <div style="font-size:9px;color:#666;">Just now</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:16px;">
+  <h3>Implementation notes</h3>
+  <ul>
+    <li><strong>Send form</strong> — React Hook Form with validation (required fields, email format)</li>
+    <li><strong>Email log</strong> — fetched from backend API, paginated, auto-refreshes after send</li>
+    <li><strong>Status badges</strong> — Sent (green) / Failed (red) / Pending (yellow)</li>
+    <li><strong>Two-column layout</strong> — collapses to single column on mobile</li>
+  </ul>
+</div>
+
+<p class="subtitle">Does this Email page layout look right? Tell me in the terminal.</p>

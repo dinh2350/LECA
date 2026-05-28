@@ -1,0 +1,39 @@
+{
+  "title": "Пошта",
+  "sendForm": {
+    "heading": "Надіслати тестовий лист",
+    "to": "Кому",
+    "toPlaceholder": "отримувач@example.com",
+    "subject": "Тема",
+    "subjectPlaceholder": "Тема листа",
+    "body": "Тіло",
+    "bodyPlaceholder": "Текст листа...",
+    "submit": "Надіслати",
+    "sending": "Надсилання...",
+    "errors": {
+      "required": "Це поле є обов'язковим.",
+      "invalidEmail": "Будь ласка, введіть дійсну адресу електронної пошти."
+    }
+  },
+  "log": {
+    "heading": "Журнал листів",
+    "refresh": "Оновити",
+    "columns": {
+      "recipient": "Отримувач",
+      "subject": "Тема",
+      "status": "Статус",
+      "sentAt": "Час відправлення"
+    },
+    "status": {
+      "sent": "Надіслано",
+      "failed": "Помилка",
+      "pending": "Очікує"
+    },
+    "empty": "Листів ще не надіслано."
+  },
+  "alerts": {
+    "sendSuccess": "Лист успішно надіслано.",
+    "sendError": "Не вдалося надіслати лист.",
+    "fetchError": "Не вдалося завантажити журнал листів."
+  }
+}

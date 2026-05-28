@@ -1,0 +1,27 @@
+{
+  "title": "Quản lý tệp",
+  "description": "Duyệt, tải lên và xóa tệp hệ thống.",
+  "upload": "Tải lên",
+  "filter": {
+    "all": "Tất cả",
+    "images": "Hình ảnh",
+    "documents": "Tài liệu",
+    "other": "Khác"
+  },
+  "confirm": {
+    "delete": {
+      "title": "Xóa tệp",
+      "message": "Bạn có chắc chắn muốn xóa tệp này không? Hành động này không thể hoàn tác."
+    }
+  },
+  "actions": {
+    "delete": "Xóa"
+  },
+  "alerts": {
+    "fetchError": "Không thể tải danh sách tệp.",
+    "uploadError": "Không thể tải lên tệp.",
+    "deleteError": "Không thể xóa tệp."
+  },
+  "empty": "Không tìm thấy tệp nào.",
+  "dropzone": "Kéo thả tệp vào đây"
+}

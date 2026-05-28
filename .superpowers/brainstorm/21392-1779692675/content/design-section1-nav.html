@@ -1,0 +1,46 @@
+<h2>Design — Section 1: Navigation Structure</h2>
+<p class="subtitle">Two new sidebar items added. Existing Users page covers Roles. No new routing patterns needed.</p>
+
+<div class="split">
+  <div class="mockup">
+    <div class="mockup-header">Before — Current Sidebar</div>
+    <div class="mockup-body" style="padding:0;">
+      <div style="background:#0f0f23;min-height:200px;padding:12px;font-size:12px;color:#ccc;">
+        <div style="color:#666;font-size:10px;letter-spacing:1px;margin-bottom:10px;">ADMIN PANEL</div>
+        <div style="color:#555;font-size:10px;margin-bottom:6px;">NAVIGATION</div>
+        <div style="padding:8px 10px;margin-bottom:3px;border-radius:6px;background:#1a1a2e;">📊 Dashboard</div>
+        <div style="padding:8px 10px;margin-bottom:3px;border-radius:6px;background:#1a1a2e;">👥 Users</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-header">After — Updated Sidebar</div>
+    <div class="mockup-body" style="padding:0;">
+      <div style="background:#0f0f23;min-height:200px;padding:12px;font-size:12px;color:#ccc;">
+        <div style="color:#666;font-size:10px;letter-spacing:1px;margin-bottom:10px;">ADMIN PANEL</div>
+        <div style="color:#555;font-size:10px;margin-bottom:6px;">NAVIGATION</div>
+        <div style="padding:8px 10px;margin-bottom:3px;border-radius:6px;background:#1a1a2e;">📊 Dashboard</div>
+        <div style="padding:8px 10px;margin-bottom:3px;border-radius:6px;background:#1a1a2e;">👥 Users &amp; Roles</div>
+        <div style="padding:8px 10px;margin-bottom:3px;border-radius:6px;background:#7c3aed;color:#fff;display:flex;align-items:center;gap:6px;">
+          📁 File Manager <span style="background:#a78bfa;font-size:9px;padding:1px 5px;border-radius:9px;">NEW</span>
+        </div>
+        <div style="padding:8px 10px;margin-bottom:3px;border-radius:6px;background:#7c3aed;color:#fff;display:flex;align-items:center;gap:6px;">
+          ✉️ Email <span style="background:#a78bfa;font-size:9px;padding:1px 5px;border-radius:9px;">NEW</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:20px;">
+  <h3>What changes</h3>
+  <ul>
+    <li><strong>Sidebar NAV_ITEMS</strong> — add <code>/admin-panel/files</code> and <code>/admin-panel/email</code> entries in <code>layout.tsx</code></li>
+    <li><strong>Users entry</strong> — rename label from "Users" → "Users &amp; Roles" (existing page, no logic changes)</li>
+    <li><strong>2 new pages</strong> — <code>apps/web/src/app/[language]/admin-panel/files/page.tsx</code> and <code>.../email/page.tsx</code></li>
+    <li><strong>No new routing pattern</strong> — follows the exact same structure as the existing Users page</li>
+  </ul>
+</div>
+
+<p class="subtitle">Does this navigation structure look right? Tell me in the terminal.</p>

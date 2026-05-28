@@ -1,0 +1,35 @@
+{
+  "title": "n2base — Boilerplate Full-Stack",
+  "description": "Chào mừng đến với ứng dụng mẫu reactjs-boilerplate. Tài liệu đầy đủ có thể được tìm thấy <0>tại đây</0>.",
+  "nav": {
+    "features": "Tính năng",
+    "stack": "Công nghệ",
+    "quickstart": "Bắt đầu nhanh",
+    "signin": "Đăng nhập"
+  },
+  "hero": {
+    "badge": "Boilerplate Monorepo Full-Stack",
+    "title": "Xây dựng sản phẩm nhanh hơn với n2base",
+    "subtitle": "NestJS API + Next.js frontend — được tích hợp sẵn xác thực, tải file, i18n, Swagger, Docker và CI. Hỗ trợ cả cơ sở dữ liệu quan hệ và tài liệu.",
+    "cta-admin": "Mở Admin Panel",
+    "cta-docs": "Xem tài liệu API"
+  },
+  "features": {
+    "label": "Bao gồm gì",
+    "title": "Tất cả đã được tích hợp",
+    "subtitle": "Không cần tìm kiếm boilerplate. Những phần khó đã được thực hiện.",
+    "backend-title": "Backend — NestJS API",
+    "frontend-title": "Frontend — Next.js"
+  },
+  "stack": {
+    "label": "Công nghệ sử dụng",
+    "title": "Các công cụ được lựa chọn kỹ càng",
+    "subtitle": "Hiện đại, đã được kiểm chứng trong môi trường sản xuất và được bảo trì tích cực."
+  },
+  "quickstart": {
+    "label": "Bắt đầu nhanh",
+    "title": "Chạy trong vài phút",
+    "subtitle": "Clone, cấu hình và bắt đầu phát triển.",
+    "full-guide": "Hướng dẫn đầy đủ"
+  }
+}

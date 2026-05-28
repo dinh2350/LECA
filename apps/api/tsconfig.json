@@ -1,0 +1,18 @@
+{
+  "extends": "@n2base/tsconfig/nestjs.json",
+  "compilerOptions": {
+    "declaration": true,
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "incremental": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "noFallthroughCasesInSwitch": false,
+    "jsx": "react"
+  },
+  "include": ["src/**/*", "test/**/*", ".install-scripts/**/*"]
+}

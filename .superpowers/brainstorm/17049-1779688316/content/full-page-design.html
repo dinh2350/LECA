@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>n2base Landing Page — Full Design Mockup</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f0f0; color: #111827; }
+
+  .page { max-width: 860px; margin: 24px auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 32px rgba(0,0,0,0.12); }
+
+  /* NAVBAR */
+  .navbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 32px; border-bottom: 1px solid #f3f4f6;
+    position: sticky; top: 0; background: white; z-index: 10;
+  }
+  .navbar-logo { font-weight: 800; font-size: 16px; color: #111827; }
+  .navbar-logo span { color: #6366f1; }
+  .navbar-links { display: flex; gap: 24px; align-items: center; }
+  .navbar-links a { font-size: 13px; color: #6b7280; text-decoration: none; }
+  .navbar-links a:hover { color: #111827; }
+  .btn-signin { background: #6366f1; color: white; padding: 6px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; }
+
+  /* HERO */
+  .hero {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+    padding: 56px 32px 48px; align-items: center;
+    background: linear-gradient(160deg, #fafaff 0%, #ffffff 60%);
+  }
+  .hero-badge {
+    display: inline-block; background: #ede9fe; color: #7c3aed;
+    padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .hero-title { font-size: 28px; font-weight: 800; line-height: 1.25; color: #111827; margin-bottom: 12px; }
+  .hero-title span { color: #6366f1; }
+  .hero-subtitle { font-size: 13px; color: #6b7280; line-height: 1.6; margin-bottom: 24px; }
+  .hero-ctas { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+  .btn-primary { background: #6366f1; color: white; padding: 9px 20px; border-radius: 7px; font-size: 13px; font-weight: 600; }
+  .btn-secondary { border: 1px solid #d1d5db; color: #374151; padding: 9px 20px; border-radius: 7px; font-size: 13px; font-weight: 500; }
+  .hero-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .hero-badges span { background: #f3f4f6; color: #374151; padding: 3px 9px; border-radius: 12px; font-size: 10px; font-weight: 500; }
+
+  /* App preview wireframe */
+  .app-preview {
+    background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 10px;
+    overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  }
+  .preview-titlebar {
+    background: #1f2937; padding: 8px 12px; display: flex; align-items: center; gap: 5px;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .preview-body { display: flex; height: 160px; }
+  .preview-sidebar {
+    width: 48px; background: #111827; padding: 10px 6px; display: flex; flex-direction: column; gap: 8px;
+  }
+  .sidebar-item { height: 6px; background: #374151; border-radius: 3px; }
+  .sidebar-item.active { background: #6366f1; }
+  .preview-content { flex: 1; padding: 12px; }
+  .preview-row { height: 8px; background: #e5e7eb; border-radius: 4px; margin-bottom: 6px; }
+  .preview-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: 8px; }
+  .preview-card { background: white; border: 1px solid #e5e7eb; border-radius: 5px; padding: 8px; }
+  .preview-card-bar { height: 6px; background: #ddd6fe; border-radius: 3px; margin-bottom: 4px; }
+  .preview-card-bar2 { height: 5px; background: #e5e7eb; border-radius: 3px; width: 70%; }
+
+  /* DIVIDER */
+  .section-label {
+    text-align: center; padding: 12px 32px 0;
+    font-size: 10px; font-weight: 700; color: #6b7280; letter-spacing: 1.5px; text-transform: uppercase;
+  }
+
+  /* FEATURES */
+  .features { padding: 40px 32px; }
+  .features-title { text-align: center; font-size: 22px; font-weight: 800; color: #111827; margin-bottom: 6px; }
+  .features-subtitle { text-align: center; font-size: 13px; color: #6b7280; margin-bottom: 32px; }
+  .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .feature-col { background: #fafafa; border: 1px solid #f3f4f6; border-radius: 10px; padding: 20px; }
+  .feature-col-title {
+    font-size: 13px; font-weight: 700; color: #111827; margin-bottom: 14px;
+    padding-bottom: 10px; border-bottom: 1px solid #e5e7eb;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .col-badge { background: #ede9fe; color: #7c3aed; padding: 2px 8px; border-radius: 10px; font-size: 10px; }
+  .col-badge.green { background: #dcfce7; color: #15803d; }
+  .feature-item { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 10px; }
+  .check { color: #6366f1; font-size: 12px; margin-top: 1px; flex-shrink: 0; }
+  .feature-item-text { font-size: 12px; color: #374151; line-height: 1.4; }
+  .feature-item-sub { font-size: 10px; color: #9ca3af; }
+
+  /* TECH STACK */
+  .techstack { padding: 0 32px 40px; }
+  .techstack-title { text-align: center; font-size: 22px; font-weight: 800; color: #111827; margin-bottom: 6px; }
+  .techstack-subtitle { text-align: center; font-size: 13px; color: #6b7280; margin-bottom: 24px; }
+  .stack-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .stack-card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px; }
+  .stack-card-title { font-size: 10px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .stack-pill { display: inline-block; background: #f3f4f6; color: #374151; padding: 3px 8px; border-radius: 10px; font-size: 10px; margin: 2px 2px 2px 0; }
+
+  /* QUICKSTART */
+  .quickstart { background: #0d1117; margin: 0 32px 40px; border-radius: 10px; padding: 24px; }
+  .quickstart-label { font-size: 10px; font-weight: 700; color: #58a6ff; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+  .quickstart-title { font-size: 16px; font-weight: 700; color: #f0f6fc; margin-bottom: 6px; }
+  .quickstart-sub { font-size: 12px; color: #8b949e; margin-bottom: 16px; }
+  .code-block { background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 14px 16px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; line-height: 1.7; }
+  .cmd { color: #7ee787; }
+  .comment { color: #8b949e; }
+
+  /* FOOTER */
+  .footer {
+    background: #f9fafb; border-top: 1px solid #f3f4f6;
+    padding: 24px 32px; display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-brand { font-size: 13px; font-weight: 700; color: #111827; }
+  .footer-brand small { display: block; font-size: 10px; color: #9ca3af; font-weight: 400; margin-top: 2px; }
+  .footer-links { display: flex; gap: 16px; }
+  .footer-link { font-size: 12px; color: #6b7280; text-decoration: none; }
+  .footer-link:hover { color: #6366f1; }
+
+  /* annotation */
+  .annotation {
+    background: #fef3c7; border: 1px solid #fbbf24; border-radius: 6px;
+    padding: 8px 12px; margin: 0 32px 20px; font-size: 11px; color: #92400e;
+    display: flex; gap: 6px; align-items: flex-start;
+  }
+</style>
+</head>
+<body>
+<div style="padding: 20px; background: #f0f0f0;">
+  <div style="text-align:center; margin-bottom: 16px;">
+    <span style="background:#6366f1;color:white;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;">Full Page Mockup — n2base Landing Page</span>
+    <p style="font-size:12px;color:#6b7280;margin-top:8px;">This is a static design preview. Scroll down to see all sections.</p>
+  </div>
+
+  <div class="page">
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+      <div class="navbar-logo">n2<span>base</span></div>
+      <div class="navbar-links">
+        <a href="#">Features</a>
+        <a href="#">Stack</a>
+        <a href="#">Quick Start</a>
+        <a href="#" class="btn-signin">Sign In</a>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div>
+        <div class="hero-badge">Full-Stack Monorepo Boilerplate</div>
+        <h1 class="hero-title">Ship your product<br/><span>faster</span> with n2base</h1>
+        <p class="hero-subtitle">NestJS API + Next.js frontend — pre-wired with authentication, file uploads, i18n, Swagger, Docker, and CI. Both relational and document databases supported.</p>
+        <div class="hero-ctas">
+          <div class="btn-primary">Open Admin Panel →</div>
+          <div class="btn-secondary">View API Docs</div>
+        </div>
+        <div class="hero-badges">
+          <span>NestJS 11</span>
+          <span>Next.js 16</span>
+          <span>TypeScript</span>
+          <span>Turborepo</span>
+          <span>Docker</span>
+        </div>
+      </div>
+      <div>
+        <div class="app-preview">
+          <div class="preview-titlebar">
+            <div class="dot" style="background:#ff5f57;"></div>
+            <div class="dot" style="background:#febc2e;"></div>
+            <div class="dot" style="background:#28c840;"></div>
+          </div>
+          <div class="preview-body">
+            <div class="preview-sidebar">
+              <div class="sidebar-item active"></div>
+              <div class="sidebar-item"></div>
+              <div class="sidebar-item"></div>
+              <div class="sidebar-item"></div>
+              <div class="sidebar-item"></div>
+            </div>
+            <div class="preview-content">
+              <div class="preview-row" style="width:60%;"></div>
+              <div class="preview-row" style="width:40%;background:#ede9fe;"></div>
+              <div class="preview-cards">
+                <div class="preview-card"><div class="preview-card-bar"></div><div class="preview-card-bar2"></div></div>
+                <div class="preview-card"><div class="preview-card-bar"></div><div class="preview-card-bar2"></div></div>
+                <div class="preview-card"><div class="preview-card-bar"></div><div class="preview-card-bar2"></div></div>
+              </div>
+              <div class="preview-row" style="width:100%;margin-top:8px;height:6px;"></div>
+              <div class="preview-row" style="width:85%;height:6px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEATURES -->
+    <div class="section-label">What's Included</div>
+    <div class="features">
+      <h2 class="features-title">Everything pre-wired</h2>
+      <p class="features-subtitle">No boilerplate hunting. The hard parts are already done.</p>
+      <div class="features-grid">
+        <div class="feature-col">
+          <div class="feature-col-title">
+            Backend — NestJS API
+            <span class="col-badge">apps/api</span>
+          </div>
+          <div class="feature-item"><span class="check">✓</span><div class="feature-item-text">JWT Auth + Refresh Tokens<div class="feature-item-sub">Passport strategies, bcryptjs</div></div></div>
+          <div class="feature-item"><span class="check">✓</span><div class="feature-item-text">Social Sign In<div class="feature-item-sub">Google, Facebook, Apple</div></div></div>
+          <div class="feature-item"><span class="check">✓</span><div class="feature-item-text">Dual Database Support<div class="feature-item-sub">PostgreSQL (TypeORM) + MongoDB (Mongoose)</div></div></div>
+          <div class="feature-item"><span class="check">✓</span><div class="feature-item-text">File Uploads<div class="feature-item-sub">Local driver + AWS S3 presigned URLs</div></div></div>
+          <div class="feature-item"><span class="check">✓</span><div class="feature-item-text">Email (Nodemailer)<div class="feature-item-sub">Handlebars templates</div></div></div>
+          <div class="feature-item"><span class="check">✓</span><div class="feature-item-text">Swagger / OpenAPI docs</div></div>
+          <div class="feature-item"><span class="check">✓</span><div class="feature-item-text">i18n (nestjs-i18n)</div></div>
+          <div class="feature-item"><span class="check">✓</span><div class="feature-item-text">Admin + User roles</div></div>
+          <div class="feature-item"><span class="check">✓</span><div class="feature-item-text">E2E + unit tests (Jest)</div></div>
+        </div>
+        <div class="feature-col">
+          <div class="feature-col-title">
+            Frontend — Next.js
+            <span class="col-badge green">apps/web</span>
+          </div>
+          <div class="feature-item"><span class="check" style="color:#15803d;">✓</span><div class="feature-item-text">Auth flows<div class="feature-item-sub">Sign in, sign up, reset password, confirm email</div></div></div>
+          <div class="feature-item"><span class="check" style="color:#15803d;">✓</span><div class="feature-item-text">Admin Panel<div class="feature-item-sub">User CRUD, role management</div></div></div>
+          <div class="feature-item"><span class="check" style="color:#15803d;">✓</span><div class="feature-item-text">shadcn/ui + Tailwind CSS<div class="feature-item-sub">Dark mode, design tokens</div></div></div>
+          <div class="feature-item"><span class="check" style="color:#15803d;">✓</span><div class="feature-item-text">TanStack Query v5<div class="feature-item-sub">Server state, caching, mutations</div></div></div>
+          <div class="feature-item"><span class="check" style="color:#15803d;">✓</span><div class="feature-item-text">React Hook Form + Zod</div></div>
+          <div class="feature-item"><span class="check" style="color:#15803d;">✓</span><div class="feature-item-text">i18n (i18next)<div class="feature-item-sub">Multi-language, RTL ready</div></div></div>
+          <div class="feature-item"><span class="check" style="color:#15803d;">✓</span><div class="feature-item-text">File Upload UI<div class="feature-item-sub">react-dropzone</div></div></div>
+          <div class="feature-item"><span class="check" style="color:#15803d;">✓</span><div class="feature-item-text">Google OAuth UI</div></div>
+          <div class="feature-item"><span class="check" style="color:#15803d;">✓</span><div class="feature-item-text">Playwright E2E + Storybook</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TECH STACK -->
+    <div class="section-label">Tech Stack</div>
+    <div class="techstack" style="padding-top:20px;">
+      <h2 class="techstack-title">Carefully chosen tools</h2>
+      <p class="techstack-subtitle">Modern, production-proven, and actively maintained.</p>
+      <div class="stack-grid">
+        <div class="stack-card">
+          <div class="stack-card-title">Monorepo</div>
+          <span class="stack-pill">pnpm workspaces</span>
+          <span class="stack-pill">Turborepo</span>
+          <span class="stack-pill">hygen</span>
+          <span class="stack-pill">Husky</span>
+          <span class="stack-pill">Commitlint</span>
+          <span class="stack-pill">Prettier</span>
+        </div>
+        <div class="stack-card">
+          <div class="stack-card-title">Backend</div>
+          <span class="stack-pill">NestJS 11</span>
+          <span class="stack-pill">TypeORM</span>
+          <span class="stack-pill">Mongoose</span>
+          <span class="stack-pill">Passport</span>
+          <span class="stack-pill">class-validator</span>
+          <span class="stack-pill">Docker</span>
+        </div>
+        <div class="stack-card">
+          <div class="stack-card-title">Frontend</div>
+          <span class="stack-pill">Next.js 16</span>
+          <span class="stack-pill">React 19</span>
+          <span class="stack-pill">shadcn/ui</span>
+          <span class="stack-pill">Tailwind CSS</span>
+          <span class="stack-pill">TanStack Query</span>
+          <span class="stack-pill">Storybook</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUICKSTART -->
+    <div class="annotation">
+      <span>📦</span>
+      <span><strong>Quick Start</strong> — minimal teaser only. Full setup guide lives in the docs.</span>
+    </div>
+    <div class="quickstart">
+      <div class="quickstart-label">Quick Start</div>
+      <div class="quickstart-title">Up and running in minutes</div>
+      <div class="quickstart-sub">Clone, configure, and start developing.</div>
+      <div class="code-block">
+        <span class="comment"># Clone and install</span><br/>
+        <span class="cmd">git clone</span> https://github.com/your-org/n2base<br/>
+        <span class="cmd">cd</span> n2base &amp;&amp; <span class="cmd">pnpm install</span><br/><br/>
+        <span class="comment"># Copy env files and start</span><br/>
+        <span class="cmd">cp</span> apps/api/example.env apps/api/.env<br/>
+        <span class="cmd">pnpm dev</span>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div>
+        <div class="footer-brand">n2base</div>
+        <small>NestJS + Next.js monorepo boilerplate</small>
+      </div>
+      <div class="footer-links">
+        <a href="#" class="footer-link">GitHub</a>
+        <a href="#" class="footer-link">API Docs</a>
+        <a href="#" class="footer-link">Admin Panel</a>
+        <a href="#" class="footer-link">Privacy Policy</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<h2>Design — Section 2: File Manager Page</h2>
+<p class="subtitle">/admin-panel/files — browse, upload, and delete all system files</p>
+
+<div class="mockup">
+  <div class="mockup-header">/admin-panel/files</div>
+  <div class="mockup-body" style="padding:0;background:#0d0d1a;">
+    <div style="padding:16px;font-size:12px;color:#ccc;">
+
+      <!-- Toolbar -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div>
+          <div style="font-size:16px;font-weight:600;color:#fff;">File Manager</div>
+          <div style="font-size:11px;color:#666;">24 files · 18.4 MB total</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <div style="background:#1e1e3f;border-radius:6px;padding:6px 12px;font-size:11px;color:#888;">🔍 Search files...</div>
+          <div style="background:#7c3aed;border-radius:6px;padding:6px 14px;font-size:11px;color:#fff;font-weight:500;">⬆ Upload</div>
+        </div>
+      </div>
+
+      <!-- Filter tabs -->
+      <div style="display:flex;gap:0;border-bottom:1px solid #2a2a4e;margin-bottom:14px;">
+        <div style="padding:6px 14px;font-size:11px;border-bottom:2px solid #7c3aed;color:#7c3aed;">All (24)</div>
+        <div style="padding:6px 14px;font-size:11px;color:#666;">Images (18)</div>
+        <div style="padding:6px 14px;font-size:11px;color:#666;">Documents (4)</div>
+        <div style="padding:6px 14px;font-size:11px;color:#666;">Other (2)</div>
+      </div>
+
+      <!-- File grid -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+
+        <div style="background:#1a1a2e;border-radius:8px;overflow:hidden;border:1px solid #2a2a4e;">
+          <div style="height:70px;background:linear-gradient(135deg,#7c3aed22,#3b82f622);display:flex;align-items:center;justify-content:center;font-size:24px;">🖼</div>
+          <div style="padding:8px;">
+            <div style="font-size:10px;color:#ddd;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">avatar_john.png</div>
+            <div style="font-size:9px;color:#666;margin-top:2px;">240 KB · 2 days ago</div>
+            <div style="display:flex;justify-content:flex-end;margin-top:6px;">
+              <div style="font-size:9px;color:#ef4444;cursor:pointer;">🗑 Delete</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#1a1a2e;border-radius:8px;overflow:hidden;border:1px solid #2a2a4e;">
+          <div style="height:70px;background:linear-gradient(135deg,#7c3aed22,#3b82f622);display:flex;align-items:center;justify-content:center;font-size:24px;">🖼</div>
+          <div style="padding:8px;">
+            <div style="font-size:10px;color:#ddd;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">product_banner.jpg</div>
+            <div style="font-size:9px;color:#666;margin-top:2px;">1.2 MB · 5 days ago</div>
+            <div style="display:flex;justify-content:flex-end;margin-top:6px;">
+              <div style="font-size:9px;color:#ef4444;cursor:pointer;">🗑 Delete</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#1a1a2e;border-radius:8px;overflow:hidden;border:1px solid #2a2a4e;">
+          <div style="height:70px;background:linear-gradient(135deg,#ef444422,#f9731622);display:flex;align-items:center;justify-content:center;font-size:24px;">📄</div>
+          <div style="padding:8px;">
+            <div style="font-size:10px;color:#ddd;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">report_q1_2026.pdf</div>
+            <div style="font-size:9px;color:#666;margin-top:2px;">3.4 MB · 1 week ago</div>
+            <div style="display:flex;justify-content:flex-end;margin-top:6px;">
+              <div style="font-size:9px;color:#ef4444;cursor:pointer;">🗑 Delete</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#1a1a2e;border-radius:8px;overflow:hidden;border:1px solid #2a2a4e;border-style:dashed;display:flex;align-items:center;justify-content:center;flex-direction:column;min-height:120px;cursor:pointer;">
+          <div style="font-size:20px;color:#444;">+</div>
+          <div style="font-size:9px;color:#555;margin-top:4px;">Drop files here</div>
+        </div>
+
+      </div>
+
+      <!-- Delete confirm hint -->
+      <div style="margin-top:12px;background:#2a1a1a;border:1px solid #5a1a1a;border-radius:6px;padding:8px 12px;font-size:10px;color:#f87171;">
+        🗑 Clicking Delete shows a confirmation dialog before permanently removing the file.
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:16px;">
+  <h3>Implementation notes</h3>
+  <ul>
+    <li><strong>File grid</strong> — image files show thumbnail preview; docs/other show icon</li>
+    <li><strong>Upload</strong> — reuses existing <code>useFileUploadService</code> + drag-and-drop pattern from <code>multiple-image-picker</code></li>
+    <li><strong>Delete</strong> — confirmation dialog (reuses existing <code>alert-dialog.tsx</code>)</li>
+    <li><strong>Filter tabs</strong> — client-side filtering by MIME type, no extra API needed</li>
+    <li><strong>Pagination</strong> — uses same pattern as existing users list</li>
+  </ul>
+</div>
+
+<p class="subtitle">Does this File Manager layout look right? Tell me in the terminal.</p>

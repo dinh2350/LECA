@@ -1,0 +1,43 @@
+{
+  "app-name": "APP",
+  "loading": "Đang tải ...",
+  "navigation": {
+    "home": "Trang chủ",
+    "signIn": "Đăng nhập",
+    "signUp": "Đăng ký",
+    "profile": "Hồ sơ",
+    "dashboard": "Bảng điều khiển",
+    "users": "Người dùng & Vai trò",
+    "fileManager": "Quản lý tệp",
+    "email": "Email",
+    "logout": "Đăng xuất"
+  },
+  "formInputs": {
+    "avatarInput": {
+      "dropzoneText": "Thả hình ảnh vào đây ...",
+      "dragAndDrop": "Hoặc kéo và thả hình ảnh vào đây",
+      "selectFile": "Chọn hình ảnh"
+    },
+    "multipleImageInput": {
+      "dropzoneText": "Thả hình ảnh vào đây ...",
+      "dragAndDrop": "Hoặc kéo và thả hình ảnh vào đây",
+      "selectFile": "Chọn hình ảnh"
+    },
+    "singleImageInput": {
+      "dropzoneText": "Thả hình ảnh vào đây ...",
+      "dragAndDrop": "Hoặc kéo và thả hình ảnh vào đây",
+      "selectFile": "Chọn hình ảnh"
+    }
+  },
+  "leavePage": {
+    "title": "Rời khỏi trang này?",
+    "message": "Các thay đổi bạn đã thực hiện có thể không được lưu",
+    "stay": "Ở lại trang",
+    "leave": "Rời khỏi trang"
+  },
+  "auth": {
+    "facebook": {
+      "action": "Đăng nhập bằng Facebook"
+    }
+  }
+}
