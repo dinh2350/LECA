@@ -1,0 +1,2343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LECA — UI Wireframes · All Screens</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #080C18;
+      --s1: #0E1527;
+      --s2: #151D35;
+      --s3: #1D2542;
+      --border: rgba(255,255,255,0.07);
+      --border-h: rgba(255,255,255,0.14);
+      --amber: #F5A623;
+      --amber-s: rgba(245,166,35,0.12);
+      --cream: #EAE4D8;
+      --cream-d: #B8B2A8;
+      --cream-m: #6B6760;
+      --green: #48C9A0;
+      --green-s: rgba(72,201,160,0.15);
+      --yellow: #F5C118;
+      --yellow-s: rgba(245,193,24,0.15);
+      --red: #EF6060;
+      --red-s: rgba(239,96,96,0.15);
+      --blue: #5B8DEF;
+      --fd: 'Syne', sans-serif;
+      --fb: 'Lora', serif;
+      --fm: 'JetBrains Mono', monospace;
+    }
+
+    body { background: var(--bg); color: var(--cream); font-family: var(--fb); min-height: 100vh; overflow-x: hidden; }
+
+    /* ── NAVIGATOR ── */
+    .wf-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(8,12,24,0.92); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px; display: flex; align-items: center; gap: 3px; height: 50px; overflow-x: auto;
+    }
+    .wf-nav::-webkit-scrollbar { display: none; }
+    .wf-label {
+      font-family: var(--fm); font-size: 10px; color: var(--cream-m);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding-right: 14px; border-right: 1px solid var(--border);
+      margin-right: 6px; white-space: nowrap; flex-shrink: 0;
+    }
+    .wf-btn {
+      font-family: var(--fm); font-size: 11px; color: var(--cream-d);
+      background: none; border: 1px solid transparent; border-radius: 6px;
+      padding: 5px 11px; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: all 0.15s;
+    }
+    .wf-btn:hover { color: var(--cream); border-color: var(--border-h); }
+    .wf-btn.active { color: var(--amber); background: var(--amber-s); border-color: rgba(245,166,35,0.3); }
+
+    /* ── LAYOUT ── */
+    .wf-content { padding-top: 50px; min-height: 100vh; }
+    .screen { display: none; min-height: calc(100vh - 50px); }
+    .screen.active { display: flex; flex-direction: column; }
+
+    /* ── PHONE STAGE ── */
+    .phone-stage {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      padding: 36px 24px;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(245,166,35,0.04) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(91,141,239,0.03) 0%, transparent 60%);
+    }
+    .phone-frame {
+      width: 390px; height: 844px;
+      background: var(--s1); border-radius: 48px;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 0 0 8px rgba(255,255,255,0.03), 0 40px 100px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08);
+      overflow: hidden; display: flex; flex-direction: column;
+    }
+    .phone-notch {
+      width: 120px; height: 34px; background: var(--bg);
+      border-radius: 0 0 20px 20px; margin: 0 auto; flex-shrink: 0;
+    }
+    .phone-screen { flex: 1; overflow-y: auto; overflow-x: hidden; display: flex; flex-direction: column; }
+    .phone-screen::-webkit-scrollbar { display: none; }
+
+    /* ── ANNOTATION ── */
+    .ann {
+      background: var(--s1); border-top: 1px solid var(--border);
+      padding: 14px 32px; display: flex; gap: 20px; flex-wrap: wrap;
+    }
+    .ann-item { display: flex; align-items: center; gap: 8px; font-family: var(--fm); font-size: 11px; color: var(--cream-m); }
+    .ann-item .req { color: var(--amber); }
+
+    /* ── SCREEN TITLE ── */
+    .stitle { text-align: center; padding: 20px 0 6px; }
+    .stitle h2 { font-family: var(--fd); font-size: 12px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cream-m); }
+    .stitle span { font-family: var(--fm); font-size: 11px; color: var(--cream-m); opacity: 0.5; }
+
+    /* ── SHARED ── */
+    .sbar { display: flex; justify-content: space-between; padding: 12px 20px 0; font-family: var(--fm); font-size: 11px; font-weight: 500; color: var(--cream); flex-shrink: 0; }
+    .pill { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 999px; font-family: var(--fm); font-size: 11px; font-weight: 500; }
+    .p-amber { background: var(--amber-s); color: var(--amber); border: 1px solid rgba(245,166,35,0.25); }
+    .p-green { background: var(--green-s); color: var(--green); border: 1px solid rgba(72,201,160,0.25); }
+    .p-yellow { background: var(--yellow-s); color: var(--yellow); border: 1px solid rgba(245,193,24,0.25); }
+    .p-red { background: var(--red-s); color: var(--red); border: 1px solid rgba(239,96,96,0.25); }
+    .p-blue { background: rgba(91,141,239,0.12); color: var(--blue); border: 1px solid rgba(91,141,239,0.25); }
+    .btn-p {
+      background: var(--amber); color: var(--bg); border: none; border-radius: 999px;
+      font-family: var(--fd); font-size: 15px; font-weight: 700; padding: 14px 28px;
+      cursor: pointer; width: 100%; letter-spacing: 0.02em;
+    }
+    .btn-s {
+      background: transparent; color: var(--cream); border: 1px solid var(--border-h);
+      border-radius: 999px; font-family: var(--fd); font-size: 15px; font-weight: 600;
+      padding: 14px 28px; cursor: pointer; width: 100%;
+    }
+    .sec-title { font-family: var(--fd); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream-m); padding: 18px 20px 8px; }
+    .bnav { display: flex; border-top: 1px solid var(--border); padding: 8px 0 20px; flex-shrink: 0; }
+    .bni { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px; cursor: pointer; }
+    .bni-icon { font-size: 21px; }
+    .bni-lbl { font-family: var(--fm); font-size: 10px; color: var(--cream-m); }
+
+    /* ── WAVEFORM ── */
+    .wave-row { display: flex; align-items: center; justify-content: center; gap: 3px; height: 48px; }
+    .wbar { width: 3px; background: var(--amber); border-radius: 2px; opacity: 0.7; animation: wv 1.4s ease-in-out infinite; }
+    @keyframes wv { 0%,100% { transform: scaleY(0.2); opacity: 0.3; } 50% { transform: scaleY(1); opacity: 0.85; } }
+
+    /* ════════════════════════════════
+       SCREEN 01 — SPLASH
+    ════════════════════════════════ */
+    .splash { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 60px 28px 48px; position: relative; overflow: hidden; }
+    .splash::before { content: ''; position: absolute; top: -120px; left: 50%; transform: translateX(-50%); width: 380px; height: 380px; background: radial-gradient(ellipse, rgba(245,166,35,0.13) 0%, transparent 70%); pointer-events: none; }
+    .splash-wm { font-family: var(--fd); font-size: 76px; font-weight: 800; letter-spacing: -0.04em; color: var(--cream); line-height: 1; }
+    .splash-wm em { color: var(--amber); font-style: normal; }
+    .splash-sub { font-family: var(--fm); font-size: 10px; color: var(--cream-m); letter-spacing: 0.18em; margin-top: 6px; text-align: center; }
+    .splash-tag { font-family: var(--fb); font-style: italic; font-size: 19px; color: var(--cream-d); text-align: center; line-height: 1.55; }
+    .splash-acts { width: 100%; display: flex; flex-direction: column; gap: 12px; }
+    .splash-fine { text-align: center; font-family: var(--fm); font-size: 10px; color: var(--cream-m); margin-top: 6px; }
+
+    /* ════════════════════════════════
+       SCREEN 02 — HOME
+    ════════════════════════════════ */
+    .home-hdr { padding: 18px 20px 0; flex-shrink: 0; }
+    .greet { font-family: var(--fd); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-m); }
+    .greet-name { font-family: var(--fd); font-size: 26px; font-weight: 800; color: var(--cream); margin-top: 2px; }
+    .streak { display: flex; align-items: center; gap: 8px; margin-top: 10px; padding: 10px 14px; background: var(--s2); border-radius: 12px; border: 1px solid var(--border); }
+    .streak-ct { font-family: var(--fd); font-size: 18px; font-weight: 800; color: var(--amber); margin-left: auto; }
+    .streak-tx { font-family: var(--fm); font-size: 12px; color: var(--cream-d); }
+    .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 20px; }
+    .mcard { background: var(--s2); border: 1px solid var(--border); border-radius: 20px; padding: 20px 16px; cursor: pointer; }
+    .mcard.feat { background: linear-gradient(135deg, rgba(245,166,35,0.13) 0%, var(--s2) 100%); border-color: rgba(245,166,35,0.28); }
+    .mcard-ic { font-size: 28px; margin-bottom: 10px; display: block; }
+    .mcard-t { font-family: var(--fd); font-size: 15px; font-weight: 700; color: var(--cream); margin-bottom: 4px; }
+    .mcard-d { font-size: 11px; color: var(--cream-m); line-height: 1.4; }
+    .rsess { display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-bottom: 1px solid var(--border); }
+    .rsess-ic { width: 36px; height: 36px; border-radius: 8px; background: var(--s3); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+    .rsess-inf { flex: 1; min-width: 0; }
+    .rsess-t { font-family: var(--fd); font-size: 13px; font-weight: 600; color: var(--cream); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rsess-m { font-family: var(--fm); font-size: 10px; color: var(--cream-m); margin-top: 2px; }
+    .rsess-sc { font-family: var(--fd); font-size: 18px; font-weight: 800; }
+
+    /* ════════════════════════════════
+       SCREEN 03 — CONVERSATION
+    ════════════════════════════════ */
+    .conv-hdr { display: flex; align-items: center; padding: 14px 20px; gap: 12px; flex-shrink: 0; }
+    .conv-back { font-size: 20px; cursor: pointer; color: var(--cream-d); }
+    .conv-si { flex: 1; }
+    .conv-st { font-family: var(--fd); font-size: 14px; font-weight: 700; color: var(--cream); }
+    .conv-sm { font-family: var(--fm); font-size: 10px; color: var(--cream-m); }
+    .conv-timer { font-family: var(--fm); font-size: 13px; color: var(--amber); background: var(--amber-s); padding: 4px 10px; border-radius: 999px; }
+    .conv-msgs { flex: 1; overflow-y: auto; padding: 8px 20px; display: flex; flex-direction: column; gap: 16px; }
+    .msg { display: flex; flex-direction: column; gap: 4px; }
+    .msg.ai { align-items: flex-start; }
+    .msg.usr { align-items: flex-end; }
+    .msg-who { font-family: var(--fm); font-size: 9px; color: var(--cream-m); letter-spacing: 0.07em; text-transform: uppercase; }
+    .mbubble { max-width: 82%; padding: 12px 16px; border-radius: 14px; font-size: 14px; line-height: 1.6; }
+    .msg.ai .mbubble { background: var(--s2); border: 1px solid var(--border); color: var(--cream); border-radius: 4px 14px 14px 14px; }
+    .msg.usr .mbubble { background: var(--amber); color: var(--bg); font-family: var(--fd); font-weight: 500; border-radius: 14px 4px 14px 14px; }
+    .fb-chip { display: inline-flex; align-items: center; gap: 5px; background: var(--s3); border: 1px solid var(--border); border-radius: 999px; padding: 3px 12px; font-family: var(--fm); font-size: 10px; color: var(--green); cursor: pointer; margin-top: 4px; }
+    .ptt-area { padding: 14px 20px 22px; display: flex; flex-direction: column; align-items: center; gap: 10px; flex-shrink: 0; }
+    .live-wave { display: flex; align-items: center; gap: 2px; height: 22px; }
+    .lbar { width: 2px; background: var(--amber); border-radius: 1px; animation: wv 0.4s ease-in-out infinite; }
+    .ptt-btn {
+      width: 80px; height: 80px; border-radius: 50%; background: var(--amber);
+      border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 28px; box-shadow: 0 0 0 0 rgba(245,166,35,0.4), 0 8px 32px rgba(245,166,35,0.3);
+      position: relative;
+    }
+    .ptt-btn::after { content: ''; position: absolute; inset: -8px; border-radius: 50%; border: 2px solid rgba(245,166,35,0.35); animation: pring 2s ease-in-out infinite; }
+    @keyframes pring { 0%,100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.1); opacity: 0.15; } }
+    .ptt-hint { font-family: var(--fm); font-size: 10px; color: var(--cream-m); }
+    .fb-toggle { display: flex; align-items: center; gap: 8px; font-family: var(--fm); font-size: 10px; color: var(--cream-m); }
+    .toggle { width: 34px; height: 18px; background: var(--amber); border-radius: 999px; position: relative; flex-shrink: 0; }
+    .toggle::after { content: ''; position: absolute; right: 2px; top: 2px; width: 14px; height: 14px; background: white; border-radius: 50%; }
+
+    /* ════════════════════════════════
+       SCREEN 04 — PRONUNCIATION
+    ════════════════════════════════ */
+    .pron-hdr { padding: 18px 20px 0; flex-shrink: 0; }
+    .pron-title { font-family: var(--fd); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream-m); margin-bottom: 14px; }
+    .utt { padding: 16px; background: var(--s2); border: 1px solid var(--border); border-radius: 20px; margin: 0 20px; line-height: 2.2; font-size: 18px; }
+    .w { display: inline-block; margin: 0 2px; padding: 2px 6px; border-radius: 6px; cursor: pointer; }
+    .w-g { background: var(--green-s); color: var(--green); }
+    .w-y { background: var(--yellow-s); color: var(--yellow); }
+    .w-r { background: var(--red-s); color: var(--red); }
+    .w-n { color: var(--cream); }
+    .phn-box { margin: 10px 20px 0; padding: 14px 16px; background: var(--s3); border-radius: 12px; border: 1px solid var(--border); }
+    .phn-lbl { font-family: var(--fm); font-size: 10px; color: var(--cream-m); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.08em; }
+    .phns { display: flex; gap: 8px; flex-wrap: wrap; }
+    .ph { font-family: var(--fm); font-size: 13px; padding: 4px 9px; border-radius: 6px; }
+    .ph-g { background: var(--green-s); color: var(--green); }
+    .ph-y { background: var(--yellow-s); color: var(--yellow); }
+    .ph-r { background: var(--red-s); color: var(--red); }
+    .fb-secs { padding: 12px 20px; display: flex; flex-direction: column; gap: 8px; }
+    .fb-sec { background: var(--s2); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; }
+    .fb-sec-lbl { font-family: var(--fm); font-size: 9px; color: var(--cream-m); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 5px; }
+    .fb-sec-tx { font-size: 13px; color: var(--cream-d); line-height: 1.5; }
+    .fb-sec-tx strong { color: var(--cream); }
+
+    /* ════════════════════════════════
+       SCREEN 05 — SUMMARY
+    ════════════════════════════════ */
+    .sum-hero { padding: 28px 20px 16px; text-align: center; flex-shrink: 0; }
+    .sum-em { font-size: 48px; margin-bottom: 10px; }
+    .sum-t { font-family: var(--fd); font-size: 28px; font-weight: 800; color: var(--cream); margin-bottom: 4px; }
+    .sum-st { font-size: 13px; font-style: italic; color: var(--cream-d); }
+    .score-ring {
+      width: 96px; height: 96px; border-radius: 50%; border: 3px solid var(--green);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      margin: 16px auto; background: var(--green-s); box-shadow: 0 0 30px rgba(72,201,160,0.18);
+    }
+    .score-n { font-family: var(--fd); font-size: 32px; font-weight: 800; color: var(--green); line-height: 1; }
+    .score-l { font-family: var(--fm); font-size: 9px; color: var(--green); letter-spacing: 0.08em; text-transform: uppercase; }
+    .stats-g { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 0 20px; }
+    .stat-c { background: var(--s2); border: 1px solid var(--border); border-radius: 12px; padding: 14px 8px; text-align: center; }
+    .stat-v { font-family: var(--fd); font-size: 22px; font-weight: 800; color: var(--amber); }
+    .stat-u { font-family: var(--fm); font-size: 11px; color: var(--amber); }
+    .stat-l { font-family: var(--fm); font-size: 10px; color: var(--cream-m); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .imp-list { padding: 0 20px; display: flex; flex-direction: column; gap: 8px; }
+    .imp-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--s2); border: 1px solid var(--border); border-radius: 12px; }
+    .imp-rk { font-family: var(--fd); font-size: 18px; font-weight: 800; color: var(--amber); width: 22px; }
+    .imp-inf { flex: 1; }
+    .imp-t { font-family: var(--fd); font-size: 13px; font-weight: 700; color: var(--cream); }
+    .imp-d { font-family: var(--fm); font-size: 10px; color: var(--cream-m); margin-top: 2px; }
+    .sum-acts { padding: 16px 20px 24px; display: flex; flex-direction: column; gap: 10px; }
+
+    /* ════════════════════════════════
+       SCREEN 06 — SCENARIO LIBRARY
+    ════════════════════════════════ */
+    .lib-hdr { padding: 18px 20px 0; flex-shrink: 0; }
+    .lib-t { font-family: var(--fd); font-size: 26px; font-weight: 800; color: var(--cream); margin-bottom: 14px; }
+    .srch { display: flex; align-items: center; gap: 10px; background: var(--s2); border: 1px solid var(--border-h); border-radius: 999px; padding: 10px 16px; margin-bottom: 14px; }
+    .srch-ph { font-family: var(--fb); font-size: 14px; color: var(--cream-m); font-style: italic; }
+    .filt { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
+    .filt::-webkit-scrollbar { display: none; }
+    .fchip { white-space: nowrap; padding: 6px 14px; border-radius: 999px; font-family: var(--fm); font-size: 11px; border: 1px solid var(--border); color: var(--cream-d); cursor: pointer; flex-shrink: 0; }
+    .fchip.on { background: var(--amber-s); border-color: rgba(245,166,35,0.3); color: var(--amber); }
+    .scen-list { flex: 1; overflow-y: auto; padding: 14px 20px; display: flex; flex-direction: column; gap: 11px; }
+    .scard { background: var(--s2); border: 1px solid var(--border); border-radius: 20px; padding: 16px; cursor: pointer; display: flex; flex-direction: column; gap: 8px; }
+    .scard:first-child { border-color: rgba(245,166,35,0.25); background: linear-gradient(135deg, rgba(245,166,35,0.07) 0%, var(--s2) 100%); }
+    .scard-hd { display: flex; align-items: flex-start; justify-content: space-between; }
+    .scard-t { font-family: var(--fd); font-size: 15px; font-weight: 700; color: var(--cream); line-height: 1.3; }
+    .scard-r { font-family: var(--fm); font-size: 12px; color: var(--amber); white-space: nowrap; margin-left: 8px; }
+    .scard-d { font-size: 13px; color: var(--cream-m); line-height: 1.4; }
+    .scard-ft { display: flex; align-items: center; gap: 8px; }
+    .scard-plays { margin-left: auto; font-family: var(--fm); font-size: 10px; color: var(--cream-m); }
+
+    /* ════════════════════════════════
+       SCREEN 07 — LEARNER DASHBOARD
+    ════════════════════════════════ */
+    .dash-hdr { padding: 18px 20px 0; flex-shrink: 0; }
+    .dash-t { font-family: var(--fd); font-size: 26px; font-weight: 800; color: var(--cream); margin-bottom: 2px; }
+    .dash-st { font-size: 13px; font-style: italic; color: var(--cream-m); }
+    .chart-c { margin: 14px 20px; background: var(--s2); border: 1px solid var(--border); border-radius: 20px; padding: 16px; }
+    .chart-t { font-family: var(--fd); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream-m); margin-bottom: 10px; }
+    .chart-a { height: 96px; position: relative; }
+    .chart-a svg { width: 100%; height: 100%; }
+    .weak-sec { padding: 0 20px; }
+    .weak-t { font-family: var(--fd); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream-m); margin-bottom: 10px; }
+    .phi { display: flex; align-items: center; gap: 12px; padding: 11px 14px; background: var(--s2); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 8px; cursor: pointer; }
+    .phi-sym { font-family: var(--fm); font-size: 20px; color: var(--red); width: 38px; text-align: center; }
+    .phi-inf { flex: 1; }
+    .phi-n { font-family: var(--fd); font-size: 13px; font-weight: 700; color: var(--cream); }
+    .phi-tr { font-family: var(--fm); font-size: 10px; color: var(--cream-m); margin-top: 2px; }
+    .phi-sc { font-family: var(--fd); font-size: 20px; font-weight: 800; }
+    .hist-sec { padding: 0 20px 20px; margin-top: 4px; }
+    .hist-t { font-family: var(--fd); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream-m); margin-bottom: 10px; }
+    .hitem { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border); }
+    .hitem-d { font-family: var(--fm); font-size: 10px; color: var(--cream-m); width: 32px; text-align: center; flex-shrink: 0; }
+    .hitem-i { flex: 1; min-width: 0; }
+    .hitem-n { font-family: var(--fd); font-size: 13px; font-weight: 600; color: var(--cream); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hitem-m { font-family: var(--fm); font-size: 10px; color: var(--cream-m); margin-top: 2px; }
+    .hitem-sc { font-family: var(--fd); font-size: 18px; font-weight: 800; }
+
+    /* ════════════════════════════════
+       SCREEN 08 — EDUCATOR DASHBOARD
+    ════════════════════════════════ */
+    .edu { flex-direction: column; background: var(--bg); }
+    .edu-topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 60px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+    }
+    .edu-brand { font-family: var(--fd); font-size: 22px; font-weight: 800; color: var(--cream); }
+    .edu-brand span { color: var(--amber); }
+    .edu-links { display: flex; gap: 2px; }
+    .edu-link { font-family: var(--fm); font-size: 12px; padding: 6px 14px; border-radius: 6px; color: var(--cream-d); cursor: pointer; border: 1px solid transparent; }
+    .edu-link.on { background: var(--amber-s); color: var(--amber); border-color: rgba(245,166,35,0.25); }
+    .edu-usr { display: flex; align-items: center; gap: 10px; font-family: var(--fm); font-size: 12px; color: var(--cream-d); }
+    .edu-av { width: 32px; height: 32px; border-radius: 50%; background: var(--amber-s); border: 2px solid var(--amber); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+    .edu-body { display: flex; flex: 1; overflow: hidden; }
+    .edu-side { width: 240px; border-right: 1px solid var(--border); padding: 24px 16px; flex-shrink: 0; overflow-y: auto; }
+    .edu-cls-n { font-family: var(--fd); font-size: 16px; font-weight: 800; color: var(--cream); }
+    .edu-cls-m { font-family: var(--fm); font-size: 11px; color: var(--cream-m); margin-top: 3px; }
+    .code-box { background: var(--s2); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; margin-top: 12px; }
+    .code-lbl { font-family: var(--fm); font-size: 10px; color: var(--cream-m); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+    .code-val { font-family: var(--fm); font-size: 22px; font-weight: 500; color: var(--amber); letter-spacing: 0.2em; }
+    .edu-stats { margin-top: 20px; display: flex; flex-direction: column; gap: 8px; }
+    .esu { background: var(--s2); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; }
+    .esu-l { font-family: var(--fm); font-size: 10px; color: var(--cream-m); text-transform: uppercase; letter-spacing: 0.08em; }
+    .esu-v { font-family: var(--fd); font-size: 24px; font-weight: 800; color: var(--cream); margin-top: 3px; }
+    .edu-main { flex: 1; overflow-y: auto; padding: 24px 32px; }
+    .edu-mhdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .edu-mt { font-family: var(--fd); font-size: 20px; font-weight: 800; color: var(--cream); }
+    .edu-acts { display: flex; gap: 8px; }
+    .ebtn { font-family: var(--fm); font-size: 12px; padding: 8px 16px; border-radius: 8px; border: 1px solid var(--border-h); background: transparent; color: var(--cream-d); cursor: pointer; }
+    .ebtn-p { background: var(--amber); color: var(--bg); border-color: transparent; font-weight: 600; }
+    .rtbl { width: 100%; border-collapse: collapse; }
+    .rtbl th { font-family: var(--fm); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream-m); padding: 8px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+    .rtbl td { padding: 13px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .rtbl tr:last-child td { border-bottom: none; }
+    .rtbl tr:hover td { background: rgba(255,255,255,0.015); }
+    .st-n { font-family: var(--fd); font-size: 14px; font-weight: 600; color: var(--cream); }
+    .st-lv { font-family: var(--fm); font-size: 10px; color: var(--cream-m); margin-top: 2px; }
+    .ta { font-size: 18px; }
+    .ta-up { color: var(--green); }
+    .ta-st { color: var(--yellow); }
+    .ta-dn { color: var(--red); }
+    .flag { display: inline-flex; align-items: center; gap: 4px; background: var(--red-s); border: 1px solid rgba(239,96,96,0.3); border-radius: 999px; padding: 2px 8px; font-family: var(--fm); font-size: 10px; color: var(--red); }
+    .spk-bar { display: flex; align-items: center; gap: 8px; }
+    .spk-trk { flex: 1; height: 4px; background: var(--s3); border-radius: 2px; overflow: hidden; }
+    .spk-fill { height: 100%; background: var(--amber); border-radius: 2px; }
+    .spk-val { font-family: var(--fm); font-size: 11px; color: var(--cream-d); width: 30px; text-align: right; }
+
+    /* ════════════════════════════════
+       SCREEN 09 — REGISTRATION
+    ════════════════════════════════ */
+    .reg { flex: 1; display: flex; flex-direction: column; padding: 32px 28px 36px; overflow-y: auto; }
+    .reg-back { font-size: 20px; color: var(--cream-d); margin-bottom: 24px; cursor: pointer; }
+    .reg-h { font-family: var(--fd); font-size: 28px; font-weight: 800; color: var(--cream); line-height: 1.2; margin-bottom: 6px; }
+    .reg-sub { font-size: 13px; color: var(--cream-m); font-style: italic; margin-bottom: 28px; }
+    .fld { margin-bottom: 16px; }
+    .fld-lbl { font-family: var(--fm); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--cream-m); margin-bottom: 6px; }
+    .fld-inp { width: 100%; background: var(--s2); border: 1px solid var(--border-h); border-radius: 12px; padding: 13px 16px; font-family: var(--fb); font-size: 15px; color: var(--cream); }
+    .fld-inp.focus { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(245,166,35,0.1); }
+    .age-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+    .chk { width: 18px; height: 18px; border: 2px solid var(--border-h); border-radius: 5px; background: var(--amber-s); border-color: rgba(245,166,35,0.5); flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; }
+    .chk::after { content: '✓'; font-size: 11px; color: var(--amber); font-weight: 700; }
+    .chk-tx { font-family: var(--fm); font-size: 11px; color: var(--cream-d); line-height: 1.5; }
+    .chk-tx a { color: var(--amber); text-decoration: underline; }
+    .reg-div { display: flex; align-items: center; gap: 10px; margin: 14px 0; }
+    .reg-div span { font-family: var(--fm); font-size: 10px; color: var(--cream-m); white-space: nowrap; }
+    .reg-div::before, .reg-div::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    /* ════════════════════════════════
+       SCREEN 10 — LEVEL ASSESSMENT
+    ════════════════════════════════ */
+    .asmnt { flex: 1; display: flex; flex-direction: column; padding: 20px 24px 28px; }
+    .asmnt-prog { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; }
+    .apb { flex: 1; height: 3px; background: var(--s3); border-radius: 2px; overflow: hidden; }
+    .apb-fill { height: 100%; background: var(--amber); border-radius: 2px; transition: width 0.4s ease; }
+    .asmnt-step { font-family: var(--fm); font-size: 10px; color: var(--cream-m); white-space: nowrap; }
+    .asmnt-label { font-family: var(--fm); font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--amber); margin-bottom: 10px; }
+    .asmnt-q { font-family: var(--fd); font-size: 22px; font-weight: 700; color: var(--cream); line-height: 1.35; margin-bottom: 8px; }
+    .asmnt-ctx { font-size: 13px; color: var(--cream-m); font-style: italic; line-height: 1.5; margin-bottom: 20px; }
+    .ai-says { background: var(--s2); border: 1px solid var(--border); border-radius: 4px 16px 16px 16px; padding: 14px 16px; font-size: 14px; line-height: 1.6; color: var(--cream); margin-bottom: 16px; }
+    .ai-tag { font-family: var(--fm); font-size: 9px; color: var(--cream-m); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+    .asmnt-rec { background: var(--s3); border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+    .asmnt-rec-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); animation: blink 1s ease-in-out infinite; flex-shrink: 0; }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .asmnt-rec-tx { font-family: var(--fm); font-size: 11px; color: var(--cream-d); }
+    .level-hint { text-align: center; font-family: var(--fm); font-size: 11px; color: var(--cream-m); margin-top: 8px; }
+
+    /* ════════════════════════════════
+       SCREEN 11 — SCENARIO DETAIL
+    ════════════════════════════════ */
+    .sdet { flex: 1; overflow-y: auto; }
+    .sdet-hero { padding: 20px 20px 0; }
+    .sdet-ic { font-size: 40px; margin-bottom: 10px; }
+    .sdet-t { font-family: var(--fd); font-size: 24px; font-weight: 800; color: var(--cream); line-height: 1.2; margin-bottom: 8px; }
+    .sdet-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+    .sdet-stars { display: flex; align-items: center; gap: 6px; font-family: var(--fm); font-size: 12px; color: var(--amber); }
+    .sdet-ctx-lbl { font-family: var(--fd); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--cream-m); margin-bottom: 6px; }
+    .sdet-ctx { font-size: 13px; color: var(--cream-d); line-height: 1.6; background: var(--s2); border-radius: 12px; border: 1px solid var(--border); padding: 14px; margin-bottom: 14px; }
+    .role-box { background: var(--amber-s); border: 1px solid rgba(245,166,35,0.25); border-radius: 12px; padding: 12px 14px; margin-bottom: 14px; }
+    .role-lbl { font-family: var(--fm); font-size: 9px; color: var(--amber); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 4px; }
+    .role-tx { font-family: var(--fd); font-size: 13px; color: var(--cream); font-weight: 600; }
+    .vocab-sec { padding: 0 20px 16px; }
+    .vocab-grid { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 8px; }
+    .vword { font-family: var(--fm); font-size: 11px; padding: 5px 11px; background: var(--s3); border: 1px solid var(--border); border-radius: 999px; color: var(--cream-d); }
+    .opening-box { margin: 0 20px 16px; background: var(--s2); border-left: 3px solid var(--amber); border-radius: 0 12px 12px 0; padding: 12px 14px; }
+    .opening-lbl { font-family: var(--fm); font-size: 9px; color: var(--amber); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 6px; }
+    .opening-tx { font-size: 13px; color: var(--cream-d); font-style: italic; line-height: 1.5; }
+    .sdet-acts { padding: 12px 20px 28px; display: flex; flex-direction: column; gap: 10px; }
+
+    /* ════════════════════════════════
+       SCREEN 12 — MINIMAL PAIR DRILL
+    ════════════════════════════════ */
+    .drill { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+    .drill-hdr { padding: 16px 20px 0; flex-shrink: 0; }
+    .drill-tag { font-family: var(--fm); font-size: 10px; color: var(--amber); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 6px; }
+    .drill-t { font-family: var(--fd); font-size: 20px; font-weight: 800; color: var(--cream); margin-bottom: 4px; }
+    .drill-sub { font-size: 12px; color: var(--cream-m); font-style: italic; }
+    .ph-focus { margin: 16px 20px; background: var(--s2); border: 1px solid rgba(245,166,35,0.3); border-radius: 20px; padding: 18px; text-align: center; }
+    .ph-sym-big { font-family: var(--fm); font-size: 52px; color: var(--amber); line-height: 1; margin-bottom: 6px; }
+    .ph-eg { font-family: var(--fb); font-size: 13px; color: var(--cream-m); font-style: italic; }
+    .ph-audio { display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; padding: 8px 18px; border-radius: 999px; border: 1px solid rgba(245,166,35,0.35); font-family: var(--fm); font-size: 11px; color: var(--amber); cursor: pointer; background: var(--amber-s); }
+    .pair-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 20px; }
+    .pair-card { background: var(--s2); border: 1px solid var(--border); border-radius: 16px; padding: 16px 14px; text-align: center; cursor: pointer; }
+    .pair-card.target { border-color: rgba(245,166,35,0.4); background: var(--amber-s); }
+    .pair-word { font-family: var(--fd); font-size: 20px; font-weight: 800; color: var(--cream); margin-bottom: 4px; }
+    .pair-card.target .pair-word { color: var(--amber); }
+    .pair-ipa { font-family: var(--fm); font-size: 12px; color: var(--cream-m); }
+    .drill-score-row { display: flex; gap: 8px; padding: 14px 20px 0; }
+    .drill-att { flex: 1; background: var(--s2); border: 1px solid var(--border); border-radius: 12px; padding: 12px; text-align: center; }
+    .drill-att-w { font-family: var(--fd); font-size: 16px; font-weight: 700; color: var(--cream); margin-bottom: 2px; }
+    .drill-att-sc { font-family: var(--fm); font-size: 12px; }
+    .drill-ptt { padding: 14px 20px 24px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .drill-inst { font-family: var(--fm); font-size: 10px; color: var(--cream-m); text-align: center; line-height: 1.5; }
+
+    /* ════════════════════════════════
+       SCREEN 13 — SETTINGS
+    ════════════════════════════════ */
+    .set-hdr { padding: 18px 20px 0; flex-shrink: 0; }
+    .set-t { font-family: var(--fd); font-size: 26px; font-weight: 800; color: var(--cream); margin-bottom: 2px; }
+    .set-body { flex: 1; overflow-y: auto; padding: 10px 0 20px; }
+    .set-sec { margin-bottom: 6px; }
+    .set-sec-lbl { font-family: var(--fd); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-m); padding: 12px 20px 6px; }
+    .set-row { display: flex; align-items: center; gap: 12px; padding: 13px 20px; border-bottom: 1px solid var(--border); }
+    .set-row:last-child { border-bottom: none; }
+    .set-row-ic { font-size: 18px; width: 24px; text-align: center; flex-shrink: 0; }
+    .set-row-inf { flex: 1; }
+    .set-row-t { font-family: var(--fd); font-size: 14px; font-weight: 600; color: var(--cream); }
+    .set-row-d { font-family: var(--fm); font-size: 10px; color: var(--cream-m); margin-top: 2px; }
+    .set-row-act { font-family: var(--fm); font-size: 11px; color: var(--cream-m); }
+    .set-danger { color: var(--red); }
+    .set-row.danger-row { background: var(--red-s); border-color: rgba(239,96,96,0.2); }
+    .set-row.danger-row .set-row-t { color: var(--red); }
+    .privacy-note { margin: 8px 20px; padding: 14px; background: var(--s2); border: 1px solid var(--border); border-radius: 12px; font-family: var(--fm); font-size: 11px; color: var(--cream-m); line-height: 1.6; }
+    .privacy-note strong { color: var(--cream-d); }
+
+    /* ════════════════════════════════
+       SCREEN 14 — JOIN CLASS
+    ════════════════════════════════ */
+    .join { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px 28px 48px; text-align: center; }
+    .join-ic { font-size: 52px; margin-bottom: 18px; }
+    .join-t { font-family: var(--fd); font-size: 26px; font-weight: 800; color: var(--cream); margin-bottom: 8px; }
+    .join-sub { font-size: 13px; color: var(--cream-m); font-style: italic; margin-bottom: 32px; line-height: 1.5; }
+    .code-input { display: flex; gap: 8px; justify-content: center; margin-bottom: 20px; }
+    .code-cell { width: 42px; height: 52px; background: var(--s2); border: 2px solid var(--border-h); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: var(--fm); font-size: 22px; font-weight: 700; color: var(--cream); }
+    .code-cell.filled { background: var(--amber-s); border-color: var(--amber); color: var(--amber); }
+    .code-cell.active { border-color: rgba(245,166,35,0.7); box-shadow: 0 0 0 3px rgba(245,166,35,0.12); }
+    .join-info { background: var(--s2); border: 1px solid var(--border); border-radius: 12px; padding: 14px; font-family: var(--fm); font-size: 11px; color: var(--cream-m); line-height: 1.6; margin-bottom: 24px; width: 100%; text-align: left; }
+    .join-info strong { color: var(--cream-d); }
+
+    /* ════════════════════════════════
+       SCREEN 15 — ADMIN DASHBOARD
+    ════════════════════════════════ */
+    .adm { flex-direction: column; background: var(--bg); }
+    .adm-topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 60px; border-bottom: 1px solid var(--border); flex-shrink: 0;
+    }
+    .adm-brand { font-family: var(--fd); font-size: 22px; font-weight: 800; color: var(--cream); }
+    .adm-brand span { color: var(--amber); }
+    .adm-badge { font-family: var(--fm); font-size: 9px; padding: 2px 8px; border-radius: 999px; background: var(--green-s); border: 1px solid rgba(72,201,160,0.3); color: var(--green); margin-left: 8px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .adm-links { display: flex; gap: 2px; }
+    .adm-link { font-family: var(--fm); font-size: 12px; padding: 6px 14px; border-radius: 6px; color: var(--cream-d); cursor: pointer; border: 1px solid transparent; }
+    .adm-link.on { background: var(--amber-s); color: var(--amber); border-color: rgba(245,166,35,0.25); }
+    .adm-body { display: flex; flex: 1; overflow: hidden; }
+    .adm-side { width: 220px; border-right: 1px solid var(--border); padding: 20px 16px; flex-shrink: 0; overflow-y: auto; }
+    .adm-sys { background: var(--green-s); border: 1px solid rgba(72,201,160,0.25); border-radius: 10px; padding: 10px 12px; margin-bottom: 14px; }
+    .adm-sys-lbl { font-family: var(--fm); font-size: 9px; color: var(--green); text-transform: uppercase; letter-spacing: 0.1em; }
+    .adm-sys-v { font-family: var(--fm); font-size: 13px; color: var(--green); font-weight: 600; margin-top: 2px; }
+    .adm-nav { display: flex; flex-direction: column; gap: 2px; }
+    .adm-nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 8px; font-family: var(--fm); font-size: 12px; color: var(--cream-d); cursor: pointer; }
+    .adm-nav-item.on { background: var(--amber-s); color: var(--amber); }
+    .adm-nav-ic { font-size: 15px; }
+    .adm-main { flex: 1; overflow-y: auto; padding: 24px 32px; }
+    .adm-mhdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .adm-mt { font-family: var(--fd); font-size: 20px; font-weight: 800; color: var(--cream); }
+    .adm-kpi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+    .adm-kpi-c { background: var(--s1); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+    .adm-kpi-l { font-family: var(--fm); font-size: 10px; color: var(--cream-m); text-transform: uppercase; letter-spacing: 0.08em; }
+    .adm-kpi-v { font-family: var(--fd); font-size: 28px; font-weight: 800; color: var(--cream); margin-top: 4px; }
+    .adm-kpi-sub { font-family: var(--fm); font-size: 10px; color: var(--cream-m); margin-top: 2px; }
+    .adm-cfg { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    .adm-cfg-c { background: var(--s1); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+    .adm-cfg-t { font-family: var(--fd); font-size: 13px; font-weight: 700; color: var(--cream); margin-bottom: 12px; }
+    .cfg-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .cfg-lbl { font-family: var(--fm); font-size: 11px; color: var(--cream-d); }
+    .cfg-val { font-family: var(--fm); font-size: 11px; color: var(--amber); background: var(--amber-s); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(245,166,35,0.25); }
+    .cfg-val.ok { color: var(--green); background: var(--green-s); border-color: rgba(72,201,160,0.25); }
+    .cfg-val.warn { color: var(--yellow); background: var(--yellow-s); border-color: rgba(245,193,24,0.25); }
+    .adm-usr-tbl { width: 100%; border-collapse: collapse; }
+    .adm-usr-tbl th { font-family: var(--fm); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--cream-m); padding: 8px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+    .adm-usr-tbl td { padding: 11px 14px; border-bottom: 1px solid var(--border); font-family: var(--fm); font-size: 12px; color: var(--cream-d); vertical-align: middle; }
+    .adm-usr-tbl tr:hover td { background: rgba(255,255,255,0.015); }
+    .adm-usr-name { font-family: var(--fd); font-size: 13px; font-weight: 600; color: var(--cream); }
+    .adm-act { display: flex; gap: 4px; }
+    .adm-act-btn { font-family: var(--fm); font-size: 10px; padding: 4px 9px; border-radius: 5px; border: 1px solid var(--border); background: transparent; color: var(--cream-d); cursor: pointer; }
+
+    /* ════════════════════════════════
+       SCREEN 16 — KEY PHRASES (PRE-SESSION)
+    ════════════════════════════════ */
+    .phrases { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .phrases-hdr { padding: 16px 20px 0; flex-shrink: 0; }
+    .phrases-eyebrow { font-family: var(--fm); font-size: 10px; color: var(--amber); text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 6px; }
+    .phrases-t { font-family: var(--fd); font-size: 22px; font-weight: 800; color: var(--cream); line-height: 1.2; margin-bottom: 4px; }
+    .phrases-sub { font-size: 12px; color: var(--cream-m); font-style: italic; }
+    .sit-badge { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; margin-bottom: 14px; padding: 5px 12px; border-radius: 999px; font-family: var(--fm); font-size: 11px; background: rgba(91,141,239,0.12); border: 1px solid rgba(91,141,239,0.25); color: var(--blue); }
+    .phrase-count-note { font-family: var(--fm); font-size: 10px; color: var(--cream-m); margin-bottom: 10px; }
+    .phrase-list { flex: 1; overflow-y: auto; padding: 0 20px; display: flex; flex-direction: column; gap: 10px; }
+    .phrase-card { background: var(--s2); border: 1px solid var(--border); border-radius: 16px; padding: 14px 16px; cursor: pointer; transition: border-color 0.15s; }
+    .phrase-card:hover { border-color: rgba(245,166,35,0.3); }
+    .phrase-card:first-child { border-color: rgba(245,166,35,0.25); background: linear-gradient(135deg, rgba(245,166,35,0.07) 0%, var(--s2) 100%); }
+    .phrase-text { font-family: var(--fd); font-size: 16px; font-weight: 700; color: var(--cream); margin-bottom: 5px; line-height: 1.3; }
+    .phrase-ex { font-size: 12px; color: var(--cream-m); font-style: italic; line-height: 1.5; margin-bottom: 8px; }
+    .phrase-ft { display: flex; align-items: center; justify-content: space-between; }
+    .phrase-tts { display: inline-flex; align-items: center; gap: 5px; font-family: var(--fm); font-size: 12px; color: var(--amber); background: var(--amber-s); border: 1px solid rgba(245,166,35,0.3); border-radius: 12px; padding: 10px 16px; min-height: 48px; cursor: pointer; }
+    .phrase-tap { font-family: var(--fm); font-size: 10px; color: var(--cream-m); }
+    .phrases-acts { padding: 14px 20px 24px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; border-top: 1px solid var(--border); }
+
+    /* ════════════════════════════════
+       SCREEN 17 — PHRASE DETAIL SHEET
+    ════════════════════════════════ */
+    .pdet-bg { flex: 1; position: relative; overflow: hidden; }
+    .pdet-behind { flex: 1; opacity: 0.25; filter: blur(1px); padding: 20px; overflow: hidden; }
+    .sheet { position: absolute; bottom: 0; left: 0; right: 0; background: var(--s1); border-radius: 28px 28px 0 0; border-top: 1px solid var(--border-h); padding: 0 0 32px; }
+    .sheet-handle { width: 36px; height: 4px; background: var(--border-h); border-radius: 2px; margin: 14px auto 20px; }
+    .sheet-phrase { font-family: var(--fd); font-size: 26px; font-weight: 800; color: var(--cream); line-height: 1.25; padding: 0 24px; margin-bottom: 6px; }
+    .sheet-sit { display: inline-flex; margin: 0 24px 16px; }
+    .tts-big { display: flex; align-items: center; gap: 14px; margin: 0 24px 18px; padding: 16px; background: var(--amber-s); border: 1px solid rgba(245,166,35,0.3); border-radius: 16px; cursor: pointer; }
+    .tts-play { width: 48px; height: 48px; border-radius: 50%; background: var(--amber); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .tts-inf { flex: 1; }
+    .tts-label { font-family: var(--fd); font-size: 13px; font-weight: 700; color: var(--amber); }
+    .tts-sub { font-family: var(--fm); font-size: 10px; color: rgba(245,166,35,0.7); margin-top: 2px; }
+    .ex-box { margin: 0 24px 16px; background: var(--s2); border-left: 3px solid var(--amber); border-radius: 0 12px 12px 0; padding: 12px 14px; }
+    .ex-lbl { font-family: var(--fm); font-size: 9px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--amber); margin-bottom: 6px; }
+    .ex-sent { font-size: 14px; color: var(--cream-d); line-height: 1.6; }
+    .ex-sent strong { color: var(--amber); font-style: normal; font-family: var(--fd); }
+    .when-box { margin: 0 24px 18px; }
+    .when-lbl { font-family: var(--fm); font-size: 9px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--cream-m); margin-bottom: 5px; }
+    .when-tx { font-size: 12px; color: var(--cream-d); line-height: 1.5; }
+    .sheet-acts { padding: 0 24px; display: flex; flex-direction: column; gap: 8px; }
+
+    /* ════════════════════════════════
+       SCREEN 18 — SUMMARY + VOCAB GAPS
+    ════════════════════════════════ */
+    .vocab-gap-sec { padding: 0 20px; margin-top: 4px; }
+    .vg-t { font-family: var(--fd); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream-m); margin-bottom: 10px; }
+    .vg-used { display: flex; flex-direction: column; gap: 7px; margin-bottom: 14px; }
+    .vg-used-lbl { font-family: var(--fm); font-size: 10px; color: var(--green); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+    .vg-chip-used { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: var(--green-s); border: 1px solid rgba(72,201,160,0.25); border-radius: 999px; font-family: var(--fd); font-size: 12px; color: var(--green); margin: 0 4px 6px 0; }
+    .vg-missed { background: var(--s2); border: 1px solid rgba(245,166,35,0.25); border-radius: 16px; padding: 14px; }
+    .vg-missed-lbl { font-family: var(--fm); font-size: 10px; color: var(--amber); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+    .vg-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .vg-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .vg-phrase { flex: 1; font-family: var(--fd); font-size: 13px; font-weight: 600; color: var(--cream); }
+    .vg-row-hint { font-family: var(--fm); font-size: 10px; color: var(--cream-m); margin-top: 1px; }
+    .vg-practice { font-family: var(--fm); font-size: 10px; color: var(--amber); background: var(--amber-s); border: 1px solid rgba(245,166,35,0.3); border-radius: 999px; padding: 4px 10px; white-space: nowrap; cursor: pointer; }
+
+    /* ════════════════════════════════
+       SCREEN 19 — LIBRARY: SITUATION FILTER
+    ════════════════════════════════ */
+    .sit-tabs { display: flex; gap: 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 12px; }
+    .sit-tab { flex: 1; text-align: center; padding: 10px 8px; font-family: var(--fm); font-size: 12px; font-weight: 500; color: var(--cream-m); cursor: pointer; }
+    .sit-tab.on { background: var(--amber); color: var(--bg); font-weight: 700; }
+    .scard-phrases { display: flex; align-items: center; gap: 5px; font-family: var(--fm); font-size: 10px; color: var(--cream-m); margin-left: auto; }
+    .phrase-badge { background: rgba(91,141,239,0.12); border: 1px solid rgba(91,141,239,0.2); color: var(--blue); border-radius: 999px; padding: 2px 8px; font-family: var(--fm); font-size: 10px; }
+
+    @media (max-width: 900px) {
+      .edu-side { display: none; }
+      .adm-side { display: none; }
+      .adm-kpi { grid-template-columns: repeat(2, 1fr); }
+      .adm-cfg { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ──────────────── NAVIGATOR ──────────────── -->
+<nav class="wf-nav">
+  <div class="wf-label">LECA Wireframes · All Screens</div>
+  <button class="wf-btn active" onclick="go(0,this)">01 Splash</button>
+  <button class="wf-btn" onclick="go(1,this)">02 Home</button>
+  <button class="wf-btn" onclick="go(2,this)">03 Conversation</button>
+  <button class="wf-btn" onclick="go(3,this)">04 Pronunciation</button>
+  <button class="wf-btn" onclick="go(4,this)">05 Summary</button>
+  <button class="wf-btn" onclick="go(5,this)">06 Scenarios</button>
+  <button class="wf-btn" onclick="go(6,this)">07 Dashboard</button>
+  <button class="wf-btn" onclick="go(7,this)">08 Educator</button>
+  <button class="wf-btn" onclick="go(8,this)">09 Registration</button>
+  <button class="wf-btn" onclick="go(9,this)">10 Assessment</button>
+  <button class="wf-btn" onclick="go(10,this)">11 Scenario Detail</button>
+  <button class="wf-btn" onclick="go(11,this)">12 Pair Drill</button>
+  <button class="wf-btn" onclick="go(12,this)">13 Settings</button>
+  <button class="wf-btn" onclick="go(13,this)">14 Join Class</button>
+  <button class="wf-btn" onclick="go(14,this)">15 Admin</button>
+  <button class="wf-btn" onclick="go(15,this)">16 Key Phrases</button>
+  <button class="wf-btn" onclick="go(16,this)">17 Phrase Detail</button>
+  <button class="wf-btn" onclick="go(17,this)">20 Text Fallback</button>
+  <button class="wf-btn" onclick="go(18,this)">21 Guest Limit</button>
+  <button class="wf-btn" onclick="go(19,this)">22 L1 Redirect</button>
+  <button class="wf-btn" onclick="go(20,this)">23 Share Report</button>
+  <button class="wf-btn" onclick="go(21,this)">24 Submit Scenario</button>
+</nav>
+
+<div class="wf-content">
+
+<!-- ════════════════════════════════════════
+     SCREEN 01 — SPLASH / ONBOARDING
+════════════════════════════════════════ -->
+<div class="screen active" id="s0">
+  <div class="stitle"><h2>01 — Splash / Onboarding</h2><span>Mobile · PWA · First launch</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="splash">
+          <div style="text-align:center">
+            <div class="splash-wm">LE<em>CA</em></div>
+            <div class="splash-sub">Language &amp; English Communication AI</div>
+          </div>
+          <div style="text-align:center">
+            <div class="wave-row" id="splash-wave" style="margin-bottom:18px">
+              <!-- JS populates bars -->
+            </div>
+            <div class="splash-tag">"English as instinct,<br>not a skill."</div>
+            <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m);margin-top:10px">Open-source · Free forever · Self-hostable</div>
+          </div>
+          <div class="splash-acts">
+            <button class="btn-p">Start for free</button>
+            <button class="btn-s">I already have an account</button>
+            <div class="splash-fine">By continuing you agree to the Terms of Service</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">FR-AUTH-01</span> Guest mode · up to 3 sessions before signup prompt</div>
+    <div class="ann-item"><span class="req">NFR-USE-01</span> First session reachable in &lt;3 min from this screen</div>
+    <div class="ann-item"><span class="req">NFR-COMP-02</span> ToS acceptance before account creation</div>
+    <div class="ann-item"><span class="req">NFR-USE-06</span> Android 8.0+ via PWA, no install required</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCREEN 02 — HOME
+════════════════════════════════════════ -->
+<div class="screen" id="s1">
+  <div class="stitle"><h2>02 — Home / Mode Selection</h2><span>Mobile · Authenticated learner</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="sbar"><span>9:41</span><span>●●●● WiFi 🔋</span></div>
+        <div class="home-hdr">
+          <div class="greet">Good afternoon</div>
+          <div class="greet-name">Minh Anh 👋</div>
+          <div class="streak">
+            <span style="font-size:18px">🔥</span>
+            <span class="streak-tx">Day streak</span>
+            <span class="streak-ct">12</span>
+          </div>
+        </div>
+        <div class="sec-title">Practice mode</div>
+        <div class="mode-grid">
+          <div class="mcard feat">
+            <span class="mcard-ic">🎤</span>
+            <div class="mcard-t">Free Talk</div>
+            <div class="mcard-d">Speak on any topic. No script.</div>
+          </div>
+          <div class="mcard">
+            <span class="mcard-ic">📋</span>
+            <div class="mcard-t">Scenario</div>
+            <div class="mcard-d">Pick a real situation to practice.</div>
+          </div>
+        </div>
+        <div class="sec-title">Recent sessions</div>
+        <div class="rsess">
+          <div class="rsess-ic">💼</div>
+          <div class="rsess-inf">
+            <div class="rsess-t">Job Interview Practice</div>
+            <div class="rsess-m">Yesterday · 14 min · 8 turns</div>
+          </div>
+          <div class="rsess-sc" style="color:var(--green)">78</div>
+        </div>
+        <div class="rsess">
+          <div class="rsess-ic">🗣️</div>
+          <div class="rsess-inf">
+            <div class="rsess-t">Free Talk — Tech &amp; AI</div>
+            <div class="rsess-m">2 days ago · 22 min · 14 turns</div>
+          </div>
+          <div class="rsess-sc" style="color:var(--green)">83</div>
+        </div>
+        <div class="rsess">
+          <div class="rsess-ic">🏥</div>
+          <div class="rsess-inf">
+            <div class="rsess-t">Doctor's Appointment</div>
+            <div class="rsess-m">4 days ago · 11 min · 6 turns</div>
+          </div>
+          <div class="rsess-sc" style="color:var(--yellow)">64</div>
+        </div>
+        <div style="flex:1"></div>
+        <div class="bnav">
+          <div class="bni"><div class="bni-icon">🏠</div><div class="bni-lbl" style="color:var(--amber)">Home</div></div>
+          <div class="bni"><div class="bni-icon">📚</div><div class="bni-lbl">Scenarios</div></div>
+          <div class="bni"><div class="bni-icon">📊</div><div class="bni-lbl">Progress</div></div>
+          <div class="bni"><div class="bni-icon">⚙️</div><div class="bni-lbl">Settings</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">FR-CONV-06</span> Free Talk mode</div>
+    <div class="ann-item"><span class="req">FR-CONV-07</span> Scenario mode</div>
+    <div class="ann-item"><span class="req">FR-DASH-01</span> Recent session history with score</div>
+    <div class="ann-item"><span class="req">NFR-USE-02</span> Mobile-first · ≥320px width</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCREEN 03 — LIVE CONVERSATION
+════════════════════════════════════════ -->
+<div class="screen" id="s2">
+  <div class="stitle"><h2>03 — Live Conversation</h2><span>Mobile · In-session · Scenario mode</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="sbar"><span>9:47</span><span style="color:var(--red)">🔴 Live</span></div>
+        <div class="conv-hdr">
+          <div class="conv-back">←</div>
+          <div class="conv-si">
+            <div class="conv-st">Job Interview at Tech Co.</div>
+            <div class="conv-sm">Intermediate · Turn 3 of ~8</div>
+          </div>
+          <div class="conv-timer">06:42</div>
+        </div>
+        <div class="conv-msgs">
+          <div class="msg ai">
+            <div class="msg-who">AI Interviewer</div>
+            <div class="mbubble">Can you tell me about a challenging project you worked on recently and how you handled it?</div>
+          </div>
+          <div class="msg usr">
+            <div class="msg-who">You</div>
+            <div class="mbubble">Yes, I worked on migrating our old database system last quarter. The most difficult part was ensuring zero downtime during the transition.</div>
+            <div class="fb-chip">✦ Feedback · Tap to expand</div>
+          </div>
+          <div class="msg ai">
+            <div class="msg-who">AI Interviewer</div>
+            <div class="mbubble">That sounds significant. What strategies did you use to ensure no data was lost during the migration?</div>
+          </div>
+          <div class="msg usr">
+            <div class="msg-who">You</div>
+            <div class="mbubble" style="opacity:0.45;font-style:italic">Speaking…</div>
+          </div>
+        </div>
+        <div class="ptt-area">
+          <div class="live-wave">
+            <div class="lbar" style="height:7px;animation-delay:0s;animation-duration:0.3s"></div>
+            <div class="lbar" style="height:14px;animation-delay:0.05s;animation-duration:0.35s"></div>
+            <div class="lbar" style="height:22px;animation-delay:0.1s;animation-duration:0.4s"></div>
+            <div class="lbar" style="height:16px;animation-delay:0.15s;animation-duration:0.38s"></div>
+            <div class="lbar" style="height:20px;animation-delay:0.2s;animation-duration:0.45s"></div>
+            <div class="lbar" style="height:18px;animation-delay:0.25s;animation-duration:0.42s"></div>
+            <div class="lbar" style="height:12px;animation-delay:0.3s;animation-duration:0.36s"></div>
+            <div class="lbar" style="height:8px;animation-delay:0.35s;animation-duration:0.32s"></div>
+          </div>
+          <button class="ptt-btn">🎤</button>
+          <div class="ptt-hint">Hold to speak · Release to submit</div>
+          <div class="fb-toggle">
+            <div class="toggle"></div>
+            <span>Show feedback after each turn</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">FR-CONV-01</span> 16kHz audio capture via push-to-talk</div>
+    <div class="ann-item"><span class="req">FR-CONV-04</span> Optional per-turn feedback overlay (toggle)</div>
+    <div class="ann-item"><span class="req">FR-CONV-05</span> Kokoro-js TTS plays AI response on-device</div>
+    <div class="ann-item"><span class="req">NFR-USE-03</span> PTT button ≥48×48px touch target</div>
+    <div class="ann-item"><span class="req">NFR-PERF-02</span> &lt;3s end-to-end latency (P95)</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCREEN 04 — PRONUNCIATION FEEDBACK
+════════════════════════════════════════ -->
+<div class="screen" id="s3">
+  <div class="stitle"><h2>04 — Pronunciation Feedback</h2><span>Mobile · Post-turn overlay · Word tapped</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="sbar"><span>9:48</span><span>●●●● WiFi 🔋</span></div>
+        <div class="pron-hdr">
+          <div class="pron-title">Your last turn</div>
+        </div>
+        <div class="utt">
+          <span class="w w-n">Yes,</span>
+          <span class="w w-n">I</span>
+          <span class="w w-g">worked</span>
+          <span class="w w-n">on</span>
+          <span class="w w-y">migrating</span>
+          <span class="w w-n">our</span>
+          <span class="w w-g">old</span>
+          <span class="w w-g">database</span>
+          <span class="w w-g">system</span>
+          <span class="w w-n">last</span>
+          <span class="w w-g">quarter.</span>
+          <span class="w w-n">The</span>
+          <span class="w w-r">most</span>
+          <span class="w w-g">difficult</span>
+          <span class="w w-n">part</span>
+          <span class="w w-n">was</span>
+          <span class="w w-y">ensuring</span>
+          <span class="w w-r">zero</span>
+          <span class="w w-g">downtime.</span>
+        </div>
+        <div style="display:flex;gap:10px;padding:8px 20px;font-family:var(--fm);font-size:10px">
+          <span style="color:var(--green)">● Good (≥80)</span>
+          <span style="color:var(--yellow)">● Needs work (60–79)</span>
+          <span style="color:var(--red)">● Incorrect (&lt;60)</span>
+        </div>
+        <div class="phn-box">
+          <div class="phn-lbl">Word: "zero" — tap phoneme for audio example</div>
+          <div class="phns">
+            <div class="ph ph-r">/z/</div>
+            <div class="ph ph-y">/ɪ/</div>
+            <div class="ph ph-g">/ɹ/</div>
+            <div class="ph ph-g">/oʊ/</div>
+          </div>
+          <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m);margin-top:8px">⚠ /z/ → /s/ · Common pattern for Vietnamese speakers</div>
+        </div>
+        <div class="fb-secs">
+          <div class="fb-sec">
+            <div class="fb-sec-lbl">Fluency</div>
+            <div class="fb-sec-tx">Good pacing. Slight hesitation before <strong>"migrating"</strong> — natural at B1 level.</div>
+          </div>
+          <div class="fb-sec">
+            <div class="fb-sec-lbl">Naturalness</div>
+            <div class="fb-sec-tx"><strong>"I worked on the migrating"</strong> → try <strong>"I worked on migrating"</strong> — no article before gerunds.</div>
+          </div>
+          <div class="fb-sec">
+            <div class="fb-sec-lbl">Vocabulary</div>
+            <div class="fb-sec-tx">Great use of <strong>"zero downtime"</strong> — this is natural technical English.</div>
+          </div>
+        </div>
+        <div style="padding:10px 20px 24px">
+          <button class="btn-p">Continue conversation →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">FR-PRON-02</span> Per-word score (0–100) + per-phoneme deviation indicator</div>
+    <div class="ann-item"><span class="req">FR-PRON-03</span> Color-coded: green ≥80 · yellow 60–79 · red &lt;60</div>
+    <div class="ann-item"><span class="req">FR-CONV-04</span> Fluency + Naturalness + Vocabulary + explanation</div>
+    <div class="ann-item"><span class="req">NFR-USE-05</span> Colorblind-safe: text labels alongside color coding</div>
+    <div class="ann-item"><span class="req">NFR-PERF-06</span> Wav2Vec2 WASM alignment &lt;1.5s per utterance</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCREEN 05 — SESSION SUMMARY + VOCAB GAPS
+════════════════════════════════════════ -->
+<div class="screen" id="s4">
+  <div class="stitle"><h2>05 — Session Summary · Vocabulary Gap Analysis</h2><span>Mobile · Post-session · Score + improvement areas + phrases used/missed</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="sbar"><span>10:02</span><span>●●●● WiFi 🔋</span></div>
+        <div class="sum-hero">
+          <div class="sum-em">🎯</div>
+          <div class="sum-t">Session Complete</div>
+          <div class="sum-st">"Job Interview at Tech Company"</div>
+          <div class="score-ring">
+            <div class="score-n">78</div>
+            <div class="score-l">pron. score</div>
+          </div>
+          <div style="font-family:var(--fm);font-size:11px;color:var(--green)">↑ +4 from last session</div>
+        </div>
+        <div class="stats-g">
+          <div class="stat-c">
+            <div class="stat-v">14<span class="stat-u">m</span></div>
+            <div class="stat-l">Duration</div>
+          </div>
+          <div class="stat-c">
+            <div class="stat-v">8</div>
+            <div class="stat-l">Turns</div>
+          </div>
+          <div class="stat-c">
+            <div class="stat-v">11<span class="stat-u">m</span></div>
+            <div class="stat-l">Speaking</div>
+          </div>
+        </div>
+        <div class="sec-title">Top areas to improve</div>
+        <div class="imp-list">
+          <div class="imp-item">
+            <div class="imp-rk">1</div>
+            <div class="imp-inf">
+              <div class="imp-t">/z/ Sound</div>
+              <div class="imp-d">Pronounced as /s/ in "zero", "realizing"</div>
+            </div>
+            <div class="pill p-red">Practice</div>
+          </div>
+          <div class="imp-item">
+            <div class="imp-rk">2</div>
+            <div class="imp-inf">
+              <div class="imp-t">Article usage</div>
+              <div class="imp-d">"the migrating" → "migrating"</div>
+            </div>
+            <div class="pill p-yellow">Review</div>
+          </div>
+          <div class="imp-item">
+            <div class="imp-rk">3</div>
+            <div class="imp-inf">
+              <div class="imp-t">Sentence rhythm</div>
+              <div class="imp-d">Hesitations before complex nouns</div>
+            </div>
+            <div class="pill p-yellow">Review</div>
+          </div>
+        </div>
+        <div class="vocab-gap-sec" style="margin-top:14px">
+          <div class="vg-t">Vocabulary this session</div>
+          <div class="vg-used-lbl">✓ Used naturally</div>
+          <div style="flex-wrap:wrap;display:flex;margin-bottom:12px">
+            <div class="vg-chip-used">✓ zero downtime</div>
+            <div class="vg-chip-used">✓ key contributions</div>
+            <div class="vg-chip-used">✓ tech stack</div>
+          </div>
+          <div class="vg-missed">
+            <div class="vg-missed-lbl">💡 Could have used (up to 3)</div>
+            <div class="vg-row">
+              <div style="flex:1">
+                <div class="vg-phrase">"walk you through that"</div>
+                <div class="vg-row-hint">Natural alternative to "explain it"</div>
+              </div>
+              <div class="vg-practice">Practice →</div>
+            </div>
+            <div class="vg-row">
+              <div style="flex:1">
+                <div class="vg-phrase">"in my previous role"</div>
+                <div class="vg-row-hint">More precise opener for experience answers</div>
+              </div>
+              <div class="vg-practice">Practice →</div>
+            </div>
+            <div class="vg-row">
+              <div style="flex:1">
+                <div class="vg-phrase">"Let me think for a moment"</div>
+                <div class="vg-row-hint">Buys thinking time · sounds confident</div>
+              </div>
+              <div class="vg-practice">Practice →</div>
+            </div>
+          </div>
+        </div>
+        <div class="sum-acts" style="padding:14px 20px 24px">
+          <button class="btn-p">Practice this again</button>
+          <button class="btn-s" style="font-size:13px;padding:12px">Choose new scenario</button>
+          <div style="text-align:center;font-family:var(--fm);font-size:11px;color:var(--amber);margin-top:4px;cursor:pointer">📤 Share my progress report</div>
+          <div style="text-align:center;font-family:var(--fm);font-size:11px;color:var(--amber);margin-top:2px;cursor:pointer">🔊 Review my weak sounds</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">FR-CONV-08</span> Summary: duration · turns · top areas · pron. score · actions</div>
+    <div class="ann-item"><span class="req">BRD §7.6 AC-2</span> Post-session: shows phrases used naturally + flags up to 3 missed</div>
+    <div class="ann-item"><span class="req">BRD §7.6 Tech</span> Gap detection = set diff: scenario phrases minus detected in transcript</div>
+    <div class="ann-item"><span class="req">FR-PRON-04</span> Minimal pair drill offered when phoneme error ≥3× in session</div>
+    <div class="ann-item"><span class="req">FR-DASH-01</span> Session persisted to history on completion</div>
+    <div class="ann-item"><span class="req">FR-DASH-04</span> "Share my progress report" → generates PDF/link with 30-day expiry</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCREEN 06 — SCENARIO LIBRARY
+════════════════════════════════════════ -->
+<div class="screen" id="s5">
+  <div class="stitle"><h2>06 — Scenario Library · Situation Filter</h2><span>Mobile · Browse · Work/Everyday tabs · phrase count per card</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="sbar"><span>9:41</span><span>●●●● WiFi 🔋</span></div>
+        <div class="lib-hdr">
+          <div class="lib-t">Scenarios</div>
+          <div class="srch">
+            <span style="font-size:15px;color:var(--cream-m)">🔍</span>
+            <div class="srch-ph">Search scenarios…</div>
+          </div>
+          <!-- Situation tabs — primary filter per BRD §7.6 AC-3 -->
+          <div class="sit-tabs">
+            <div class="sit-tab on">All</div>
+            <div class="sit-tab">💼 Work</div>
+            <div class="sit-tab">🏠 Everyday</div>
+          </div>
+          <div class="filt" style="margin-bottom:2px">
+            <div class="fchip on">All categories</div>
+            <div class="fchip">💼 Job Interview</div>
+            <div class="fchip">🏥 Medical</div>
+            <div class="fchip">✈️ Travel</div>
+            <div class="fchip">📊 Workplace</div>
+          </div>
+        </div>
+        <div class="scen-list">
+          <div class="scard">
+            <div class="scard-hd">
+              <div class="scard-t">Tech Company Job Interview</div>
+              <div class="scard-r">★ 4.8</div>
+            </div>
+            <div class="scard-d">Practice behavioral and technical questions with an experienced hiring manager.</div>
+            <div class="scard-ft">
+              <div class="pill p-amber">Intermediate</div>
+              <div class="pill p-blue">💼 Interview</div>
+              <div class="scard-phrases"><span class="phrase-badge">📝 7 phrases</span></div>
+            </div>
+          </div>
+          <div class="scard">
+            <div class="scard-hd">
+              <div class="scard-t">Doctor's Appointment</div>
+              <div class="scard-r">★ 4.6</div>
+            </div>
+            <div class="scard-d">Describe symptoms and understand medical advice. Essential vocabulary included.</div>
+            <div class="scard-ft">
+              <div class="pill p-green">Beginner</div>
+              <div class="pill" style="background:rgba(72,201,160,0.1);color:var(--green);border:1px solid rgba(72,201,160,0.2)">🏥 Medical</div>
+              <div class="scard-phrases"><span class="phrase-badge">📝 6 phrases</span></div>
+            </div>
+          </div>
+          <div class="scard">
+            <div class="scard-hd">
+              <div class="scard-t">Quarterly Business Presentation</div>
+              <div class="scard-r">★ 4.5</div>
+            </div>
+            <div class="scard-d">Present results to an international team. Focus on clarity and Q&amp;A confidence.</div>
+            <div class="scard-ft">
+              <div class="pill p-red">Advanced</div>
+              <div class="pill p-amber">📊 Workplace</div>
+              <div class="scard-phrases"><span class="phrase-badge">📝 9 phrases</span></div>
+            </div>
+          </div>
+          <div class="scard">
+            <div class="scard-hd">
+              <div class="scard-t">Airport Check-in &amp; Immigration</div>
+              <div class="scard-r">★ 4.7</div>
+            </div>
+            <div class="scard-d">Handle check-in, security, and border control questions with confidence.</div>
+            <div class="scard-ft">
+              <div class="pill p-green">Beginner</div>
+              <div class="pill" style="background:rgba(91,141,239,0.1);color:var(--blue);border:1px solid rgba(91,141,239,0.2)">✈️ Travel</div>
+              <div class="scard-phrases"><span class="phrase-badge">📝 5 phrases</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="bnav">
+          <div class="bni"><div class="bni-icon">🏠</div><div class="bni-lbl">Home</div></div>
+          <div class="bni"><div class="bni-icon">📚</div><div class="bni-lbl" style="color:var(--amber)">Scenarios</div></div>
+          <div class="bni"><div class="bni-icon">📊</div><div class="bni-lbl">Progress</div></div>
+          <div class="bni"><div class="bni-icon">⚙️</div><div class="bni-lbl">Settings</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">BRD §7.6 AC-3</span> Filter by "Work" or "Everyday" situation type · phrase count per scenario</div>
+    <div class="ann-item"><span class="req">BRD §7.6 Must</span> Situations: Everyday (shopping, transport, social) · Work (meetings, presentations, calls)</div>
+    <div class="ann-item"><span class="req">FR-SCEN-01</span> Cards: title · category · difficulty · rating · phrase count badge</div>
+    <div class="ann-item"><span class="req">FR-SCEN-02</span> Full-text search · results &lt;500ms</div>
+    <div class="ann-item"><span class="req">FR-SCEN-07</span> 10 scenarios at Phase 0 · 20 at Phase 1 launch</div>
+    <div class="ann-item"><span class="req">NFR-REL-04</span> 20 most recent scenarios cached in IndexedDB for offline use</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCREEN 07 — LEARNER DASHBOARD
+════════════════════════════════════════ -->
+<div class="screen" id="s6">
+  <div class="stitle"><h2>07 — Learner Progress Dashboard</h2><span>Mobile · Progress &amp; history</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="sbar"><span>9:41</span><span>●●●● WiFi 🔋</span></div>
+        <div class="dash-hdr">
+          <div class="dash-t">Progress</div>
+          <div class="dash-st">Last 30 sessions</div>
+        </div>
+        <div class="chart-c">
+          <div class="chart-t">Pronunciation score trend</div>
+          <div class="chart-a">
+            <svg viewBox="0 0 320 96" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#48C9A0" stop-opacity="0.28"/>
+                  <stop offset="100%" stop-color="#48C9A0" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <line x1="0" y1="20" x2="320" y2="20" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+              <line x1="0" y1="48" x2="320" y2="48" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+              <line x1="0" y1="76" x2="320" y2="76" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+              <text x="3" y="19" fill="rgba(255,255,255,0.22)" font-size="8" font-family="monospace">100</text>
+              <text x="3" y="47" fill="rgba(255,255,255,0.22)" font-size="8" font-family="monospace">75</text>
+              <text x="3" y="75" fill="rgba(255,255,255,0.22)" font-size="8" font-family="monospace">50</text>
+              <path d="M20,74 L45,70 L70,66 L90,72 L110,63 L130,58 L150,56 L170,61 L190,52 L210,47 L230,43 L250,39 L270,34 L290,28 L308,22 L308,96 L20,96 Z" fill="url(#cg)"/>
+              <path d="M20,74 L45,70 L70,66 L90,72 L110,63 L130,58 L150,56 L170,61 L190,52 L210,47 L230,43 L250,39 L270,34 L290,28 L308,22" fill="none" stroke="#48C9A0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="308" cy="22" r="4" fill="#48C9A0"/>
+              <circle cx="308" cy="22" r="9" fill="rgba(72,201,160,0.2)"/>
+              <text x="278" y="17" fill="#48C9A0" font-size="9" font-family="monospace" font-weight="bold">78</text>
+            </svg>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-family:var(--fm);font-size:10px;color:var(--cream-m);margin-top:4px">
+            <span>30 sessions ago</span><span>Today</span>
+          </div>
+        </div>
+        <div class="weak-sec">
+          <div class="weak-t">Weak areas — last 10 sessions</div>
+          <div class="phi">
+            <div class="phi-sym">/z/</div>
+            <div class="phi-inf">
+              <div class="phi-n">"Z" sound</div>
+              <div class="phi-tr">Errors in 7/10 sessions · Trending ↑ worse</div>
+            </div>
+            <div style="text-align:right">
+              <div class="phi-sc" style="color:var(--red)">42</div>
+              <div style="font-family:var(--fm);font-size:9px;color:var(--red);margin-top:1px">Poor · worsening</div>
+            </div>
+          </div>
+          <div class="phi">
+            <div class="phi-sym">/θ/</div>
+            <div class="phi-inf">
+              <div class="phi-n">"TH" sound</div>
+              <div class="phi-tr">Errors in 5/10 sessions · Stable</div>
+            </div>
+            <div style="text-align:right">
+              <div class="phi-sc" style="color:var(--yellow)">58</div>
+              <div style="font-family:var(--fm);font-size:9px;color:var(--yellow);margin-top:1px">Fair · stable</div>
+            </div>
+          </div>
+          <div class="phi">
+            <div class="phi-sym">/ɪ/</div>
+            <div class="phi-inf">
+              <div class="phi-n">Short "i" vowel</div>
+              <div class="phi-tr">Errors in 4/10 sessions · Improving ↓</div>
+            </div>
+            <div style="text-align:right">
+              <div class="phi-sc" style="color:var(--yellow)">62</div>
+              <div style="font-family:var(--fm);font-size:9px;color:var(--yellow);margin-top:1px">Fair · improving</div>
+            </div>
+          </div>
+        </div>
+        <div class="hist-sec" style="margin-top:14px">
+          <div class="hist-t">Session history</div>
+          <div class="hitem">
+            <div class="hitem-d">Today</div>
+            <div class="hitem-i"><div class="hitem-n">Job Interview Practice</div><div class="hitem-m">14 min · 8 turns</div></div>
+            <div class="hitem-sc" style="color:var(--green)">78</div>
+          </div>
+          <div class="hitem">
+            <div class="hitem-d">Wed</div>
+            <div class="hitem-i"><div class="hitem-n">Free Talk — Tech &amp; AI</div><div class="hitem-m">22 min · 14 turns</div></div>
+            <div class="hitem-sc" style="color:var(--green)">83</div>
+          </div>
+          <div class="hitem">
+            <div class="hitem-d">Mon</div>
+            <div class="hitem-i"><div class="hitem-n">Doctor's Appointment</div><div class="hitem-m">11 min · 6 turns</div></div>
+            <div class="hitem-sc" style="color:var(--yellow)">64</div>
+          </div>
+          <div style="text-align:center;padding:12px 0;font-family:var(--fm);font-size:11px;color:var(--amber);cursor:pointer">View all 24 sessions →</div>
+        </div>
+        <div class="hist-sec" style="margin-top:14px">
+          <div class="hist-t">Vocabulary practice</div>
+          <div class="hitem">
+            <div class="hitem-d" style="font-size:18px">📝</div>
+            <div class="hitem-i"><div class="hitem-n">42 phrases practiced</div><div class="hitem-m">across 24 sessions · 8 mastered</div></div>
+            <div style="font-family:var(--fm);font-size:11px;color:var(--amber);cursor:pointer">Review →</div>
+          </div>
+          <div class="hitem">
+            <div class="hitem-d" style="font-size:18px">🔁</div>
+            <div class="hitem-i"><div class="hitem-n">Spaced repetition</div><div class="hitem-m">3 phrases due for review today</div></div>
+            <div style="font-family:var(--fm);font-size:11px;color:var(--amber);cursor:pointer">Practice →</div>
+          </div>
+        </div>
+        <div class="bnav">
+          <div class="bni"><div class="bni-icon">🏠</div><div class="bni-lbl">Home</div></div>
+          <div class="bni"><div class="bni-icon">📚</div><div class="bni-lbl">Scenarios</div></div>
+          <div class="bni"><div class="bni-icon">📊</div><div class="bni-lbl" style="color:var(--amber)">Progress</div></div>
+          <div class="bni"><div class="bni-icon">⚙️</div><div class="bni-lbl">Settings</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">FR-DASH-01</span> Session history: date · scenario · duration · score</div>
+    <div class="ann-item"><span class="req">FR-DASH-02</span> Pronunciation trend line chart · 30 sessions · ≥320px</div>
+    <div class="ann-item"><span class="req">FR-DASH-03</span> Top 3 weak phonemes with practice links</div>
+    <div class="ann-item"><span class="req">FR-PRON-06</span> Rolling improvement trend per phoneme (last 10 sessions)</div>
+    <div class="ann-item"><span class="req">NFR-USE-05</span> Phoneme score text label alongside color (Poor/Fair/Good) — colorblind-safe</div>
+    <div class="ann-item"><span class="req">BRD §7.6 Should</span> Vocabulary tracking: phrases practiced across sessions · spaced repetition nudge</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCREEN 08 — EDUCATOR DASHBOARD
+════════════════════════════════════════ -->
+<div class="screen edu" id="s7">
+  <div class="stitle"><h2>08 — Educator Dashboard</h2><span>Desktop · Class roster view</span></div>
+  <div class="edu-topbar">
+    <div class="edu-brand">LE<span>CA</span></div>
+    <div class="edu-links">
+      <div class="edu-link on">My Classes</div>
+      <div class="edu-link">Scenarios</div>
+      <div class="edu-link">Reports</div>
+      <div class="edu-link">Settings</div>
+    </div>
+    <div class="edu-usr">
+      <div class="edu-av">👩‍🏫</div>
+      Ms. Linh Nguyen
+    </div>
+  </div>
+  <div class="edu-body">
+    <div class="edu-side">
+      <div style="margin-bottom:20px">
+        <div class="edu-cls-n">English B1–B2</div>
+        <div class="edu-cls-m">Morning Class · 28 students · Week 6</div>
+        <div class="code-box">
+          <div class="code-lbl">Class Code</div>
+          <div class="code-val">KX4T2R</div>
+        </div>
+      </div>
+      <div class="edu-stats">
+        <div class="esu">
+          <div class="esu-l">Active this week</div>
+          <div class="esu-v">22 <span style="font-size:14px;color:var(--cream-m)">/ 28</span></div>
+        </div>
+        <div class="esu">
+          <div class="esu-l">Avg. speaking time</div>
+          <div class="esu-v">18 <span style="font-size:14px;color:var(--cream-m)">min/wk</span></div>
+        </div>
+        <div class="esu">
+          <div class="esu-l">Class avg. score</div>
+          <div class="esu-v" style="color:var(--green)">71</div>
+        </div>
+        <div class="esu" style="border-color:rgba(239,96,96,0.3);background:var(--red-s)">
+          <div class="esu-l" style="color:var(--red)">Needs attention</div>
+          <div class="esu-v" style="color:var(--red)">3</div>
+        </div>
+      </div>
+    </div>
+    <div class="edu-main">
+      <div class="edu-mhdr">
+        <div class="edu-mt">Class Roster — Week of May 28, 2026</div>
+        <div class="edu-acts">
+          <button class="ebtn">Assign scenario</button>
+          <button class="ebtn ebtn-p">Export CSV ↓</button>
+        </div>
+      </div>
+      <table class="rtbl">
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>Last active</th>
+            <th>Speaking time (wk)</th>
+            <th>Score trend</th>
+            <th>Latest score</th>
+            <th>Weak area</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="st-n">Minh Anh Tran</div><div class="st-lv">Intermediate</div></td>
+            <td><span style="font-family:var(--fm);font-size:12px;color:var(--cream-d)">Today, 9:41</span></td>
+            <td><div class="spk-bar"><div class="spk-trk"><div class="spk-fill" style="width:70%"></div></div><div class="spk-val">21m</div></div></td>
+            <td><span class="ta ta-up">↑</span></td>
+            <td><span style="font-family:var(--fd);font-size:16px;font-weight:800;color:var(--green)">78</span></td>
+            <td><span class="pill p-yellow">/z/ sound</span></td>
+            <td><span class="pill p-green">Active</span></td>
+          </tr>
+          <tr style="background:rgba(239,96,96,0.035)">
+            <td><div class="st-n">Bao Nguyen</div><div class="st-lv">Beginner</div></td>
+            <td><span style="font-family:var(--fm);font-size:12px;color:var(--red)">5 days ago</span></td>
+            <td><div class="spk-bar"><div class="spk-trk"><div class="spk-fill" style="width:18%;background:var(--red)"></div></div><div class="spk-val" style="color:var(--red)">5m</div></div></td>
+            <td><span class="ta ta-dn">↓</span></td>
+            <td><span style="font-family:var(--fd);font-size:16px;font-weight:800;color:var(--red)">48</span></td>
+            <td><span class="pill p-red">/θ/ sound</span></td>
+            <td><span class="flag">⚑ Flagged</span></td>
+          </tr>
+          <tr>
+            <td><div class="st-n">Thu Pham</div><div class="st-lv">Intermediate</div></td>
+            <td><span style="font-family:var(--fm);font-size:12px;color:var(--cream-d)">Yesterday</span></td>
+            <td><div class="spk-bar"><div class="spk-trk"><div class="spk-fill" style="width:85%"></div></div><div class="spk-val">26m</div></div></td>
+            <td><span class="ta ta-up">↑</span></td>
+            <td><span style="font-family:var(--fd);font-size:16px;font-weight:800;color:var(--green)">82</span></td>
+            <td><span class="pill p-green">Good</span></td>
+            <td><span class="pill p-green">Active</span></td>
+          </tr>
+          <tr>
+            <td><div class="st-n">Duc Le</div><div class="st-lv">Beginner</div></td>
+            <td><span style="font-family:var(--fm);font-size:12px;color:var(--cream-d)">Today, 8:12</span></td>
+            <td><div class="spk-bar"><div class="spk-trk"><div class="spk-fill" style="width:45%"></div></div><div class="spk-val">14m</div></div></td>
+            <td><span class="ta ta-st">→</span></td>
+            <td><span style="font-family:var(--fd);font-size:16px;font-weight:800;color:var(--yellow)">65</span></td>
+            <td><span class="pill p-yellow">/r/ sound</span></td>
+            <td><span class="pill p-amber">Needs push</span></td>
+          </tr>
+          <tr style="background:rgba(239,96,96,0.035)">
+            <td><div class="st-n">Lan Vo</div><div class="st-lv">Beginner</div></td>
+            <td><span style="font-family:var(--fm);font-size:12px;color:var(--red)">6 days ago</span></td>
+            <td><div class="spk-bar"><div class="spk-trk"><div class="spk-fill" style="width:10%;background:var(--red)"></div></div><div class="spk-val" style="color:var(--red)">3m</div></div></td>
+            <td><span class="ta ta-dn">↓</span></td>
+            <td><span style="font-family:var(--fd);font-size:16px;font-weight:800;color:var(--red)">51</span></td>
+            <td><span class="pill p-red">/l/ vs /r/</span></td>
+            <td><span class="flag">⚑ Flagged</span></td>
+          </tr>
+          <tr>
+            <td><div class="st-n">Hung Phan</div><div class="st-lv">Intermediate</div></td>
+            <td><span style="font-family:var(--fm);font-size:12px;color:var(--cream-d)">Today, 7:55</span></td>
+            <td><div class="spk-bar"><div class="spk-trk"><div class="spk-fill" style="width:58%"></div></div><div class="spk-val">18m</div></div></td>
+            <td><span class="ta ta-up">↑</span></td>
+            <td><span style="font-family:var(--fd);font-size:16px;font-weight:800;color:var(--green)">75</span></td>
+            <td><span class="pill p-yellow">/v/ sound</span></td>
+            <td><span class="pill p-green">Active</span></td>
+          </tr>
+          <tr>
+            <td colspan="7" style="text-align:center;padding:16px;font-family:var(--fm);font-size:11px;color:var(--cream-m)">
+              Showing 6 of 28 students · <span style="color:var(--amber);cursor:pointer">Load all →</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">FR-DASH-05</span> Roster: last active · speaking time · score trend (↑→↓) · weak area</div>
+    <div class="ann-item"><span class="req">FR-DASH-06</span> Speaking time logged per student per week</div>
+    <div class="ann-item"><span class="req">FR-DASH-07</span> Auto-flag: score declined &gt;10 pts over 5 sessions</div>
+    <div class="ann-item"><span class="req">FR-DASH-08</span> CSV/PDF export button</div>
+    <div class="ann-item"><span class="req">FR-SELF-03</span> 6-character class code for student enrollment</div>
+    <div class="ann-item"><span class="req">NFR-SEC-07</span> Class code: cryptographically random · expires after 30 days inactivity</div>
+  </div>
+</div>
+<!-- ════════════════════════════════════════
+     SCREEN 09 — ACCOUNT REGISTRATION
+════════════════════════════════════════ -->
+<div class="screen" id="s8">
+  <div class="stitle"><h2>09 — Account Registration</h2><span>Mobile · New user sign-up flow</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="sbar"><span>9:41</span><span>●●●● WiFi 🔋</span></div>
+        <div class="reg">
+          <div class="reg-back">←</div>
+          <div class="reg-h">Create your<br>free account</div>
+          <div class="reg-sub">Free forever. No credit card needed.</div>
+          <div class="fld">
+            <div class="fld-lbl">Email address</div>
+            <div class="fld-inp">minh.anh@email.com</div>
+          </div>
+          <div class="fld">
+            <div class="fld-lbl">Password</div>
+            <div class="fld-inp focus" style="letter-spacing:0.2em;color:var(--cream-m)">••••••••••</div>
+          </div>
+          <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m);margin-bottom:18px;padding-left:4px">Min. 8 characters</div>
+          <div class="age-row">
+            <div class="chk"></div>
+            <div class="chk-tx">I confirm I am <strong style="color:var(--cream)">13 years or older</strong></div>
+          </div>
+          <div class="age-row">
+            <div class="chk"></div>
+            <div class="chk-tx">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></div>
+          </div>
+          <div style="margin-top:4px;margin-bottom:6px">
+            <button class="btn-p">Create account</button>
+          </div>
+          <div class="reg-div"><span>or continue without account</span></div>
+          <button class="btn-s" style="font-size:13px;padding:12px">Try as guest · 3 free sessions</button>
+          <div style="text-align:center;font-family:var(--fm);font-size:10px;color:var(--cream-m);margin-top:14px">Already have an account? <span style="color:var(--amber)">Sign in →</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">FR-AUTH-01</span> Guest flow: 3 free sessions before forced signup</div>
+    <div class="ann-item"><span class="req">FR-AUTH-02</span> Email + password registration · No OAuth in Phase 1</div>
+    <div class="ann-item"><span class="req">FR-AUTH-04</span> Age gate: 13+ confirmation · COPPA-compliant</div>
+    <div class="ann-item"><span class="req">NFR-COMP-02</span> ToS + Privacy Policy acceptance required before account creation</div>
+    <div class="ann-item"><span class="req">NFR-SEC-02</span> Passwords stored as bcrypt hash (cost ≥12) · never logged</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCREEN 10 — LEVEL ASSESSMENT
+════════════════════════════════════════ -->
+<div class="screen" id="s9">
+  <div class="stitle"><h2>10 — Level Assessment</h2><span>Mobile · First authenticated session · 2-minute spoken assessment</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="sbar"><span>9:43</span><span>●●●● WiFi 🔋</span></div>
+        <div class="asmnt">
+          <div class="asmnt-prog">
+            <div class="apb"><div class="apb-fill" style="width:42%"></div></div>
+            <div class="asmnt-step">3 / 7</div>
+          </div>
+          <div class="asmnt-label">Level check · Quick · 2 min</div>
+          <div class="asmnt-q">Tell me about a typical day at work or school.</div>
+          <div class="asmnt-ctx">Speak naturally — there are no right or wrong answers. LECA will adjust to your level.</div>
+          <div class="ai-says">
+            <div class="ai-tag">LECA Tutor</div>
+            Thanks! Now let's try something a bit different. Can you describe the last time you had to explain something complicated to someone?
+          </div>
+          <div class="asmnt-rec">
+            <div class="asmnt-rec-dot"></div>
+            <div class="asmnt-rec-tx">Recording… speak now or hold the button below</div>
+          </div>
+          <div class="ptt-area" style="padding:0;gap:8px">
+            <div class="live-wave">
+              <div class="lbar" style="height:8px;animation-delay:0s"></div>
+              <div class="lbar" style="height:18px;animation-delay:0.06s"></div>
+              <div class="lbar" style="height:26px;animation-delay:0.12s"></div>
+              <div class="lbar" style="height:14px;animation-delay:0.18s"></div>
+              <div class="lbar" style="height:22px;animation-delay:0.24s"></div>
+              <div class="lbar" style="height:19px;animation-delay:0.3s"></div>
+            </div>
+            <button class="ptt-btn" style="width:68px;height:68px;font-size:24px">🎤</button>
+            <div class="ptt-hint">Release to submit your answer</div>
+          </div>
+          <div class="level-hint">Your level will be set automatically after 7 prompts</div>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <div class="pill p-green" style="flex:1;justify-content:center;font-size:10px">Beginner</div>
+            <div class="pill p-amber" style="flex:1;justify-content:center;font-size:10px;opacity:0.5">Intermediate</div>
+            <div class="pill p-red" style="flex:1;justify-content:center;font-size:10px;opacity:0.3">Advanced</div>
+          </div>
+          <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m);text-align:center;margin-top:6px">Estimating your level…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">FR-AUTH-03</span> 2-min spoken assessment · 5–7 prompts · classifies Beginner / Intermediate / Advanced</div>
+    <div class="ann-item"><span class="req">FR-AUTH-03</span> Classification seeds AI adaptive difficulty baseline</div>
+    <div class="ann-item"><span class="req">NFR-USE-01</span> First session reachable in &lt;3 min including this assessment</div>
+    <div class="ann-item"><span class="req">FR-CONV-01</span> 16kHz push-to-talk audio capture used for assessment utterances</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCREEN 11 — SCENARIO DETAIL
+════════════════════════════════════════ -->
+<div class="screen" id="s10">
+  <div class="stitle"><h2>11 — Scenario Detail</h2><span>Mobile · Pre-session · Scenario preview before starting</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="sbar"><span>9:44</span><span>●●●● WiFi 🔋</span></div>
+        <div class="sdet">
+          <div style="display:flex;align-items:center;gap:12px;padding:14px 20px 0">
+            <div style="font-size:20px;cursor:pointer;color:var(--cream-d)">←</div>
+            <div style="font-family:var(--fd);font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream-m)">Scenario</div>
+          </div>
+          <div class="sdet-hero">
+            <div class="sdet-ic">💼</div>
+            <div class="sdet-t">Tech Company Job Interview</div>
+            <div class="sdet-meta">
+              <div class="pill p-amber">Intermediate</div>
+              <div class="pill p-blue">💼 Job Interview</div>
+            </div>
+            <div class="sdet-stars">★★★★★ <span style="color:var(--cream-m)">4.8 · 1,240 plays</span></div>
+          </div>
+          <div style="padding:14px 20px 0">
+            <div class="sdet-ctx-lbl">Scenario context</div>
+            <div class="sdet-ctx">You're interviewing for a mid-level software engineer role at a growing tech company. The interviewer wants to assess your experience, problem-solving, and communication skills.</div>
+          </div>
+          <div style="padding:0 20px">
+            <div class="role-box">
+              <div class="role-lbl">AI plays the role of</div>
+              <div class="role-tx">👔 Hiring Manager at a tech company</div>
+            </div>
+          </div>
+          <div class="opening-box">
+            <div class="opening-lbl">AI opening line</div>
+            <div class="opening-tx">"Thanks for coming in today. Can you start by telling me a bit about yourself and what brought you to apply for this role?"</div>
+          </div>
+          <div class="vocab-sec">
+            <div class="sdet-ctx-lbl">Key phrases for this scenario</div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 0 4px">
+              <div style="font-size:28px">📝</div>
+              <div>
+                <div style="font-family:var(--fd);font-size:14px;font-weight:600;color:var(--cream)">7 key phrases included</div>
+                <div style="font-family:var(--fm);font-size:11px;color:var(--cream-m);margin-top:2px">Tap to hear TTS · Learn before you start</div>
+              </div>
+              <div style="margin-left:auto;font-family:var(--fm);font-size:12px;color:var(--amber);cursor:pointer;white-space:nowrap">See phrases →</div>
+            </div>
+          </div>
+          <div class="sdet-acts">
+            <button class="btn-p">Start scenario →</button>
+            <button class="btn-s" style="font-size:13px;padding:12px">★ Save for later</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">FR-SCEN-01</span> Title · category · difficulty · community rating displayed</div>
+    <div class="ann-item"><span class="req">FR-SCEN-03</span> Schema: context · ai_role · opening_line · vocabulary_list · tags</div>
+    <div class="ann-item"><span class="req">FR-SCEN-05</span> Star rating visible; learner can rate after completing</div>
+    <div class="ann-item"><span class="req">FR-CONV-07</span> AI adopts defined role + initiates conversation from scenario context</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCREEN 12 — MINIMAL PAIR DRILL
+════════════════════════════════════════ -->
+<div class="screen" id="s11">
+  <div class="stitle"><h2>12 — Minimal Pair Drill</h2><span>Mobile · Post-session phoneme practice · triggered after 3+ errors on same phoneme</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="sbar"><span>10:05</span><span>●●●● WiFi 🔋</span></div>
+        <div class="drill">
+          <div class="drill-hdr">
+            <div class="drill-tag">Minimal pair drill · triggered from session</div>
+            <div class="drill-t">/z/ vs /s/ Sound</div>
+            <div class="drill-sub">Detected 4 errors in today's session</div>
+          </div>
+          <div class="ph-focus">
+            <div class="ph-sym-big">/z/</div>
+            <div class="ph-eg">as in "zero", "realizing", "because"</div>
+            <div class="ph-eg" style="margin-top:4px;color:var(--cream-m)">Voiced fricative — feel your throat vibrate</div>
+            <div class="ph-audio">🔊 Hear native example</div>
+          </div>
+          <div class="sec-title" style="padding-top:10px">Tap the word you hear — then say it</div>
+          <div class="pair-grid">
+            <div class="pair-card target">
+              <div class="pair-word">zero</div>
+              <div class="pair-ipa">/ˈziː.roʊ/</div>
+            </div>
+            <div class="pair-card">
+              <div class="pair-word">sero</div>
+              <div class="pair-ipa">/ˈsiː.roʊ/</div>
+            </div>
+            <div class="pair-card">
+              <div class="pair-word">buzz</div>
+              <div class="pair-ipa">/bʌz/</div>
+            </div>
+            <div class="pair-card">
+              <div class="pair-word">bus</div>
+              <div class="pair-ipa">/bʌs/</div>
+            </div>
+          </div>
+          <div class="drill-score-row">
+            <div class="drill-att">
+              <div class="drill-att-w">zero</div>
+              <div class="drill-att-sc" style="color:var(--green)">86 ✓</div>
+            </div>
+            <div class="drill-att">
+              <div class="drill-att-w">buzz</div>
+              <div class="drill-att-sc" style="color:var(--red)">44 ✗</div>
+            </div>
+            <div class="drill-att">
+              <div class="drill-att-w">zone</div>
+              <div class="drill-att-sc" style="color:var(--cream-m)">—</div>
+            </div>
+          </div>
+          <div class="drill-ptt">
+            <button class="ptt-btn" style="width:64px;height:64px;font-size:22px">🎤</button>
+            <div class="drill-inst">Say the highlighted word.<br>Release button to submit.</div>
+            <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m)">2 of 6 words · 1 correct so far</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">FR-PRON-04</span> Triggered when same phoneme error occurs ≥3× in a session</div>
+    <div class="ann-item"><span class="req">FR-PRON-02</span> Per-word pronunciation score (0–100) displayed per attempt</div>
+    <div class="ann-item"><span class="req">FR-PRON-03</span> Color-coded feedback: green ≥80 · red &lt;60</div>
+    <div class="ann-item"><span class="req">NFR-USE-03</span> PTT touch target ≥48×48px</div>
+    <div class="ann-item"><span class="req">NFR-USE-05</span> Colorblind-safe: text labels and icons alongside color</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCREEN 13 — SETTINGS
+════════════════════════════════════════ -->
+<div class="screen" id="s12">
+  <div class="stitle"><h2>13 — Settings &amp; Privacy</h2><span>Mobile · Account settings · GDPR data controls</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="sbar"><span>9:41</span><span>●●●● WiFi 🔋</span></div>
+        <div class="set-hdr">
+          <div class="set-t">Settings</div>
+        </div>
+        <div class="set-body">
+          <div class="set-sec">
+            <div class="set-sec-lbl">Account</div>
+            <div class="set-row">
+              <div class="set-row-ic">👤</div>
+              <div class="set-row-inf">
+                <div class="set-row-t">Minh Anh Tran</div>
+                <div class="set-row-d">minh.anh@email.com · Intermediate level</div>
+              </div>
+              <div class="set-row-act">Edit →</div>
+            </div>
+            <div class="set-row">
+              <div class="set-row-ic">🔑</div>
+              <div class="set-row-inf">
+                <div class="set-row-t">Change password</div>
+              </div>
+              <div class="set-row-act">→</div>
+            </div>
+          </div>
+          <div class="set-sec">
+            <div class="set-sec-lbl">Practice preferences</div>
+            <div class="set-row">
+              <div class="set-row-ic">💬</div>
+              <div class="set-row-inf">
+                <div class="set-row-t">Show feedback after each turn</div>
+                <div class="set-row-d">Fluency, naturalness &amp; vocabulary tips</div>
+              </div>
+              <div class="toggle"></div>
+            </div>
+            <div class="set-row">
+              <div class="set-row-ic">🔊</div>
+              <div class="set-row-inf">
+                <div class="set-row-t">AI voice (TTS)</div>
+                <div class="set-row-d">On-device · Kokoro voice</div>
+              </div>
+              <div class="set-row-act">Change →</div>
+            </div>
+          </div>
+          <div class="set-sec">
+            <div class="set-sec-lbl">Privacy &amp; Data</div>
+            <div class="privacy-note">
+              <strong>How your data is processed:</strong> Audio is sent to Gemini 2.0 Flash API (Google) for transcription and response. Transcriptions and pronunciation scores are stored with your account. Audio itself is not persisted after processing.<br><br>
+              On self-hosted deployments, all data stays on your institution's server.
+            </div>
+            <div class="set-row">
+              <div class="set-row-ic">📦</div>
+              <div class="set-row-inf">
+                <div class="set-row-t">Export my data</div>
+                <div class="set-row-d">Sessions, scores, and account info as JSON</div>
+              </div>
+              <div class="set-row-act">Export →</div>
+            </div>
+            <div class="set-row">
+              <div class="set-row-ic">📜</div>
+              <div class="set-row-inf">
+                <div class="set-row-t">Privacy Policy</div>
+              </div>
+              <div class="set-row-act">View →</div>
+            </div>
+          </div>
+          <div class="set-sec">
+            <div class="set-sec-lbl">Danger zone</div>
+            <div class="set-row danger-row">
+              <div class="set-row-ic">🗑️</div>
+              <div class="set-row-inf">
+                <div class="set-row-t">Delete my account</div>
+                <div class="set-row-d" style="color:var(--red);opacity:0.7">Permanently delete all data · Cannot be undone</div>
+              </div>
+              <div class="set-row-act set-danger">Delete →</div>
+            </div>
+          </div>
+          <div style="text-align:center;padding:16px;font-family:var(--fm);font-size:10px;color:var(--cream-m)">LECA v1.0.0 · Open-source · Apache 2.0<br><span style="color:var(--amber)">github.com/leca-ai/leca</span></div>
+        </div>
+        <div class="bnav">
+          <div class="bni"><div class="bni-icon">🏠</div><div class="bni-lbl">Home</div></div>
+          <div class="bni"><div class="bni-icon">📚</div><div class="bni-lbl">Scenarios</div></div>
+          <div class="bni"><div class="bni-icon">📊</div><div class="bni-lbl">Progress</div></div>
+          <div class="bni"><div class="bni-icon">⚙️</div><div class="bni-lbl" style="color:var(--amber)">Settings</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">NFR-COMP-01</span> GDPR: data export + account deletion accessible from settings</div>
+    <div class="ann-item"><span class="req">NFR-COMP-03</span> Privacy Policy discloses audio processing · by whom · how long</div>
+    <div class="ann-item"><span class="req">NFR-SEC-03</span> Explains audio path: Gemini API (Phase 1) · on-device (Phase 2)</div>
+    <div class="ann-item"><span class="req">NFR-OSS-01</span> License and repo link visible in settings footer</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCREEN 14 — STUDENT JOIN CLASS
+════════════════════════════════════════ -->
+<div class="screen" id="s13">
+  <div class="stitle"><h2>14 — Join a Class</h2><span>Mobile · Student enters 6-character class code from teacher</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="sbar"><span>9:41</span><span>●●●● WiFi 🔋</span></div>
+        <div style="display:flex;align-items:center;padding:14px 20px 0;gap:12px">
+          <div style="font-size:20px;cursor:pointer;color:var(--cream-d)">←</div>
+          <div style="font-family:var(--fd);font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--cream-m)">Join a class</div>
+        </div>
+        <div class="join">
+          <div class="join-ic">🏫</div>
+          <div class="join-t">Enter your class code</div>
+          <div class="join-sub">Your teacher will share a 6-character<br>code to connect your account to their class.</div>
+          <div class="code-input">
+            <div class="code-cell filled">K</div>
+            <div class="code-cell filled">X</div>
+            <div class="code-cell filled">4</div>
+            <div class="code-cell filled">T</div>
+            <div class="code-cell active"></div>
+            <div class="code-cell"></div>
+          </div>
+          <div class="join-info">
+            <strong>You'll be joining:</strong><br>
+            English B1–B2 · Ms. Linh Nguyen<br>
+            Morning Class · LECA School
+          </div>
+          <button class="btn-p" style="width:100%;margin-bottom:10px">Join class →</button>
+          <div style="font-family:var(--fm);font-size:11px;color:var(--cream-m)">Don't have a code? Ask your teacher for class code <span style="color:var(--amber)">KX4T2R</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">FR-SELF-03</span> Learner joins class by entering 6-character class code</div>
+    <div class="ann-item"><span class="req">FR-SELF-03</span> Code generated by educator in admin dashboard</div>
+    <div class="ann-item"><span class="req">NFR-SEC-07</span> Class code: cryptographically random alphanumeric · expires after 30 days inactivity</div>
+    <div class="ann-item"><span class="req">NFR-USE-01</span> First session reachable in &lt;3 min after joining class</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCREEN 15 — SELF-HOST ADMIN DASHBOARD
+════════════════════════════════════════ -->
+<div class="screen adm" id="s14">
+  <div class="stitle"><h2>15 — Self-Host Admin Dashboard</h2><span>Desktop · Institution admin · Account management &amp; model config</span></div>
+  <div class="edu-topbar adm-topbar">
+    <div>
+      <span class="adm-brand">LE<span>CA</span></span>
+      <span class="adm-badge">Self-Hosted</span>
+    </div>
+    <div class="adm-links">
+      <div class="adm-link on">Users</div>
+      <div class="adm-link">Classes</div>
+      <div class="adm-link">Model Config</div>
+      <div class="adm-link">System</div>
+      <div class="adm-link">Logs</div>
+    </div>
+    <div class="edu-usr" style="font-family:var(--fm);font-size:12px;color:var(--cream-d);display:flex;align-items:center;gap:10px">
+      <div class="edu-av">🛡️</div>
+      admin@leca.school
+    </div>
+  </div>
+  <div class="adm-body">
+    <div class="adm-side">
+      <div class="adm-sys">
+        <div class="adm-sys-lbl">System Status</div>
+        <div class="adm-sys-v">● All services running</div>
+      </div>
+      <div class="adm-nav">
+        <div class="adm-nav-item on"><span class="adm-nav-ic">👥</span> User Management</div>
+        <div class="adm-nav-item"><span class="adm-nav-ic">🏫</span> Classes</div>
+        <div class="adm-nav-item"><span class="adm-nav-ic">🤖</span> AI Model Config</div>
+        <div class="adm-nav-item"><span class="adm-nav-ic">🔒</span> Content Safety</div>
+        <div class="adm-nav-item"><span class="adm-nav-ic">📊</span> System Health</div>
+        <div class="adm-nav-item"><span class="adm-nav-ic">📋</span> Audit Logs</div>
+        <div class="adm-nav-item"><span class="adm-nav-ic">⚙️</span> Settings</div>
+      </div>
+    </div>
+    <div class="adm-main">
+      <div class="adm-mhdr">
+        <div class="adm-mt">User Management</div>
+        <div class="edu-acts">
+          <button class="ebtn">Import CSV</button>
+          <button class="ebtn ebtn-p">+ Add user</button>
+        </div>
+      </div>
+      <div class="adm-kpi">
+        <div class="adm-kpi-c">
+          <div class="adm-kpi-l">Total users</div>
+          <div class="adm-kpi-v">284</div>
+          <div class="adm-kpi-sub">across 9 classes</div>
+        </div>
+        <div class="adm-kpi-c">
+          <div class="adm-kpi-l">Active this week</div>
+          <div class="adm-kpi-v" style="color:var(--green)">201</div>
+          <div class="adm-kpi-sub">71% engagement</div>
+        </div>
+        <div class="adm-kpi-c">
+          <div class="adm-kpi-l">LLM Backend</div>
+          <div class="adm-kpi-v" style="font-size:16px;margin-top:8px"><span class="cfg-val ok">llama3-8b</span></div>
+          <div class="adm-kpi-sub">Mac Mini M4 · Ollama</div>
+        </div>
+        <div class="adm-kpi-c" style="border-color:rgba(245,193,24,0.25)">
+          <div class="adm-kpi-l">Flagged students</div>
+          <div class="adm-kpi-v" style="color:var(--yellow)">7</div>
+          <div class="adm-kpi-sub">score declined &gt;10 pts</div>
+        </div>
+      </div>
+      <div class="adm-cfg">
+        <div class="adm-cfg-c">
+          <div class="adm-cfg-t">🤖 AI Model Configuration</div>
+          <div class="cfg-row"><div class="cfg-lbl">LECA_LLM_BACKEND</div><div class="cfg-val">llama3-8b</div></div>
+          <div class="cfg-row"><div class="cfg-lbl">Model status</div><div class="cfg-val ok">Running</div></div>
+          <div class="cfg-row"><div class="cfg-lbl">Avg. latency (P95)</div><div class="cfg-val ok">2.4s</div></div>
+          <div class="cfg-row"><div class="cfg-lbl">Concurrent sessions</div><div class="cfg-val">1–2 max</div></div>
+          <div style="margin-top:8px"><button class="ebtn" style="width:100%">Change model →</button></div>
+        </div>
+        <div class="adm-cfg-c">
+          <div class="adm-cfg-t">🔒 Content Safety</div>
+          <div class="cfg-row"><div class="cfg-lbl">LECA_CONTENT_SAFETY</div><div class="cfg-val">standard</div></div>
+          <div class="cfg-row"><div class="cfg-lbl">Age gate enforced</div><div class="cfg-val ok">Yes</div></div>
+          <div class="cfg-row"><div class="cfg-lbl">Child learner mode</div><div class="cfg-val warn">Off</div></div>
+          <div class="cfg-row"><div class="cfg-lbl">Telemetry to LECA Cloud</div><div class="cfg-val ok">Disabled</div></div>
+          <div style="margin-top:8px"><button class="ebtn" style="width:100%">Configure →</button></div>
+        </div>
+      </div>
+      <div style="font-family:var(--fd);font-size:14px;font-weight:700;color:var(--cream);margin-bottom:12px">All users</div>
+      <table class="adm-usr-tbl">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Class</th>
+            <th>Level</th>
+            <th>Last active</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="adm-usr-name">Minh Anh Tran</div></td>
+            <td>minh.anh@school.edu</td>
+            <td><span class="pill p-amber" style="font-size:10px">B1–B2 Morning</span></td>
+            <td><span class="pill p-amber" style="font-size:10px">Intermediate</span></td>
+            <td>Today, 9:41</td>
+            <td><div class="adm-act"><button class="adm-act-btn">View</button><button class="adm-act-btn">Reset pw</button></div></td>
+          </tr>
+          <tr>
+            <td><div class="adm-usr-name">Bao Nguyen</div></td>
+            <td>bao.nguyen@school.edu</td>
+            <td><span class="pill p-amber" style="font-size:10px">B1–B2 Morning</span></td>
+            <td><span class="pill p-green" style="font-size:10px">Beginner</span></td>
+            <td><span style="color:var(--red)">5 days ago</span></td>
+            <td><div class="adm-act"><button class="adm-act-btn">View</button><button class="adm-act-btn">Reset pw</button></div></td>
+          </tr>
+          <tr>
+            <td><div class="adm-usr-name">Thu Pham</div></td>
+            <td>thu.pham@school.edu</td>
+            <td><span class="pill p-blue" style="font-size:10px">A2 Evening</span></td>
+            <td><span class="pill p-amber" style="font-size:10px">Intermediate</span></td>
+            <td>Yesterday</td>
+            <td><div class="adm-act"><button class="adm-act-btn">View</button><button class="adm-act-btn">Reset pw</button></div></td>
+          </tr>
+          <tr>
+            <td colspan="6" style="text-align:center;padding:14px;color:var(--cream-m);font-size:11px">
+              Showing 3 of 284 users · <span style="color:var(--amber);cursor:pointer">Search or filter users →</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">FR-SELF-02</span> Admin: create/manage accounts · classes · scenarios · progress · password reset</div>
+    <div class="ann-item"><span class="req">FR-SELF-04</span> LECA_LLM_BACKEND config visible + changeable · fail-fast validation on startup</div>
+    <div class="ann-item"><span class="req">FR-SELF-06</span> LECA_CONTENT_SAFETY config · strict mode toggle for child learners</div>
+    <div class="ann-item"><span class="req">NFR-SEC-04</span> Telemetry to LECA Cloud disabled by default on self-hosted instance</div>
+    <div class="ann-item"><span class="req">NFR-SEC-08</span> Admin dashboard requires auth · not accessible on public port by default</div>
+    <div class="ann-item"><span class="req">FR-SELF-01</span> Docker compose up · all services containerized · operational in &lt;15 min</div>
+  </div>
+</div>
+<!-- ════════════════════════════════════════
+     SCREEN 16 — KEY PHRASES (PRE-SESSION)
+════════════════════════════════════════ -->
+<div class="screen" id="s15">
+  <div class="stitle"><h2>16 — Key Phrases · Pre-session Panel</h2><span>Mobile · Phrase set shown before conversation starts · BRD §7.6</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="sbar"><span>9:44</span><span>●●●● WiFi 🔋</span></div>
+        <div class="phrases">
+          <div class="phrases-hdr">
+            <div class="phrases-eyebrow">Before you start · Key phrases</div>
+            <div class="phrases-t">Tech Company<br>Job Interview</div>
+            <div class="phrases-sub">Phrases that will make you sound natural in this scenario</div>
+            <div class="sit-badge">💼 Work situation · 7 phrases</div>
+            <div class="phrase-count-note">Tap any phrase to hear it · tap again to practice</div>
+          </div>
+          <div class="phrase-list">
+            <div class="phrase-card">
+              <div class="phrase-text">"I'd be happy to walk you through that."</div>
+              <div class="phrase-ex">Use when an interviewer asks you to explain your experience or a project in detail.</div>
+              <div class="phrase-ft">
+                <div class="phrase-tts">🔊 Hear it</div>
+                <div class="phrase-tap">Tap for detail →</div>
+              </div>
+            </div>
+            <div class="phrase-card">
+              <div class="phrase-text">"One of my key contributions was…"</div>
+              <div class="phrase-ex">Opens a strong answer when describing your role in a team project or achievement.</div>
+              <div class="phrase-ft">
+                <div class="phrase-tts">🔊 Hear it</div>
+                <div class="phrase-tap">Tap for detail →</div>
+              </div>
+            </div>
+            <div class="phrase-card">
+              <div class="phrase-text">"That's a great question. Let me think for a moment."</div>
+              <div class="phrase-ex">Buys natural thinking time without awkward silence — sounds professional, not hesitant.</div>
+              <div class="phrase-ft">
+                <div class="phrase-tts">🔊 Hear it</div>
+                <div class="phrase-tap">Tap for detail →</div>
+              </div>
+            </div>
+            <div class="phrase-card">
+              <div class="phrase-text">"In my previous role, I was responsible for…"</div>
+              <div class="phrase-ex">Standard opener for experience-based questions. More precise than "I worked on…".</div>
+              <div class="phrase-ft">
+                <div class="phrase-tts">🔊 Hear it</div>
+                <div class="phrase-tap">Tap for detail →</div>
+              </div>
+            </div>
+            <div class="phrase-card">
+              <div class="phrase-text">"The biggest challenge was ensuring…"</div>
+              <div class="phrase-ex">Use with STAR method: sets up the Action/Result naturally after stating the situation.</div>
+              <div class="phrase-ft">
+                <div class="phrase-tts">🔊 Hear it</div>
+                <div class="phrase-tap">Tap for detail →</div>
+              </div>
+            </div>
+            <div style="text-align:center;font-family:var(--fm);font-size:10px;color:var(--cream-m);padding:8px 0">+ 2 more phrases · scroll to see all</div>
+          </div>
+          <div class="phrases-acts">
+            <button class="btn-p">Start conversation →</button>
+            <button class="btn-s" style="font-size:13px;padding:11px">Skip phrases</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">BRD §7.6 AC-1</span> ≥5 key phrases/sentences each with a one-sentence usage example</div>
+    <div class="ann-item"><span class="req">BRD §7.6 Must</span> Phrase sets curated per scenario · extend existing scenario YAML/JSON schema</div>
+    <div class="ann-item"><span class="req">BRD §7.6 Must</span> Situations categorised as Everyday vs. Work · "💼 Work" badge visible</div>
+    <div class="ann-item"><span class="req">BRD §7.6 Should</span> Tap phrase to hear TTS pronunciation — Kokoro-js on-device · no server call</div>
+    <div class="ann-item"><span class="req">BRD §7.6 Tech</span> No AI inference at MVP — phrases are human-curated in scenario schema</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCREEN 17 — PHRASE DETAIL SHEET
+════════════════════════════════════════ -->
+<div class="screen" id="s16">
+  <div class="stitle"><h2>17 — Phrase Detail · Bottom Sheet</h2><span>Mobile · Tap phrase → sheet opens · TTS + example sentence + practice</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen" style="position:relative">
+        <div class="sbar"><span>9:44</span><span>●●●● WiFi 🔋</span></div>
+        <!-- Blurred background (phrase list behind) -->
+        <div class="pdet-behind">
+          <div style="font-family:var(--fd);font-size:11px;color:var(--cream-m);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px">Before you start · Key phrases</div>
+          <div class="phrase-card" style="margin-bottom:8px;opacity:0.5">
+            <div class="phrase-text" style="font-size:14px">"I'd be happy to walk you through that."</div>
+          </div>
+          <div class="phrase-card" style="opacity:0.3">
+            <div class="phrase-text" style="font-size:14px">"One of my key contributions was…"</div>
+          </div>
+        </div>
+        <!-- Bottom sheet overlay -->
+        <div class="sheet">
+          <div class="sheet-handle"></div>
+          <div class="sheet-phrase">"That's a great question. Let me think for a moment."</div>
+          <div style="padding:0 24px 4px">
+            <div class="sit-badge" style="margin:0 0 14px">💼 Work · Job Interview</div>
+          </div>
+          <div class="tts-big">
+            <div class="tts-play">▶</div>
+            <div class="tts-inf">
+              <div class="tts-label">Hear native pronunciation</div>
+              <div class="tts-sub">Kokoro voice · on-device · tap to play</div>
+            </div>
+          </div>
+          <div class="ex-box">
+            <div class="ex-lbl">In a full sentence</div>
+            <div class="ex-sent"><strong>"That's a great question.</strong> Let me think for a moment — I'd say the main challenge was keeping our API response time under 200ms as the dataset scaled."</div>
+          </div>
+          <div class="when-box">
+            <div class="when-lbl">When to use it</div>
+            <div class="when-tx">Use this when you need a moment to gather your thoughts. It signals confidence and courtesy at the same time — interviewers respond positively to it.</div>
+          </div>
+          <div class="sheet-acts">
+            <button class="btn-p" style="font-size:14px;padding:13px">Practice this phrase now →</button>
+            <button class="btn-s" style="font-size:12px;padding:10px">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">BRD §7.6 Should</span> Tap phrase → hear TTS (Kokoro-js on-device) + see phrase in full sentence</div>
+    <div class="ann-item"><span class="req">BRD §7.6 AC-4</span> TTS plays · full example sentence shown when phrase detail opens</div>
+    <div class="ann-item"><span class="req">BRD §7.6</span> "Practice this phrase" → launches new conversation turn targeting that phrase</div>
+    <div class="ann-item"><span class="req">FR-CONV-05</span> Kokoro-js TTS · on-device · first-chunk playback &lt;400ms</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCREEN 20 — TEXT INPUT FALLBACK
+════════════════════════════════════════ -->
+<div class="screen" id="s17">
+  <div class="stitle"><h2>20 — Text Input Fallback</h2><span>Mobile · Mic denied or SNR &lt;10dB · FR-CONV-12 [S]</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="sbar"><span>10:14</span><span>●●●● WiFi 🔋</span></div>
+        <div style="padding:14px 20px 10px;display:flex;align-items:center;gap:10px">
+          <div style="font-size:18px;color:var(--cream-d);cursor:pointer">←</div>
+          <div style="font-family:var(--fd);font-size:13px;font-weight:600;color:var(--cream)">Job Interview Practice</div>
+        </div>
+        <div style="background:rgba(245,193,24,0.1);border:1px solid rgba(245,193,24,0.3);border-radius:14px;margin:0 20px 16px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
+          <div style="font-size:20px">⚠️</div>
+          <div>
+            <div style="font-family:var(--fd);font-size:13px;font-weight:700;color:var(--yellow);margin-bottom:4px">Microphone unavailable</div>
+            <div style="font-family:var(--fm);font-size:11px;color:var(--cream-d);line-height:1.5">Your mic is blocked or too noisy right now. Type your responses instead — all other features still work.</div>
+          </div>
+        </div>
+        <div style="flex:1;padding:0 20px;overflow-y:auto">
+          <div style="margin-bottom:16px">
+            <div style="background:var(--s2);border-radius:14px 14px 14px 4px;padding:14px 16px;margin-bottom:4px;max-width:85%">
+              <div style="font-family:var(--fb);font-size:14px;color:var(--cream);line-height:1.6">"Thanks for coming in today. Can you start by telling me about yourself?"</div>
+            </div>
+            <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m);padding-left:4px">AI · Hiring Manager</div>
+          </div>
+          <div style="margin-bottom:16px;display:flex;flex-direction:column;align-items:flex-end">
+            <div style="background:var(--amber-s);border:1px solid rgba(245,166,35,0.25);border-radius:14px 14px 4px 14px;padding:14px 16px;max-width:85%">
+              <div style="font-family:var(--fb);font-size:14px;color:var(--cream);line-height:1.6">Sure! I'm a software engineer with five years of experience, mostly in backend systems and cloud infrastructure...</div>
+            </div>
+            <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m);padding-right:4px;margin-top:4px">You · typed</div>
+          </div>
+        </div>
+        <div style="padding:12px 20px 28px">
+          <div style="background:var(--s2);border:1px solid var(--border-h);border-radius:16px;padding:12px 16px;display:flex;gap:10px;align-items:flex-end">
+            <textarea style="flex:1;background:none;border:none;color:var(--cream);font-family:var(--fb);font-size:14px;resize:none;outline:none;line-height:1.5;min-height:48px" placeholder="Type your response…"></textarea>
+            <button style="background:var(--amber);color:var(--bg);border:none;border-radius:10px;padding:10px 16px;font-family:var(--fd);font-size:13px;font-weight:700;cursor:pointer;flex-shrink:0;min-height:48px">Send</button>
+          </div>
+          <div style="text-align:center;font-family:var(--fm);font-size:10px;color:var(--amber);margin-top:8px;cursor:pointer">🎤 Allow microphone access</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">FR-CONV-12</span> Text input fallback when mic denied or SNR &lt;10dB — full conversation still functions</div>
+    <div class="ann-item"><span class="req">FR-CONV-12</span> Pronunciation feedback unavailable in text mode — clearly indicated to user</div>
+    <div class="ann-item"><span class="req">NFR-USE-03</span> Textarea + Send button both ≥48px tall — keyboard-friendly touch targets</div>
+    <div class="ann-item"><span class="req">NFR-USE-01</span> Non-blocking warning — learner can continue immediately without dismissing modal</div>
+    <div class="ann-item"><span class="req">NFR-USE-05</span> Warning uses yellow border + icon + text — not color alone</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCREEN 21 — GUEST SESSION LIMIT REACHED
+════════════════════════════════════════ -->
+<div class="screen" id="s18">
+  <div class="stitle"><h2>21 — Guest Session Limit Reached</h2><span>Mobile · After 3rd guest session · FR-AUTH-01 [M]</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="sbar"><span>10:08</span><span>●●●● WiFi 🔋</span></div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;text-align:center">
+          <div style="font-size:52px;margin-bottom:16px">🎉</div>
+          <div style="font-family:var(--fd);font-size:22px;font-weight:800;color:var(--cream);margin-bottom:8px">You've had 3 free sessions!</div>
+          <div style="font-family:var(--fb);font-size:14px;color:var(--cream-d);line-height:1.7;margin-bottom:24px">That's a great start. Create a free account to keep your progress, unlock all scenarios, and continue improving.</div>
+          <div style="background:var(--s2);border:1px solid var(--border);border-radius:16px;padding:16px;width:100%;margin-bottom:24px;text-align:left">
+            <div style="font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--amber);margin-bottom:12px">What you unlock with a free account</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;gap:10px;align-items:center">
+                <div style="color:var(--green);font-size:16px">✓</div>
+                <div style="font-family:var(--fm);font-size:12px;color:var(--cream-d)">Full progress history across all sessions</div>
+              </div>
+              <div style="display:flex;gap:10px;align-items:center">
+                <div style="color:var(--green);font-size:16px">✓</div>
+                <div style="font-family:var(--fm);font-size:12px;color:var(--cream-d)">All scenario categories including Work and Everyday</div>
+              </div>
+              <div style="display:flex;gap:10px;align-items:center">
+                <div style="color:var(--green);font-size:16px">✓</div>
+                <div style="font-family:var(--fm);font-size:12px;color:var(--cream-d)">Vocabulary tracking and spaced repetition</div>
+              </div>
+              <div style="display:flex;gap:10px;align-items:center">
+                <div style="color:var(--green);font-size:16px">✓</div>
+                <div style="font-family:var(--fm);font-size:12px;color:var(--cream-d)">Always free — no paywall, ever</div>
+              </div>
+            </div>
+          </div>
+          <button class="btn-p" style="width:100%">Create free account →</button>
+          <button class="btn-s" style="width:100%;margin-top:10px;font-size:13px;padding:12px">I already have an account</button>
+          <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m);margin-top:16px;line-height:1.5">Open-source · Self-hostable · No tracking without consent</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">FR-AUTH-01</span> Guest mode: up to 3 sessions before signup prompt — enforced client-side + server-side</div>
+    <div class="ann-item"><span class="req">FR-AUTH-01</span> Interstitial shown after 3rd session completes — not mid-session</div>
+    <div class="ann-item"><span class="req">FR-AUTH-02</span> "Create free account" → Registration flow (Screen 09)</div>
+    <div class="ann-item"><span class="req">NFR-COMP-02</span> No account creation before consent — interstitial is a soft gate, not a hard paywall</div>
+    <div class="ann-item"><span class="req">NFR-USE-01</span> Positive framing ("You've had 3 sessions!") — not a rejection message</div>
+  </div>
+</div>
+<!-- ════════════════════════════════════════
+     SCREEN 22 — L1 REDIRECT
+════════════════════════════════════════ -->
+<div class="screen" id="s19">
+  <div class="stitle"><h2>22 — L1 Redirect</h2><span>Mobile · AI detects non-English input · FR-CONV-09 [M]</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="sbar"><span>10:22</span><span>●●●● WiFi 🔋</span></div>
+        <div style="padding:14px 20px 10px;display:flex;align-items:center;gap:10px">
+          <div style="font-size:18px;color:var(--cream-d);cursor:pointer">←</div>
+          <div style="font-family:var(--fd);font-size:13px;font-weight:600;color:var(--cream)">Job Interview Practice</div>
+          <div class="pill p-amber" style="margin-left:auto;font-size:10px">B1 · Intermediate</div>
+        </div>
+        <div style="flex:1;padding:0 20px;overflow-y:auto">
+          <div style="margin-bottom:16px">
+            <div style="background:var(--s2);border-radius:14px 14px 14px 4px;padding:14px 16px;margin-bottom:4px;max-width:85%">
+              <div style="font-family:var(--fb);font-size:14px;color:var(--cream);line-height:1.6">"Tell me about your biggest professional challenge."</div>
+            </div>
+            <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m);padding-left:4px">AI · Hiring Manager</div>
+          </div>
+          <div style="margin-bottom:16px;display:flex;flex-direction:column;align-items:flex-end">
+            <div style="background:var(--s3);border:1px solid var(--border);border-radius:14px 14px 4px 14px;padding:14px 16px;max-width:85%">
+              <div style="font-family:var(--fb);font-size:14px;color:var(--cream);line-height:1.6">"Thách thức lớn nhất của tôi là khi hệ thống bị lỗi..."</div>
+            </div>
+            <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m);padding-right:4px;margin-top:4px">You · Vietnamese detected</div>
+          </div>
+          <!-- AI gentle redirect bubble -->
+          <div style="margin-bottom:16px">
+            <div style="background:var(--s2);border:1px solid rgba(91,141,239,0.2);border-radius:14px 14px 14px 4px;padding:14px 16px;max-width:90%">
+              <div style="font-family:var(--fm);font-size:10px;color:var(--blue);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">Gentle reminder 💬</div>
+              <div style="font-family:var(--fb);font-size:14px;color:var(--cream);line-height:1.6">"That sounds like a real challenge! Let's keep going in English — try telling me in your own words, even if it's not perfect. I'll help."</div>
+            </div>
+            <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m);padding-left:4px">AI · gently redirecting</div>
+          </div>
+        </div>
+        <div style="padding:12px 20px 28px">
+          <div style="background:var(--s2);border:1px solid var(--border-h);border-radius:16px;padding:4px 4px 4px 16px;display:flex;align-items:center;gap:10px">
+            <div style="font-family:var(--fm);font-size:12px;color:var(--cream-m);flex:1">Tap to respond in English…</div>
+            <button style="background:var(--amber);color:var(--bg);border:none;border-radius:12px;padding:12px 16px;font-size:22px;cursor:pointer;min-width:48px;min-height:48px">🎤</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">FR-CONV-09</span> AI detects non-English input and gently redirects to English — does not error or refuse</div>
+    <div class="ann-item"><span class="req">FR-CONV-09</span> Redirect is encouraging, not corrective — framed as support, not rejection</div>
+    <div class="ann-item"><span class="req">FR-CONV-09</span> Detection via LLM language identification — no separate language model needed</div>
+    <div class="ann-item"><span class="req">NFR-PERF-02</span> Redirect bubble appears within normal response latency — no extra round-trip</div>
+    <div class="ann-item"><span class="req">NFR-USE-01</span> Conversation continues uninterrupted — learner does not lose session context</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCREEN 23 — SHAREABLE PROGRESS REPORT
+════════════════════════════════════════ -->
+<div class="screen" id="s20">
+  <div class="stitle"><h2>23 — Shareable Progress Report</h2><span>Mobile · PDF/link · 30-day expiry · FR-DASH-04 [S]</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="sbar"><span>10:30</span><span>●●●● WiFi 🔋</span></div>
+        <div style="padding:14px 20px 10px;display:flex;align-items:center;gap:10px">
+          <div style="font-size:18px;color:var(--cream-d);cursor:pointer">←</div>
+          <div style="font-family:var(--fd);font-size:13px;font-weight:600;color:var(--cream)">My Progress Report</div>
+        </div>
+        <div style="padding:0 20px">
+          <div style="background:var(--s2);border:1px solid var(--border);border-radius:20px;padding:20px;margin-bottom:14px">
+            <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+              <div style="width:48px;height:48px;background:var(--amber-s);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">📊</div>
+              <div>
+                <div style="font-family:var(--fd);font-size:15px;font-weight:700;color:var(--cream)">Minh Anh Tran</div>
+                <div style="font-family:var(--fm);font-size:11px;color:var(--cream-m)">English Progress · Last 30 days</div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+              <div style="background:var(--s3);border-radius:12px;padding:12px;text-align:center">
+                <div style="font-family:var(--fd);font-size:22px;font-weight:800;color:var(--green)">78</div>
+                <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m)">Avg. pron. score</div>
+              </div>
+              <div style="background:var(--s3);border-radius:12px;padding:12px;text-align:center">
+                <div style="font-family:var(--fd);font-size:22px;font-weight:800;color:var(--amber)">↑ +12</div>
+                <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m)">Score improvement</div>
+              </div>
+              <div style="background:var(--s3);border-radius:12px;padding:12px;text-align:center">
+                <div style="font-family:var(--fd);font-size:22px;font-weight:800;color:var(--cream)">24</div>
+                <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m)">Sessions completed</div>
+              </div>
+              <div style="background:var(--s3);border-radius:12px;padding:12px;text-align:center">
+                <div style="font-family:var(--fd);font-size:22px;font-weight:800;color:var(--blue)">42</div>
+                <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m)">Phrases practiced</div>
+              </div>
+            </div>
+            <div style="background:rgba(239,96,96,0.08);border:1px solid rgba(239,96,96,0.2);border-radius:10px;padding:10px 12px;margin-bottom:12px">
+              <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">Top area to improve</div>
+              <div style="font-family:var(--fd);font-size:13px;font-weight:700;color:var(--red)">/z/ sound</div>
+              <div style="font-family:var(--fm);font-size:11px;color:var(--cream-m)">42 avg. score · errors in 7/10 recent sessions</div>
+            </div>
+            <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m);text-align:center">Generated by LECA · Open-source · leca.app</div>
+          </div>
+          <div style="background:var(--s2);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px">
+            <div style="font-family:var(--fd);font-size:12px;font-weight:700;color:var(--cream);margin-bottom:12px">Share this report</div>
+            <div style="display:flex;align-items:center;gap:8px;background:var(--s3);border-radius:10px;padding:10px 12px;margin-bottom:10px">
+              <div style="font-family:var(--fm);font-size:11px;color:var(--blue);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">leca.app/r/mXk9pT2q</div>
+              <button style="background:var(--amber);color:var(--bg);border:none;border-radius:8px;padding:6px 12px;font-family:var(--fm);font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0">Copy</button>
+            </div>
+            <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m);margin-bottom:12px">Link expires in 30 days · anyone with link can view</div>
+            <button class="btn-s" style="width:100%;font-size:13px;padding:11px">⬇ Download as PDF</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">FR-DASH-04</span> Shareable link or PDF report · 30-day expiry · accessible to anyone with the link</div>
+    <div class="ann-item"><span class="req">FR-DASH-04</span> Report shows: avg. score · improvement · sessions · top weak area · phrases practiced</div>
+    <div class="ann-item"><span class="req">NFR-SEC-03</span> Link is cryptographically random · no PII in URL · GDPR-compliant anonymous sharing</div>
+    <div class="ann-item"><span class="req">NFR-COMP-01</span> User can revoke/delete report link from Settings · right to erasure respected</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SCREEN 24 — COMMUNITY SCENARIO SUBMISSION
+════════════════════════════════════════ -->
+<div class="screen" id="s21">
+  <div class="stitle"><h2>24 — Community Scenario Submission</h2><span>Mobile · Submit for review queue · FR-SCEN-04 [S]</span></div>
+  <div class="phone-stage">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="sbar"><span>10:45</span><span>●●●● WiFi 🔋</span></div>
+        <div style="padding:14px 20px 10px;display:flex;align-items:center;gap:10px">
+          <div style="font-size:18px;color:var(--cream-d);cursor:pointer">←</div>
+          <div style="font-family:var(--fd);font-size:13px;font-weight:600;color:var(--cream)">Submit a Scenario</div>
+        </div>
+        <div style="padding:0 20px 24px;overflow-y:auto">
+          <div style="font-family:var(--fm);font-size:11px;color:var(--cream-m);margin-bottom:16px;line-height:1.5">Your scenario enters a community review queue. Moderators approve within 7 days. Accepted scenarios are attributed to you.</div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div>
+              <div style="font-family:var(--fm);font-size:11px;color:var(--cream-m);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em">Scenario title *</div>
+              <div style="background:var(--s2);border:1px solid var(--border-h);border-radius:12px;padding:12px 16px;font-family:var(--fb);font-size:14px;color:var(--cream)">Salary negotiation at a tech company</div>
+            </div>
+            <div>
+              <div style="font-family:var(--fm);font-size:11px;color:var(--cream-m);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em">Situation type *</div>
+              <div style="display:flex;gap:8px">
+                <div style="background:var(--amber);color:var(--bg);border-radius:10px;padding:10px 18px;font-family:var(--fm);font-size:12px;font-weight:700;cursor:pointer">💼 Work</div>
+                <div style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:10px 18px;font-family:var(--fm);font-size:12px;color:var(--cream-m);cursor:pointer">🏠 Everyday</div>
+              </div>
+            </div>
+            <div>
+              <div style="font-family:var(--fm);font-size:11px;color:var(--cream-m);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em">Difficulty *</div>
+              <div style="display:flex;gap:8px">
+                <div style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:10px 16px;font-family:var(--fm);font-size:12px;color:var(--cream-m);cursor:pointer">Beginner</div>
+                <div style="background:var(--amber);color:var(--bg);border-radius:10px;padding:10px 16px;font-family:var(--fm);font-size:12px;font-weight:700;cursor:pointer">Intermediate</div>
+                <div style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:10px 16px;font-family:var(--fm);font-size:12px;color:var(--cream-m);cursor:pointer">Advanced</div>
+              </div>
+            </div>
+            <div>
+              <div style="font-family:var(--fm);font-size:11px;color:var(--cream-m);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em">Scenario context *</div>
+              <div style="background:var(--s2);border:1px solid var(--border-h);border-radius:12px;padding:12px 16px;font-family:var(--fb);font-size:13px;color:var(--cream);line-height:1.6;min-height:80px">You've received a job offer and want to negotiate a higher salary. The hiring manager is open to discussion but has a budget ceiling.</div>
+            </div>
+            <div>
+              <div style="font-family:var(--fm);font-size:11px;color:var(--cream-m);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em">AI opening line *</div>
+              <div style="background:var(--s2);border:1px solid var(--border-h);border-radius:12px;padding:12px 16px;font-family:var(--fb);font-size:13px;color:var(--cream);line-height:1.6">"We're excited to offer you the role. Have you had a chance to review the compensation package?"</div>
+            </div>
+            <div>
+              <div style="font-family:var(--fm);font-size:11px;color:var(--cream-m);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.08em">Key phrases (one per line, optional)</div>
+              <div style="background:var(--s2);border:1px solid var(--border-h);border-radius:12px;padding:12px 16px;font-family:var(--fm);font-size:12px;color:var(--cream);line-height:1.8;min-height:70px">"Based on my research, I was expecting…"<br>"I'm very excited about this role and…"<br>"Is there flexibility on the base salary?"</div>
+            </div>
+            <button class="btn-p">Submit for review →</button>
+            <div style="font-family:var(--fm);font-size:10px;color:var(--cream-m);text-align:center;line-height:1.5">By submitting, you release this content under CC BY-SA 4.0.<br>Moderators may edit for clarity before publishing.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ann">
+    <div class="ann-item"><span class="req">FR-SCEN-04</span> Community submission form · enters moderation queue · attributed to submitter</div>
+    <div class="ann-item"><span class="req">FR-SCEN-04</span> Required fields: title · context · AI opening line · situation type · difficulty</div>
+    <div class="ann-item"><span class="req">FR-SCEN-04</span> Optional: key phrases field extends scenario schema per BRD §7.6</div>
+    <div class="ann-item"><span class="req">NFR-OSS-02</span> Submitted content licensed CC BY-SA 4.0 — disclosed to user before submit</div>
+    <div class="ann-item"><span class="req">NFR-USE-03</span> All tappable form elements ≥48px tall — accessible on mobile</div>
+  </div>
+</div>
+
+</div><!-- /wf-content -->
+
+<script>
+  function go(i, btn) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.wf-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('s' + i).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Generate animated waveform bars on splash
+  const wave = document.getElementById('splash-wave');
+  const heights = [10,18,28,14,36,24,40,20,32,16,38,22,44,18,30,12,26,34,16,10];
+  heights.forEach((h, i) => {
+    const b = document.createElement('div');
+    b.className = 'wbar';
+    b.style.cssText = `height:${h}px;animation-delay:${(i * 0.07).toFixed(2)}s;animation-duration:${(1.1 + (i % 5) * 0.15).toFixed(2)}s`;
+    wave.appendChild(b);
+  });
+</script>
+</body>
+</html>
