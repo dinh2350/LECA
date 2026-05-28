@@ -15,7 +15,6 @@ import useAuthActions from '@/services/auth/use-auth-actions';
 import { useTranslation } from '@/services/i18n/client';
 import Link from '@/components/link';
 import { RoleEnum } from '@/services/api/types/role';
-import ThemeSwitchButton from '@/components/switch-theme-button';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { IS_SIGN_UP_ENABLED } from '@/services/auth/config';
 
@@ -30,40 +29,55 @@ function ResponsiveAppBar() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-40 border-b border-[var(--color-border)] bg-[var(--color-surface)]">
-        <div className="mx-auto flex h-14 max-w-screen-xl items-center gap-4 px-4">
+      <header
+        className="fixed top-0 left-0 right-0 z-40"
+        style={{
+          background: 'rgba(12,9,7,0.82)',
+          backdropFilter: 'blur(28px) saturate(1.4)',
+          borderBottom: '1px solid var(--leca-border)',
+          height: '64px',
+        }}
+      >
+        <div className="mx-auto flex h-full max-w-screen-xl items-center gap-6 px-12">
           {/* Logo */}
-          <Link
-            href="/"
-            className="font-mono font-bold tracking-widest text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors"
-          >
-            {t('common:app-name')}
+          <Link href="/" className="no-underline leca-logo">
+            L<span className="leca-logo-accent">E</span>CA
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex flex-1 items-center gap-2">
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="/">{t('common:navigation.home')}</Link>
-            </Button>
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="/docs">Docs</Link>
-            </Button>
+          <nav className="hidden md:flex flex-1 items-center gap-6">
+            {[
+              { href: '/#problem', label: 'Problem' },
+              { href: '/#features', label: 'Features' },
+              { href: '/#how', label: 'How it works' },
+              { href: '/#oss', label: 'Open Source' },
+            ].map(({ href, label }) => (
+              <Link key={href} href={href} className="leca-nav-link">
+                {label}
+              </Link>
+            ))}
             {isAdmin && (
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/admin-panel">
-                  {t('common:navigation.dashboard')}
-                </Link>
-              </Button>
+              <Link href="/admin-panel" className="leca-nav-link">
+                {t('common:navigation.dashboard')}
+              </Link>
             )}
           </nav>
 
           {/* Right side */}
-          <div className="ml-auto flex items-center gap-2">
-            <ThemeSwitchButton />
+          <div className="ml-auto flex items-center gap-3">
             <LanguageSwitcher />
 
             {!isLoaded ? (
-              <div className="h-5 w-5 animate-spin rounded-full border-2 border-[var(--color-accent)] border-t-transparent" />
+              <div
+                style={{
+                  width: '20px',
+                  height: '20px',
+                  borderRadius: '50%',
+                  border: '2px solid var(--amber)',
+                  borderTopColor: 'transparent',
+                  animation: 'spin 0.8s linear infinite',
+                }}
+              />
             ) : user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -77,7 +91,15 @@ function ResponsiveAppBar() {
                         src={user.photo?.path}
                         alt={`${user.firstName} ${user.lastName}`}
                       />
-                      <AvatarFallback className="bg-[var(--color-accent)] text-black text-xs font-bold">
+                      <AvatarFallback
+                        style={{
+                          background: 'var(--amber-s)',
+                          color: 'var(--amber)',
+                          fontSize: '12px',
+                          fontWeight: 700,
+                          fontFamily: 'var(--fd)',
+                        }}
+                      >
                         {user.firstName?.[0]}
                         {user.lastName?.[0]}
                       </AvatarFallback>
@@ -107,14 +129,14 @@ function ResponsiveAppBar() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <div className="hidden md:flex items-center gap-2">
-                <Button variant="ghost" size="sm" asChild>
-                  <Link href="/sign-in">{t('common:navigation.signIn')}</Link>
-                </Button>
+              <div className="hidden md:flex items-center gap-3">
+                <Link href="/sign-in" className="leca-nav-link">
+                  {t('common:navigation.signIn')}
+                </Link>
                 {IS_SIGN_UP_ENABLED && (
-                  <Button variant="default" size="sm" asChild>
-                    <Link href="/sign-up">{t('common:navigation.signUp')}</Link>
-                  </Button>
+                  <Link href="/sign-up" className="leca-nav-cta">
+                    {t('common:navigation.signUp')}
+                  </Link>
                 )}
               </div>
             )}
@@ -139,7 +161,15 @@ function ResponsiveAppBar() {
 
       {/* Mobile nav — rendered outside <header> so it never changes header height */}
       {mobileMenuOpen && (
-        <nav className="fixed top-14 left-0 right-0 z-40 md:hidden border-t border-b border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2 flex flex-col gap-1">
+        <nav
+          className="fixed left-0 right-0 z-40 md:hidden flex flex-col gap-1 px-4 py-2"
+          style={{
+            top: '64px',
+            background: 'rgba(12,9,7,0.96)',
+            backdropFilter: 'blur(24px)',
+            borderBottom: '1px solid var(--leca-border)',
+          }}
+        >
           <Button
             variant="ghost"
             size="sm"
