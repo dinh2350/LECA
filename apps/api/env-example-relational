@@ -67,3 +67,4 @@ KOKORO_URL=http://kokoro:9001
 LIVEKIT_HOST=ws://livekit:7880
 LIVEKIT_API_KEY=devkey
 LIVEKIT_API_SECRET=devsecret
+AGENT_URL=http://agent:3001

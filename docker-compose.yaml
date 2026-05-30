@@ -112,6 +112,40 @@ services:
       dockerfile: Dockerfile
     ports:
       - ${APP_PORT}:${APP_PORT}
+    environment:
+      LIVEKIT_API_KEY: ${LIVEKIT_API_KEY:-devkey}
+      LIVEKIT_API_SECRET: ${LIVEKIT_API_SECRET:-devsecret}
+      LIVEKIT_HOST: ws://livekit:7880
+      AGENT_URL: http://agent:3001
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      livekit:
+        condition: service_started
+
+  agent:
+    build:
+      context: .
+      dockerfile: apps/agent/Dockerfile
+    ports:
+      - 3001:3001
+    environment:
+      PORT: 3001
+      LIVEKIT_API_KEY: ${LIVEKIT_API_KEY:-devkey}
+      LIVEKIT_API_SECRET: ${LIVEKIT_API_SECRET:-devsecret}
+      LIVEKIT_HOST: ws://livekit:7880
+    depends_on:
+      livekit:
+        condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3001/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
 
 volumes:
   boilerplate-db:

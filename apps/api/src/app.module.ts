@@ -30,6 +30,9 @@ import redisConfig from './redis/redis.config';
 import { ConversationsModule } from './conversations/conversations.module';
 import { AssessmentsModule } from './assessments/assessments.module';
 import { ScenariosModule } from './scenarios/scenarios.module';
+import livekitConfig from './livekit/livekit.config';
+import { LiveKitModule } from './livekit/livekit.module';
+import { ConversationSessionsModule } from './conversation-sessions/conversation-sessions.module';
 
 // <database-block>
 const infrastructureDatabaseModule = (databaseConfig() as DatabaseConfig)
@@ -54,6 +57,7 @@ const infrastructureDatabaseModule = (databaseConfig() as DatabaseConfig)
         googleConfig,
         appleConfig,
         redisConfig,
+        livekitConfig,
       ],
       envFilePath: ['.env'],
     }),
@@ -95,6 +99,8 @@ const infrastructureDatabaseModule = (databaseConfig() as DatabaseConfig)
     ConversationsModule,
     AssessmentsModule,
     ScenariosModule,
+    LiveKitModule,
+    ConversationSessionsModule,
   ],
 })
 export class AppModule {}
