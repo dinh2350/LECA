@@ -1,11 +1,18 @@
 import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AccessToken, RoomServiceClient } from 'livekit-server-sdk';
+import {
+  AccessToken,
+  AgentDispatchClient,
+  RoomServiceClient,
+} from 'livekit-server-sdk';
 import { randomUUID } from 'crypto';
 import { PrismaService } from '../database/prisma.service';
 import { UsersService } from '../users/users.service';
 import { AllConfigType } from '../config/config.type';
-import { LIVEKIT_ROOM_SERVICE } from '../livekit/livekit.module';
+import {
+  LIVEKIT_DISPATCH_CLIENT,
+  LIVEKIT_ROOM_SERVICE,
+} from '../livekit/livekit.module';
 import { CreateSessionResponseDto } from './dto/create-session-response.dto';
 
 const LEARNER_TOKEN_TTL_SECONDS = 3600;
@@ -17,12 +24,17 @@ export class ConversationSessionsService {
   constructor(
     @Inject(LIVEKIT_ROOM_SERVICE)
     private readonly roomService: RoomServiceClient,
+    @Inject(LIVEKIT_DISPATCH_CLIENT)
+    private readonly dispatchClient: AgentDispatchClient,
     private readonly prisma: PrismaService,
     private readonly usersService: UsersService,
     private readonly config: ConfigService<AllConfigType>,
   ) {}
 
-  async create(boilerplateUserId: number): Promise<CreateSessionResponseDto> {
+  async create(
+    boilerplateUserId: number,
+    scenarioId?: string,
+  ): Promise<CreateSessionResponseDto> {
     const lecaUserId = await this.resolveLecaUser(boilerplateUserId);
 
     const roomName = randomUUID();
@@ -39,12 +51,14 @@ export class ConversationSessionsService {
 
     const learnerToken = await this.buildLearnerToken(roomName, lecaUserId);
 
-    // Fire-and-forget: notify agent to join the room
-    this.notifyAgent(roomName, session.id).catch((err: unknown) => {
-      this.logger.warn(
-        `Agent notification failed for session ${session.id}: ${String(err)}`,
-      );
-    });
+    // Dispatch agent worker into room — fire and forget
+    this.dispatchAgent(roomName, session.id, scenarioId).catch(
+      (err: unknown) => {
+        this.logger.warn(
+          `Agent dispatch failed for session ${session.id}: ${String(err)}`,
+        );
+      },
+    );
 
     return {
       sessionId: session.id,
@@ -133,45 +147,22 @@ export class ConversationSessionsService {
     return token.toJwt();
   }
 
-  private async notifyAgent(
+  private async dispatchAgent(
     roomName: string,
     sessionId: string,
+    scenarioId?: string,
   ): Promise<void> {
-    const apiKey = this.config.getOrThrow('livekit.apiKey', { infer: true });
-    const apiSecret = this.config.getOrThrow('livekit.apiSecret', {
+    const agentName = this.config.getOrThrow('livekit.agentName', {
       infer: true,
     });
-    const livekitUrl = this.config.getOrThrow('livekit.url', { infer: true });
-    const agentUrl = this.config.getOrThrow('livekit.agentUrl', {
-      infer: true,
-    });
-
-    const agentToken = new AccessToken(apiKey, apiSecret, {
-      identity: `leca-agent-${sessionId}`,
-      ttl: LEARNER_TOKEN_TTL_SECONDS,
-    });
-    agentToken.addGrant({
-      roomJoin: true,
-      room: roomName,
-      canSubscribe: true,
-      canPublish: true,
-      hidden: true,
-    });
-    const agentJwt = await agentToken.toJwt();
-
-    const res = await fetch(`${agentUrl}/join`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+    await this.dispatchClient.createDispatch(roomName, agentName, {
+      metadata: JSON.stringify({
         sessionId,
-        roomName,
-        livekitUrl,
-        token: agentJwt,
+        scenarioId: scenarioId ?? null,
       }),
     });
-
-    if (!res.ok) {
-      throw new Error(`Agent responded ${res.status}`);
-    }
+    this.logger.log(
+      `Agent dispatched to room ${roomName} for session ${sessionId}`,
+    );
   }
 }

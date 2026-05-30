@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Delete,
   HttpCode,
@@ -20,6 +21,7 @@ import {
 import { Request } from 'express';
 import { JwtPayloadType } from '../auth/strategies/types/jwt-payload.type';
 import { ConversationSessionsService } from './conversation-sessions.service';
+import { CreateSessionDto } from './dto/create-session.dto';
 import { CreateSessionResponseDto } from './dto/create-session-response.dto';
 
 @ApiTags('Conversation Sessions')
@@ -35,8 +37,9 @@ export class ConversationSessionsController {
   @ApiCreatedResponse({ type: CreateSessionResponseDto })
   create(
     @Req() req: Request & { user: JwtPayloadType },
+    @Body() dto: CreateSessionDto,
   ): Promise<CreateSessionResponseDto> {
-    return this.service.create(Number(req.user.id));
+    return this.service.create(Number(req.user.id), dto.scenarioId);
   }
 
   /** End a conversation session and close the LiveKit room. */

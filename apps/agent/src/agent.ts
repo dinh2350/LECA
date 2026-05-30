@@ -1,74 +1,53 @@
-import { Room, RoomEvent, TrackKind, AudioStream } from '@livekit/rtc-node';
+import { getJobContext, log, voice } from '@livekit/agents';
 
-export interface JoinOptions {
+export interface AgentOptions {
   sessionId: string;
-  roomName: string;
-  livekitUrl: string;
-  token: string;
+  scenarioId: string | null;
 }
 
-async function drainAudioStream(
-  stream: AudioStream,
-  sessionId: string,
-  participantIdentity: string,
-): Promise<void> {
-  const reader = stream.getReader();
-  try {
-    while (true) {
-      const { done, value: frame } = await reader.read();
-      if (done) break;
-      console.log(
-        `[agent][${sessionId}] Audio chunk: ${frame.data.length} samples from ${participantIdentity}`,
-      );
-    }
-  } finally {
-    reader.releaseLock();
+export class LecaAgent extends voice.Agent {
+  private readonly sessionId: string;
+  private readonly scenarioId: string | null;
+
+  constructor({ sessionId, scenarioId }: AgentOptions) {
+    const instructions = [
+      'You are LECA, a friendly English conversation tutor.',
+      'Help the user practice their spoken English naturally.',
+      'Gently correct grammar mistakes by incorporating the correct form in your reply.',
+      'Keep responses concise — 1–3 sentences maximum.',
+      scenarioId ? `The conversation scenario context ID is: ${scenarioId}.` : null,
+    ]
+      .filter(Boolean)
+      .join(' ');
+
+    super({ instructions });
+    this.sessionId = sessionId;
+    this.scenarioId = scenarioId;
   }
-}
 
-export async function joinRoom(opts: JoinOptions): Promise<void> {
-  const room = new Room();
+  override async onEnter(): Promise<void> {
+    const logger = log();
+    const ctx = getJobContext();
+    const room = ctx.room;
 
-  room.on(RoomEvent.TrackSubscribed, (track, _publication, participant) => {
-    if (track.kind !== TrackKind.KIND_AUDIO) return;
+    this.session.on(voice.AgentSessionEventTypes.UserInputTranscribed, (ev) => {
+      if (!ev.isFinal || !ev.transcript.trim()) return;
+      logger.info({ sessionId: this.sessionId, transcript: ev.transcript }, 'User said');
+    });
 
-    console.log(
-      `[agent][${opts.sessionId}] Audio track subscribed from ${participant.identity}`,
-    );
+    this.session.on(voice.AgentSessionEventTypes.ConversationItemAdded, (ev) => {
+      if (ev.item.role !== 'assistant' || ev.item.interrupted) return;
+      const text = ev.item.textContent;
+      if (!text?.trim()) return;
+      logger.info({ sessionId: this.sessionId, text }, 'Agent replied');
+    });
 
-    const stream = new AudioStream(track);
-    drainAudioStream(stream, opts.sessionId, participant.identity).catch(
-      (err: unknown) => {
-        console.error(
-          `[agent][${opts.sessionId}] AudioStream error:`,
-          String(err),
-        );
-      },
-    );
-  });
+    logger.info({ sessionId: this.sessionId, scenarioId: this.scenarioId }, 'Session started');
+    void room; // room available via ctx if needed
+    this.session.say("Hello! I'm LECA, your English practice partner. What would you like to talk about today?");
+  }
 
-  room.on(RoomEvent.Disconnected, (reason) => {
-    console.log(`[agent][${opts.sessionId}] Disconnected: ${String(reason)}`);
-  });
-
-  room.on(RoomEvent.ParticipantConnected, (participant) => {
-    console.log(
-      `[agent][${opts.sessionId}] Participant connected: ${participant.identity}`,
-    );
-  });
-
-  room.on(RoomEvent.ParticipantDisconnected, (participant) => {
-    console.log(
-      `[agent][${opts.sessionId}] Participant disconnected: ${participant.identity}`,
-    );
-  });
-
-  await room.connect(opts.livekitUrl, opts.token, {
-    autoSubscribe: true,
-    dynacast: false,
-  });
-
-  console.log(
-    `[agent][${opts.sessionId}] Connected to room ${opts.roomName}`,
-  );
+  override async onExit(): Promise<void> {
+    log().info({ sessionId: this.sessionId }, 'Session ended');
+  }
 }

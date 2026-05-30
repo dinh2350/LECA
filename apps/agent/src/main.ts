@@ -1,32 +1,73 @@
-import express, { Request, Response } from 'express';
-import { joinRoom, JoinOptions } from './agent';
+import {
+  type JobContext,
+  type JobProcess,
+  ServerOptions,
+  cli,
+  defineAgent,
+  metrics,
+  voice,
+} from '@livekit/agents';
+import * as openai from '@livekit/agents-plugin-openai';
+import * as silero from '@livekit/agents-plugin-silero';
+import { fileURLToPath } from 'node:url';
+import { LecaAgent, type AgentOptions } from './agent.js';
+import { config } from './config.js';
 
-const app = express();
-app.use(express.json());
+export default defineAgent({
+  // prewarm: runs once at process startup — loads Silero VAD model into RAM
+  prewarm: async (proc: JobProcess) => {
+    proc.userData.vad = await silero.VAD.load();
+  },
 
-const PORT = Number(process.env.PORT ?? 3001);
+  entry: async (ctx: JobContext) => {
+    await ctx.connect();
 
-app.get('/health', (_req: Request, res: Response) => {
-  res.status(200).json({ status: 'ok' });
+    const vad = ctx.proc.userData.vad as silero.VAD;
+
+    const metadata = JSON.parse(ctx.job.metadata || '{}') as {
+      sessionId?: string;
+      scenarioId?: string | null;
+    };
+
+    const agentOptions: AgentOptions = {
+      sessionId: metadata.sessionId ?? ctx.job.id,
+      scenarioId: metadata.scenarioId ?? null,
+    };
+
+    const session = new voice.AgentSession({
+      vad,
+      stt: new openai.STT({
+        model: 'whisper-1',
+        baseURL: config.sttBaseUrl,
+        apiKey: 'local',
+      }),
+      llm: new openai.LLM({
+        model: config.llmModel,
+        baseURL: config.llmBaseUrl,
+        apiKey: config.llmApiKey,
+      }),
+      tts: new openai.TTS({
+        model: 'kokoro',
+        voice: 'af_heart' as Parameters<typeof openai.TTS>[0]['voice'],
+        baseURL: config.ttsBaseUrl,
+        apiKey: 'local',
+      }),
+    });
+
+    session.on(voice.AgentSessionEventTypes.MetricsCollected, (ev) => {
+      metrics.logMetrics(ev.metrics);
+    });
+
+    await session.start({
+      agent: new LecaAgent(agentOptions),
+      room: ctx.room,
+    });
+  },
 });
 
-app.post('/join', (req: Request, res: Response) => {
-  const body = req.body as Partial<JoinOptions>;
-  const { sessionId, roomName, livekitUrl, token } = body;
-
-  if (!sessionId || !roomName || !livekitUrl || !token) {
-    res.status(400).json({ error: 'Missing required fields' });
-    return;
-  }
-
-  // Respond immediately; join room asynchronously
-  res.status(202).json({ accepted: true, sessionId });
-
-  joinRoom({ sessionId, roomName, livekitUrl, token }).catch((err: unknown) => {
-    console.error(`[agent] Failed to join room for session ${sessionId}:`, err);
-  });
-});
-
-app.listen(PORT, () => {
-  console.log(`[agent] Listening on port ${PORT}`);
-});
+cli.runApp(
+  new ServerOptions({
+    agent: fileURLToPath(import.meta.url),
+    agentName: 'leca-agent',
+  }),
+);

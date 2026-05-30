@@ -25,5 +25,4 @@ COPY apps/agent/package.json ./apps/agent/package.json
 RUN pnpm install --frozen-lockfile --filter @n2base/agent... --prod
 COPY --from=builder /repo/apps/agent/dist ./apps/agent/dist
 WORKDIR /repo/apps/agent
-EXPOSE 3001
-CMD ["node", "dist/main.js"]
+CMD ["node", "dist/main.js", "start"]
