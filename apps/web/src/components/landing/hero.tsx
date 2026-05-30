@@ -1,8 +1,14 @@
 'use client';
 
+import GuestLimitModal from '@/components/guest-limit-modal';
 import Link from '@/components/link';
+import useAuth from '@/services/auth/use-auth';
+import { useGuestSession } from '@/services/guest-session/use-guest-session';
 
 export default function HeroSection() {
+  const { user } = useAuth();
+  const { startGuestSession, limitReached, isLoading } = useGuestSession();
+
   return (
     <section
       style={{
@@ -68,9 +74,19 @@ export default function HeroSection() {
         </p>
 
         <div className="hero-actions">
-          <Link href="/sign-up" className="btn-primary">
-            🎙 Start practicing free
-          </Link>
+          {user ? (
+            <Link href="/profile" className="btn-primary">
+              🎙 Start practicing
+            </Link>
+          ) : (
+            <button
+              className="btn-primary"
+              onClick={startGuestSession}
+              disabled={isLoading}
+            >
+              🎙 Start practicing free
+            </button>
+          )}
           <a
             href="https://github.com/brocoders/nestjs-boilerplate"
             className="btn-secondary"
@@ -160,6 +176,7 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
+      <GuestLimitModal open={limitReached} />
     </section>
   );
 }
