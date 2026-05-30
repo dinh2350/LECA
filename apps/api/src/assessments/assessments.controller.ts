@@ -7,7 +7,6 @@ import {
   Param,
   Post,
   Req,
-  UploadedFile,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -67,7 +66,6 @@ export class AssessmentsController {
   answer(
     @Param('id') id: string,
     @Body() body: AnswerAssessmentDto,
-    @UploadedFile() _audio?: Express.Multer.File,
   ): Promise<AnswerAssessmentResponseDto> {
     return this.service.answer(id, body.transcript);
   }
@@ -76,9 +74,7 @@ export class AssessmentsController {
   @Post(':id/complete')
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ type: CompleteAssessmentResponseDto })
-  complete(
-    @Param('id') id: string,
-  ): Promise<CompleteAssessmentResponseDto> {
+  complete(@Param('id') id: string): Promise<CompleteAssessmentResponseDto> {
     return this.service.complete(id);
   }
 }

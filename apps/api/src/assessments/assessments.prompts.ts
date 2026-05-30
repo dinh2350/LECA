@@ -7,6 +7,7 @@ export interface AssessmentPrompt {
 export const ASSESSMENT_PROMPTS: AssessmentPrompt[] = [
   {
     index: 0,
+
     text: 'Please introduce yourself. Tell me your name and what you do for work.',
     aiFollowUp: 'Nice to meet you! That sounds interesting.',
   },
@@ -18,7 +19,8 @@ export const ASSESSMENT_PROMPTS: AssessmentPrompt[] = [
   {
     index: 2,
     text: 'Tell me about a challenge you faced at work recently and how you handled it.',
-    aiFollowUp: 'That must have been difficult. How did you feel about the outcome?',
+    aiFollowUp:
+      'That must have been difficult. How did you feel about the outcome?',
   },
   {
     index: 3,

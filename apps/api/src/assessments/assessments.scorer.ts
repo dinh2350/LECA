@@ -6,8 +6,7 @@ export class AssessmentsScorer {
   private readonly ollamaUrl: string;
 
   constructor() {
-    this.ollamaUrl =
-      process.env.OLLAMA_URL ?? 'http://localhost:11434';
+    this.ollamaUrl = process.env.OLLAMA_URL ?? 'http://localhost:11434';
   }
 
   /**

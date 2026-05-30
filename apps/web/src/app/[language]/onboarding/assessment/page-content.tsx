@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import withPageRequiredAuth from '@/services/auth/with-page-required-auth';
-import { useTranslation } from '@/services/i18n/client';
 import useLanguage from '@/services/i18n/use-language';
 import { useRouter } from 'next/navigation';
 import HTTP_CODES_ENUM from '@/services/api/types/http-codes';
@@ -18,13 +17,22 @@ const SESSION_KEY = 'leca:assessment:checked';
 
 type Stage =
   | { kind: 'loading' }
-  | { kind: 'prompt'; session: StartAssessmentResponse; promptIndex: number; promptText: string }
-  | { kind: 'recording'; session: StartAssessmentResponse; promptIndex: number; promptText: string }
+  | {
+      kind: 'prompt';
+      session: StartAssessmentResponse;
+      promptIndex: number;
+      promptText: string;
+    }
+  | {
+      kind: 'recording';
+      session: StartAssessmentResponse;
+      promptIndex: number;
+      promptText: string;
+    }
   | { kind: 'submitting'; session: StartAssessmentResponse }
   | { kind: 'result'; result: CompleteAssessmentResponse };
 
 function AssessmentPageContent() {
-  const { t } = useTranslation('assessment');
   const language = useLanguage();
   const router = useRouter();
 
@@ -93,7 +101,12 @@ function AssessmentPageContent() {
       });
 
       if (status !== HTTP_CODES_ENUM.OK) {
-        setStage({ kind: 'prompt', session, promptIndex: stage.promptIndex, promptText: stage.promptText });
+        setStage({
+          kind: 'prompt',
+          session,
+          promptIndex: stage.promptIndex,
+          promptText: stage.promptText,
+        });
         return;
       }
 
@@ -122,7 +135,10 @@ function AssessmentPageContent() {
     stopRecording();
     await new Promise<void>((resolve) => {
       const recorder = mediaRecorderRef.current;
-      if (!recorder) { resolve(); return; }
+      if (!recorder) {
+        resolve();
+        return;
+      }
       recorder.onstop = () => resolve();
     });
     const audioBlob =
@@ -158,9 +174,14 @@ function AssessmentPageContent() {
           Assessment Complete!
         </h1>
         <p className="text-xl text-[var(--color-muted)]">
-          Your English level: <span className="font-semibold text-[var(--color-accent)]">{levelLabel}</span>
+          Your English level:{' '}
+          <span className="font-semibold text-[var(--color-accent)]">
+            {levelLabel}
+          </span>
         </p>
-        <p className="text-sm text-[var(--color-muted)]">Fluency score: {score}/100</p>
+        <p className="text-sm text-[var(--color-muted)]">
+          Fluency score: {score}/100
+        </p>
         <button
           onClick={handleContinue}
           className="mt-4 rounded-lg bg-[var(--color-accent)] px-8 py-3 font-semibold text-white hover:bg-[var(--color-accent-hover)] transition-colors"
@@ -171,7 +192,10 @@ function AssessmentPageContent() {
     );
   }
 
-  const { promptIndex, promptText } = stage as Extract<Stage, { kind: 'prompt' | 'recording' | 'submitting' }> & { promptIndex?: number; promptText?: string };
+  const { promptIndex, promptText } = stage as Extract<
+    Stage,
+    { kind: 'prompt' | 'recording' | 'submitting' }
+  > & { promptIndex?: number; promptText?: string };
   const isRecording = stage.kind === 'recording';
   const isSubmitting = stage.kind === 'submitting';
   const progress = ((promptIndex ?? 0) / totalPrompts) * 100;
@@ -181,7 +205,9 @@ function AssessmentPageContent() {
       {/* Progress */}
       <div className="w-full max-w-lg">
         <div className="flex justify-between text-sm text-[var(--color-muted)] mb-1">
-          <span>Prompt {(promptIndex ?? 0) + 1} of {totalPrompts}</span>
+          <span>
+            Prompt {(promptIndex ?? 0) + 1} of {totalPrompts}
+          </span>
         </div>
         <div className="h-2 w-full rounded-full bg-[var(--color-border)]">
           <div
@@ -193,7 +219,9 @@ function AssessmentPageContent() {
 
       {/* Prompt */}
       <div className="w-full max-w-lg rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 text-center">
-        <p className="text-lg font-medium text-[var(--color-foreground)]">{promptText}</p>
+        <p className="text-lg font-medium text-[var(--color-foreground)]">
+          {promptText}
+        </p>
       </div>
 
       {/* Input area */}
@@ -230,7 +258,12 @@ function AssessmentPageContent() {
                 title="Start recording"
               >
                 {/* Mic icon */}
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-8 w-8">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="h-8 w-8"
+                >
                   <path d="M12 2a4 4 0 0 1 4 4v6a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z" />
                   <path d="M19 10a1 1 0 0 1 2 0 9 9 0 0 1-18 0 1 1 0 1 1 2 0 7 7 0 0 0 14 0z" />
                   <path d="M11 21h2v2h-2z" />
@@ -241,11 +274,18 @@ function AssessmentPageContent() {
             {isRecording && (
               <>
                 <div className="flex h-20 w-20 items-center justify-center rounded-full bg-red-500 text-white animate-pulse">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-8 w-8">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="h-8 w-8"
+                  >
                     <circle cx="12" cy="12" r="8" />
                   </svg>
                 </div>
-                <p className="text-sm text-[var(--color-muted)]">Recording… speak clearly</p>
+                <p className="text-sm text-[var(--color-muted)]">
+                  Recording… speak clearly
+                </p>
                 <button
                   onClick={handleStopAndSubmit}
                   className="rounded-lg border border-[var(--color-border)] px-6 py-2 font-semibold text-[var(--color-foreground)] hover:bg-[var(--color-surface)] transition-colors"
@@ -256,7 +296,9 @@ function AssessmentPageContent() {
             )}
 
             {isSubmitting && (
-              <p className="text-sm text-[var(--color-muted)]">Analysing your answer…</p>
+              <p className="text-sm text-[var(--color-muted)]">
+                Analysing your answer…
+              </p>
             )}
 
             {/* Optional text transcript alongside recording */}
