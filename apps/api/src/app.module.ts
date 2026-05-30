@@ -27,6 +27,7 @@ import { DatabaseConfig } from './database/config/database-config.type';
 import { PrismaModule } from './database/prisma.module';
 import { RedisModule } from './redis/redis.module';
 import redisConfig from './redis/redis.config';
+import { ConversationsModule } from './conversations/conversations.module';
 
 // <database-block>
 const infrastructureDatabaseModule = (databaseConfig() as DatabaseConfig)
@@ -89,6 +90,7 @@ const infrastructureDatabaseModule = (databaseConfig() as DatabaseConfig)
     MailModule,
     HomeModule,
     EmailModule,
+    ConversationsModule,
   ],
 })
 export class AppModule {}
