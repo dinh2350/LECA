@@ -25,6 +25,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { MongooseConfigService } from './database/mongoose-config.service';
 import { DatabaseConfig } from './database/config/database-config.type';
 import { PrismaModule } from './database/prisma.module';
+import { RedisModule } from './redis/redis.module';
 
 // <database-block>
 const infrastructureDatabaseModule = (databaseConfig() as DatabaseConfig)
@@ -52,6 +53,7 @@ const infrastructureDatabaseModule = (databaseConfig() as DatabaseConfig)
       envFilePath: ['.env'],
     }),
     infrastructureDatabaseModule,
+    RedisModule,
     I18nModule.forRootAsync({
       useFactory: (configService: ConfigService<AllConfigType>) => ({
         fallbackLanguage: configService.getOrThrow('app.fallbackLanguage', {
