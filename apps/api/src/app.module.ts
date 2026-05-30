@@ -29,6 +29,7 @@ import { RedisModule } from './redis/redis.module';
 import redisConfig from './redis/redis.config';
 import { ConversationsModule } from './conversations/conversations.module';
 import { AssessmentsModule } from './assessments/assessments.module';
+import { ScenariosModule } from './scenarios/scenarios.module';
 
 // <database-block>
 const infrastructureDatabaseModule = (databaseConfig() as DatabaseConfig)
@@ -93,6 +94,7 @@ const infrastructureDatabaseModule = (databaseConfig() as DatabaseConfig)
     EmailModule,
     ConversationsModule,
     AssessmentsModule,
+    ScenariosModule,
   ],
 })
 export class AppModule {}
