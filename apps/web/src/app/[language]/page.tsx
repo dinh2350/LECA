@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getServerTranslation } from '@/services/i18n';
+import AssessmentGate from './assessment-gate';
 import HeroSection from '@/components/landing/hero';
 import StatsBar from '@/components/landing/stats-bar';
 import ProblemSection from '@/components/landing/problem';
@@ -22,6 +23,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 export default function HomePage() {
   return (
     <main>
+      <AssessmentGate />
       <HeroSection />
       <StatsBar />
       <ProblemSection />
