@@ -39,6 +39,7 @@ import ReactQueryDevtools from '@/services/react-query/react-query-devtools';
 import GoogleAuthProvider from '@/services/social-auth/google/google-auth-provider';
 import FacebookAuthProvider from '@/services/social-auth/facebook/facebook-auth-provider';
 import ConfirmDialogProvider from '@/components/confirm-dialog/confirm-dialog-provider';
+import GuestSessionProvider from '@/services/guest-session/guest-session-provider';
 
 type Props = {
   params: Promise<{ language: string }>;
@@ -81,19 +82,21 @@ export default async function RootLayout(props: {
             <StoreLanguageProvider>
               <ConfirmDialogProvider>
                 <AuthProvider>
-                  <GoogleAuthProvider>
-                    <FacebookAuthProvider>
-                      <LeavePageProvider>
-                        <ResponsiveAppBar />
-                        {children}
-                        <ToastContainer
-                          position="bottom-left"
-                          richColors
-                          closeButton
-                        />
-                      </LeavePageProvider>
-                    </FacebookAuthProvider>
-                  </GoogleAuthProvider>
+                  <GuestSessionProvider>
+                    <GoogleAuthProvider>
+                      <FacebookAuthProvider>
+                        <LeavePageProvider>
+                          <ResponsiveAppBar />
+                          {children}
+                          <ToastContainer
+                            position="bottom-left"
+                            richColors
+                            closeButton
+                          />
+                        </LeavePageProvider>
+                      </FacebookAuthProvider>
+                    </GoogleAuthProvider>
+                  </GuestSessionProvider>
                 </AuthProvider>
               </ConfirmDialogProvider>
             </StoreLanguageProvider>
