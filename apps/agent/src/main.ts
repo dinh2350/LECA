@@ -40,6 +40,7 @@ export default defineAgent({
         model: 'whisper-1',
         baseURL: config.sttBaseUrl,
         apiKey: 'local',
+        useRealtime: false,
       }),
       llm: new openai.LLM({
         model: config.llmModel,

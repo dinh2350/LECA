@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from '@/components/link';
-import useLanguage from '@/services/i18n/use-language';
 import {
   useListScenariosService,
   ScenarioListItem,
@@ -68,19 +67,13 @@ function StarRating({ value }: { value: number | null | undefined }) {
 
 // ─── Scenario card ─────────────────────────────────────────────
 
-function ScenarioCard({
-  scenario,
-  language,
-}: {
-  scenario: ScenarioListItem;
-  language: string;
-}) {
+function ScenarioCard({ scenario }: { scenario: ScenarioListItem }) {
   const diffClass =
     DIFFICULTY_COLOUR[scenario.difficulty] ?? 'bg-white/10 text-white/60';
 
   return (
     <Link
-      href={`/${language}/scenarios/${scenario.id}`}
+      href={`/scenarios/${scenario.id}`}
       className="group flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-all hover:border-white/20 hover:bg-white/[0.06] hover:-translate-y-0.5"
     >
       {/* Category icon + label */}
@@ -128,7 +121,6 @@ function ScenarioCard({
 const DIFFICULTIES = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
 export default function ScenariosPageContent() {
-  const language = useLanguage();
   const listScenarios = useListScenariosService();
 
   const [search, setSearch] = useState('');
@@ -301,7 +293,7 @@ export default function ScenariosPageContent() {
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {scenarios.map((s) => (
-                <ScenarioCard key={s.id} scenario={s} language={language} />
+                <ScenarioCard key={s.id} scenario={s} />
               ))}
             </div>
           </div>
@@ -319,7 +311,7 @@ export default function ScenariosPageContent() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {items.map((s) => (
-                  <ScenarioCard key={s.id} scenario={s} language={language} />
+                  <ScenarioCard key={s.id} scenario={s} />
                 ))}
               </div>
             </div>

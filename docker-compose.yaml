@@ -47,6 +47,7 @@ services:
       - 8000:8000
     environment:
       WHISPER__MODEL: Systran/faster-whisper-small
+      WHISPER__API_KEY: local
     volumes:
       - whisper-models:/root/.cache/huggingface
     healthcheck:
@@ -69,7 +70,7 @@ services:
         ollama serve &
         OLLAMA_PID=$$!
         until curl -sf http://localhost:11434/api/version > /dev/null; do sleep 2; done
-        ollama pull llama3:8b-instruct-q4_K_M
+        ollama pull llama3.2:3b
         wait $$OLLAMA_PID
     healthcheck:
       test: ["CMD-SHELL", "curl -sf http://localhost:11434/api/version || exit 1"]
