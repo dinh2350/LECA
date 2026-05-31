@@ -194,10 +194,18 @@ export default function ScenariosPageContent() {
           Choose your{' '}
           <span style={{ color: 'var(--amber)' }}>conversation.</span>
         </h1>
-        <p className="text-white/60 text-lg max-w-xl">
-          {total} scenarios covering everyday and professional English contexts.
-          Pick one and start practising.
-        </p>
+        <div className="flex flex-wrap items-center gap-4">
+          <p className="text-white/60 text-lg max-w-xl">
+            {total} scenarios covering everyday and professional English
+            contexts. Pick one and start practising.
+          </p>
+          <Link
+            href="/scenarios/submit"
+            className="shrink-0 rounded-full border border-amber-500/40 px-4 py-1.5 text-sm font-medium text-amber-400 hover:border-amber-500 hover:bg-amber-500/10 transition-all"
+          >
+            + Submit a scenario
+          </Link>
+        </div>
       </div>
 
       {/* Filters */}
