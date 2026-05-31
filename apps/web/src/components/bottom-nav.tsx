@@ -16,6 +16,7 @@ const HIDDEN_PATHS = [
   '/conversation',
   '/onboarding/assessment',
   '/drills/minimal-pair',
+  '/session',
 ];
 
 export default function BottomNav() {

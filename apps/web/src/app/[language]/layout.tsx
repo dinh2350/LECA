@@ -1,7 +1,7 @@
+import '../globals.css';
 import ResponsiveAppBar from '@/components/app-bar';
 import BottomNav from '@/components/bottom-nav';
 import AuthProvider from '@/services/auth/auth-provider';
-import '../globals.css';
 import { Bricolage_Grotesque, Lora, JetBrains_Mono } from 'next/font/google';
 
 const bricolage = Bricolage_Grotesque({
