@@ -18,8 +18,9 @@ export class WordPairDto {
 export class PhonemeErrorsResponseDto {
   @ApiPropertyOptional({
     description: 'IPA symbol of the most frequently mispronounced phoneme',
+    nullable: true,
   })
-  topPhoneme?: string;
+  topPhoneme: string | null;
 
   @ApiProperty({
     description:
