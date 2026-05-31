@@ -1,14 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
+import { UsersService } from '../users/users.service';
 import { ListScenariosQueryDto } from './dto/list-scenarios-query.dto';
+import { CreateScenarioDto } from './dto/create-scenario.dto';
 import {
+  CreateScenarioResponseDto,
+  MyScenarioItemDto,
+  PendingReviewResponseDto,
   ScenarioDetailDto,
   ScenarioListItemDto,
   ScenarioListResponseDto,
 } from './dto/scenarios.dto';
 import { Prisma } from '@prisma/client';
+import { sqltag, empty } from '@prisma/client/runtime/library';
 
-// Statuses visible on the public browse page
 const VISIBLE_STATUSES = ['featured'];
 
 type ScenarioWithAuthor = Prisma.ScenarioGetPayload<{
@@ -17,7 +22,12 @@ type ScenarioWithAuthor = Prisma.ScenarioGetPayload<{
 
 @Injectable()
 export class ScenariosService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly usersService: UsersService,
+  ) {}
+
+  // ── Public read ───────────────────────────────────────────────────────────
 
   async list(query: ListScenariosQueryDto): Promise<ScenarioListResponseDto> {
     const { q, category, difficulty } = query;
@@ -53,89 +63,6 @@ export class ScenariosService {
     ]);
 
     return { data: scenarios.map(this.toListItem), total, page, limit };
-  }
-
-  private async listWithFts(
-    q: string,
-    opts: {
-      category?: string;
-      difficulty?: string;
-      page: number;
-      limit: number;
-      skip: number;
-    },
-  ): Promise<ScenarioListResponseDto> {
-    const { category, difficulty, page, limit, skip } = opts;
-
-    const categoryFilter = category
-      ? Prisma.sql`AND s.situation_type = ${category}`
-      : Prisma.empty;
-    const difficultyFilter = difficulty
-      ? Prisma.sql`AND s.difficulty = ${difficulty}`
-      : Prisma.empty;
-
-    type RawRow = {
-      id: string;
-      title: string;
-      description: string | null;
-      difficulty: string;
-      situation_type: string;
-      tags: string[];
-      rating_avg: string | null;
-      rating_count: number;
-      use_count: number;
-      author_name: string | null;
-    };
-
-    const [rows, countResult] = await Promise.all([
-      this.prisma.$queryRaw<RawRow[]>(Prisma.sql`
-        SELECT s.id, s.title, s.description, s.difficulty, s.situation_type,
-               s.tags, s.rating_avg, s.rating_count, s.use_count,
-               u.display_name AS author_name
-        FROM   scenarios s
-        LEFT JOIN users u ON u.id = s.author_id
-        WHERE  to_tsvector('english', s.title || ' ' || COALESCE(s.description, ''))
-                 @@ plainto_tsquery('english', ${q})
-          AND  s.status = ANY(${VISIBLE_STATUSES}::text[])
-          ${categoryFilter}
-          ${difficultyFilter}
-        ORDER BY ts_rank(
-                   to_tsvector('english', s.title || ' ' || COALESCE(s.description, '')),
-                   plainto_tsquery('english', ${q})
-                 ) DESC,
-                 s.rating_avg DESC NULLS LAST
-        OFFSET ${skip} LIMIT ${limit}
-      `),
-      this.prisma.$queryRaw<[{ count: bigint }]>(Prisma.sql`
-        SELECT COUNT(*) AS count
-        FROM   scenarios s
-        WHERE  to_tsvector('english', s.title || ' ' || COALESCE(s.description, ''))
-                 @@ plainto_tsquery('english', ${q})
-          AND  s.status = ANY(${VISIBLE_STATUSES}::text[])
-          ${categoryFilter}
-          ${difficultyFilter}
-      `),
-    ]);
-
-    const total = Number(countResult[0]?.count ?? 0);
-
-    return {
-      data: rows.map((r) => ({
-        id: r.id,
-        title: r.title,
-        description: r.description,
-        difficulty: r.difficulty,
-        situationType: r.situation_type,
-        tags: Array.isArray(r.tags) ? r.tags : [],
-        ratingAvg: r.rating_avg ? parseFloat(r.rating_avg) : null,
-        ratingCount: Number(r.rating_count),
-        useCount: Number(r.use_count),
-        authorName: r.author_name,
-      })),
-      total,
-      page,
-      limit,
-    };
   }
 
   async findOne(id: string): Promise<ScenarioDetailDto | null> {
@@ -174,16 +101,259 @@ export class ScenariosService {
     };
   }
 
+  // ── Auth: create + list own ───────────────────────────────────────────────
+
+  async createScenario(
+    boilerplateUserId: number,
+    dto: CreateScenarioDto,
+  ): Promise<CreateScenarioResponseDto> {
+    const lecaUserId = await this.resolveLecaUser(boilerplateUserId);
+
+    const scenario = await this.prisma.scenario.create({
+      data: {
+        authorId: lecaUserId,
+        title: dto.title,
+        description: dto.description ?? null,
+        aiRole: dto.aiRole,
+        context: dto.context,
+        difficulty: dto.difficulty,
+        situationType: dto.situationType,
+        tags: dto.tags ?? [],
+        status: 'in_review',
+      },
+    });
+
+    if (dto.phrases.length > 0) {
+      await this.prisma.scenarioPhrase.createMany({
+        data: dto.phrases.map((p, i) => ({
+          scenarioId: scenario.id,
+          phrase: p.phrase,
+          exampleSentence: p.exampleSentence,
+          difficulty: p.difficulty ?? null,
+          displayOrder: i,
+        })),
+      });
+    }
+
+    return { id: scenario.id, status: scenario.status, title: scenario.title };
+  }
+
+  async listMyScenarios(
+    boilerplateUserId: number,
+  ): Promise<MyScenarioItemDto[]> {
+    const lecaUserId = await this.resolveLecaUser(boilerplateUserId);
+    return this.prisma.scenario.findMany({
+      where: { authorId: lecaUserId },
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        title: true,
+        status: true,
+        difficulty: true,
+        situationType: true,
+        ratingAvg: true,
+        ratingCount: true,
+        createdAt: true,
+      },
+    }) as Promise<MyScenarioItemDto[]>;
+  }
+
+  // ── Auth: rate ────────────────────────────────────────────────────────────
+
+  async rateScenario(
+    boilerplateUserId: number,
+    scenarioId: string,
+    rating: number,
+  ): Promise<void> {
+    const lecaUserId = await this.resolveLecaUser(boilerplateUserId);
+
+    const scenario = await this.prisma.scenario.findFirst({
+      where: { id: scenarioId, status: { in: VISIBLE_STATUSES } },
+    });
+    if (!scenario) throw new NotFoundException('Scenario not found');
+
+    await this.prisma.$transaction(async (tx) => {
+      await tx.scenarioRating.upsert({
+        where: { scenarioId_userId: { scenarioId, userId: lecaUserId } },
+        create: { scenarioId, userId: lecaUserId, rating },
+        update: { rating },
+      });
+
+      const agg = await tx.scenarioRating.aggregate({
+        where: { scenarioId },
+        _avg: { rating: true },
+        _count: { rating: true },
+      });
+
+      await tx.scenario.update({
+        where: { id: scenarioId },
+        data: {
+          ratingAvg: agg._avg.rating ?? 0,
+          ratingCount: agg._count.rating,
+        },
+      });
+    });
+  }
+
+  // ── Admin: review queue + decision ────────────────────────────────────────
+
+  async listPendingReview(): Promise<PendingReviewResponseDto> {
+    const [scenarios, total] = await Promise.all([
+      this.prisma.scenario.findMany({
+        where: { status: 'in_review' },
+        orderBy: { createdAt: 'asc' },
+        include: { author: { select: { displayName: true } } },
+      }),
+      this.prisma.scenario.count({ where: { status: 'in_review' } }),
+    ]);
+    return { data: scenarios.map(this.toListItem), total };
+  }
+
+  async reviewScenario(
+    boilerplateUserId: number,
+    scenarioId: string,
+    decision: 'approved' | 'rejected',
+    notes: string | undefined,
+  ): Promise<void> {
+    const lecaUserId = await this.resolveLecaUser(boilerplateUserId);
+
+    const scenario = await this.prisma.scenario.findFirst({
+      where: { id: scenarioId, status: 'in_review' },
+    });
+    if (!scenario)
+      throw new NotFoundException('Scenario not found or not awaiting review');
+
+    await this.prisma.scenarioReview.create({
+      data: {
+        scenarioId,
+        reviewerId: lecaUserId,
+        decision,
+        notes: notes ?? null,
+      },
+    });
+
+    await this.prisma.scenario.update({
+      where: { id: scenarioId },
+      data: { status: decision === 'approved' ? 'featured' : 'rejected' },
+    });
+  }
+
+  // ── Private helpers ───────────────────────────────────────────────────────
+
+  private async resolveLecaUser(boilerplateUserId: number): Promise<string> {
+    const user = await this.usersService.findById(boilerplateUserId);
+    if (!user || !user.email) throw new NotFoundException('User not found');
+
+    let lecaUser = await this.prisma.lecaUser.findUnique({
+      where: { email: user.email },
+    });
+
+    if (!lecaUser) {
+      lecaUser = await this.prisma.lecaUser.create({
+        data: {
+          email: user.email,
+          displayName:
+            [user.firstName, user.lastName].filter(Boolean).join(' ') ||
+            user.email,
+        },
+      });
+    }
+
+    return lecaUser.id;
+  }
+
   private toListItem = (s: ScenarioWithAuthor): ScenarioListItemDto => ({
     id: s.id,
     title: s.title,
     description: s.description,
     difficulty: s.difficulty,
     situationType: s.situationType,
-    tags: s.tags,
+    tags: Array.isArray(s.tags) ? s.tags : [],
     ratingAvg: s.ratingAvg ? Number(s.ratingAvg) : null,
     ratingCount: s.ratingCount,
     useCount: s.useCount,
     authorName: s.author?.displayName ?? null,
   });
+
+  private async listWithFts(
+    q: string,
+    opts: {
+      category?: string;
+      difficulty?: string;
+      page: number;
+      limit: number;
+      skip: number;
+    },
+  ): Promise<ScenarioListResponseDto> {
+    const { category, difficulty, page, limit, skip } = opts;
+
+    const categoryFilter = category
+      ? sqltag`AND s.situation_type = ${category}`
+      : empty;
+    const difficultyFilter = difficulty
+      ? sqltag`AND s.difficulty = ${difficulty}`
+      : empty;
+
+    type RawRow = {
+      id: string;
+      title: string;
+      description: string | null;
+      difficulty: string;
+      situation_type: string;
+      tags: string[];
+      rating_avg: string | null;
+      rating_count: number;
+      use_count: number;
+      author_name: string | null;
+    };
+
+    const [rows, countResult] = await Promise.all([
+      this.prisma.$queryRaw<RawRow[]>(sqltag`
+        SELECT s.id, s.title, s.description, s.difficulty, s.situation_type,
+               s.tags, s.rating_avg, s.rating_count, s.use_count,
+               u.display_name AS author_name
+        FROM   scenarios s
+        LEFT JOIN users u ON u.id = s.author_id
+        WHERE  to_tsvector('english', s.title || ' ' || COALESCE(s.description, ''))
+                 @@ plainto_tsquery('english', ${q})
+          AND  s.status = ANY(${VISIBLE_STATUSES}::text[])
+          ${categoryFilter}
+          ${difficultyFilter}
+        ORDER BY ts_rank(
+                   to_tsvector('english', s.title || ' ' || COALESCE(s.description, '')),
+                   plainto_tsquery('english', ${q})
+                 ) DESC,
+                 s.rating_avg DESC NULLS LAST
+        OFFSET ${skip} LIMIT ${limit}
+      `),
+      this.prisma.$queryRaw<[{ count: bigint }]>(sqltag`
+        SELECT COUNT(*) AS count
+        FROM   scenarios s
+        WHERE  to_tsvector('english', s.title || ' ' || COALESCE(s.description, ''))
+                 @@ plainto_tsquery('english', ${q})
+          AND  s.status = ANY(${VISIBLE_STATUSES}::text[])
+          ${categoryFilter}
+          ${difficultyFilter}
+      `),
+    ]);
+
+    const total = Number(countResult[0]?.count ?? 0);
+    return {
+      data: rows.map((r) => ({
+        id: r.id,
+        title: r.title,
+        description: r.description,
+        difficulty: r.difficulty,
+        situationType: r.situation_type,
+        tags: Array.isArray(r.tags) ? r.tags : [],
+        ratingAvg: r.rating_avg ? parseFloat(r.rating_avg) : null,
+        ratingCount: Number(r.rating_count),
+        useCount: Number(r.use_count),
+        authorName: r.author_name,
+      })),
+      total,
+      page,
+      limit,
+    };
+  }
 }
