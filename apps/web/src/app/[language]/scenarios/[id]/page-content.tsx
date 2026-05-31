@@ -3,8 +3,10 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import useLanguage from '@/services/i18n/use-language';
+import useAuth from '@/services/auth/use-auth';
 import {
   useGetScenarioService,
+  useRateScenarioService,
   ScenarioDetail,
   ScenarioPhrase,
 } from '@/services/api/services/scenarios';
@@ -60,6 +62,92 @@ function PhraseRow({ phrase }: { phrase: ScenarioPhrase }) {
       <p className="text-sm text-white/50 italic leading-relaxed">
         e.g. &ldquo;{phrase.exampleSentence}&rdquo;
       </p>
+    </div>
+  );
+}
+
+// ─── Star rating widget ────────────────────────────────────────
+
+function StarRatingWidget({
+  scenarioId,
+  ratingAvg,
+  ratingCount,
+}: {
+  scenarioId: string;
+  ratingAvg: number | null | undefined;
+  ratingCount: number;
+}) {
+  const { user } = useAuth();
+  const rateScenario = useRateScenarioService();
+  const language = useLanguage();
+  const router = useRouter();
+
+  const [hovered, setHovered] = useState(0);
+  const [submitted, setSubmitted] = useState(false);
+  const [optimisticAvg, setOptimisticAvg] = useState(ratingAvg);
+  const [optimisticCount, setOptimisticCount] = useState(ratingCount);
+
+  async function handleRate(rating: number) {
+    if (!user) {
+      router.push(`/${language}/sign-in`);
+      return;
+    }
+    setOptimisticAvg(rating);
+    setOptimisticCount((c) => c + 1);
+    setSubmitted(true);
+    try {
+      await rateScenario(scenarioId, rating);
+    } catch {
+      // revert on error
+      setOptimisticAvg(ratingAvg);
+      setOptimisticCount(ratingCount);
+      setSubmitted(false);
+    }
+  }
+
+  return (
+    <div className="flex flex-col gap-1">
+      <div className="flex items-center gap-2">
+        {submitted ? (
+          <span className="text-xs text-green-400">Rating saved ✓</span>
+        ) : (
+          <>
+            <div
+              className="flex gap-0.5"
+              onMouseLeave={() => setHovered(0)}
+              aria-label="Rate this scenario"
+            >
+              {[1, 2, 3, 4, 5].map((star) => (
+                <button
+                  key={star}
+                  type="button"
+                  onMouseEnter={() => setHovered(star)}
+                  onClick={() => handleRate(star)}
+                  aria-label={`Rate ${star} star${star !== 1 ? 's' : ''}`}
+                  className="text-xl leading-none transition-transform hover:scale-110"
+                  style={{
+                    color:
+                      star <= (hovered || 0)
+                        ? '#f59e0b'
+                        : 'rgba(255,255,255,0.2)',
+                  }}
+                >
+                  ★
+                </button>
+              ))}
+            </div>
+            {!user && (
+              <span className="text-xs text-white/30">Sign in to rate</span>
+            )}
+          </>
+        )}
+      </div>
+      {optimisticAvg !== null && optimisticAvg !== undefined && (
+        <span className="text-xs text-white/40">
+          ★ {optimisticAvg.toFixed(1)} ({optimisticCount} rating
+          {optimisticCount !== 1 ? 's' : ''})
+        </span>
+      )}
     </div>
   );
 }
@@ -190,15 +278,15 @@ export default function ScenarioDetailPageContent() {
             )}
           </div>
 
-          {/* Rating + author */}
+          {/* Rating widget */}
+          <StarRatingWidget
+            scenarioId={id}
+            ratingAvg={scenario.ratingAvg}
+            ratingCount={scenario.ratingCount}
+          />
+
+          {/* Stats */}
           <div className="flex items-center gap-4 text-sm text-white/40">
-            {scenario.ratingAvg !== null &&
-              scenario.ratingAvg !== undefined && (
-                <span>
-                  ★ {scenario.ratingAvg.toFixed(1)} ({scenario.ratingCount}{' '}
-                  ratings)
-                </span>
-              )}
             {scenario.useCount > 0 && (
               <span>{scenario.useCount.toLocaleString()} sessions</span>
             )}
