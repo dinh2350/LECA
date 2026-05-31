@@ -8,8 +8,8 @@ import useAuth from '@/services/auth/use-auth';
 const TABS = [
   { label: 'Home', icon: '🏠', path: '' },
   { label: 'Scenarios', icon: '📚', path: '/scenarios' },
-  { label: 'Progress', icon: '📊', path: '/dashboard' },
-  { label: 'Settings', icon: '⚙️', path: '/settings' },
+  { label: 'Progress', icon: '📊', path: '/profile' },
+  { label: 'Settings', icon: '⚙️', path: '/profile/edit' },
 ] as const;
 
 const HIDDEN_PATHS = [
