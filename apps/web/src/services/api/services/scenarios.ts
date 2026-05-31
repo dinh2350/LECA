@@ -89,3 +89,138 @@ export function useGetScenarioService() {
     [fetch],
   );
 }
+
+// ─── UGC types ────────────────────────────────────────────────
+
+export type CreateScenarioPhrasePayload = {
+  phrase: string;
+  exampleSentence: string;
+  difficulty?: string;
+};
+
+export type CreateScenarioPayload = {
+  title: string;
+  description?: string;
+  aiRole: string;
+  context: string;
+  difficulty: string;
+  situationType: string;
+  tags?: string[];
+  phrases: CreateScenarioPhrasePayload[];
+};
+
+export type CreateScenarioResponse = {
+  id: string;
+  status: string;
+  title: string;
+};
+
+export type MyScenarioItem = {
+  id: string;
+  title: string;
+  status: string;
+  difficulty: string;
+  situationType: string;
+  ratingAvg: number | null;
+  ratingCount: number;
+  createdAt: string;
+};
+
+export type PendingReviewResponse = {
+  data: ScenarioListItem[];
+  total: number;
+};
+
+// ─── Create ───────────────────────────────────────────────────
+
+export function useCreateScenarioService() {
+  const fetch = useFetch();
+
+  return useCallback(
+    (payload: CreateScenarioPayload, requestConfig?: RequestConfigType) => {
+      return fetch(`${API_URL}/v1/scenarios`, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        ...requestConfig,
+      }).then(wrapperFetchJsonResponse<CreateScenarioResponse>);
+    },
+    [fetch],
+  );
+}
+
+// ─── Mine ─────────────────────────────────────────────────────
+
+export function useListMyScenariosService() {
+  const fetch = useFetch();
+
+  return useCallback(
+    (requestConfig?: RequestConfigType) => {
+      return fetch(`${API_URL}/v1/scenarios/mine`, {
+        method: 'GET',
+        ...requestConfig,
+      }).then(wrapperFetchJsonResponse<MyScenarioItem[]>);
+    },
+    [fetch],
+  );
+}
+
+// ─── Rate ─────────────────────────────────────────────────────
+
+export function useRateScenarioService() {
+  const fetch = useFetch();
+
+  return useCallback(
+    (id: string, rating: number, requestConfig?: RequestConfigType) => {
+      return fetch(
+        `${API_URL}/v1/scenarios/${encodeURIComponent(id)}/ratings`,
+        {
+          method: 'POST',
+          body: JSON.stringify({ rating }),
+          ...requestConfig,
+        },
+      ).then(wrapperFetchJsonResponse<void>);
+    },
+    [fetch],
+  );
+}
+
+// ─── Admin: pending review ─────────────────────────────────────
+
+export function useListPendingReviewService() {
+  const fetch = useFetch();
+
+  return useCallback(
+    (requestConfig?: RequestConfigType) => {
+      return fetch(`${API_URL}/v1/scenarios/pending-review`, {
+        method: 'GET',
+        ...requestConfig,
+      }).then(wrapperFetchJsonResponse<PendingReviewResponse>);
+    },
+    [fetch],
+  );
+}
+
+// ─── Admin: review decision ────────────────────────────────────
+
+export function useReviewScenarioService() {
+  const fetch = useFetch();
+
+  return useCallback(
+    (
+      id: string,
+      decision: 'approved' | 'rejected',
+      notes?: string,
+      requestConfig?: RequestConfigType,
+    ) => {
+      return fetch(
+        `${API_URL}/v1/scenarios/${encodeURIComponent(id)}/reviews`,
+        {
+          method: 'POST',
+          body: JSON.stringify({ decision, notes }),
+          ...requestConfig,
+        },
+      ).then(wrapperFetchJsonResponse<void>);
+    },
+    [fetch],
+  );
+}
