@@ -27,6 +27,10 @@ async function bootstrap() {
     .setDescription('API docs')
     .setVersion('1.0')
     .addBearerAuth()
+    .addApiKey(
+      { type: 'apiKey', name: 'x-leca-agent-key', in: 'header' },
+      'agent-key',
+    )
     .addGlobalParameters({
       in: 'header',
       required: false,
