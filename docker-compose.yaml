@@ -42,14 +42,16 @@ services:
   # ── AI / transport services ──────────────────────────────────────────────────
 
   whisper:
-    image: onerahmet/openai-whisper-asr-webservice:latest
+    image: fedirz/faster-whisper-server:latest-cpu
     ports:
-      - 9000:9000
+      - 8000:8000
     environment:
-      ASR_MODEL: base
-      ASR_ENGINE: openai_whisper
+      WHISPER__MODEL: Systran/faster-whisper-small
+      WHISPER__API_KEY: local
+    volumes:
+      - whisper-models:/root/.cache/huggingface
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:9000/ || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -68,7 +70,7 @@ services:
         ollama serve &
         OLLAMA_PID=$$!
         until curl -sf http://localhost:11434/api/version > /dev/null; do sleep 2; done
-        ollama pull llama3:8b-instruct-q4_K_M
+        ollama pull llama3.2:3b
         wait $$OLLAMA_PID
     healthcheck:
       test: ["CMD-SHELL", "curl -sf http://localhost:11434/api/version || exit 1"]
@@ -112,7 +114,39 @@ services:
       dockerfile: Dockerfile
     ports:
       - ${APP_PORT}:${APP_PORT}
+    environment:
+      LIVEKIT_API_KEY: ${LIVEKIT_API_KEY:-devkey}
+      LIVEKIT_API_SECRET: ${LIVEKIT_API_SECRET:-devsecret}
+      LIVEKIT_HOST: ws://livekit:7880
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      livekit:
+        condition: service_started
+
+  agent:
+    build:
+      context: .
+      dockerfile: apps/agent/Dockerfile
+    environment:
+      LIVEKIT_URL: ws://livekit:7880
+      LIVEKIT_API_KEY: ${LIVEKIT_API_KEY:-devkey}
+      LIVEKIT_API_SECRET: ${LIVEKIT_API_SECRET:-devsecret}
+      STT_BASE_URL: http://whisper:8000/v1
+      TTS_BASE_URL: http://kokoro:8880/v1
+      LLM_BASE_URL: http://ollama:11434/v1
+      LLM_MODEL: llama3:8b-instruct-q4_K_M
+      LLM_API_KEY: local
+    depends_on:
+      livekit:
+        condition: service_started
+      ollama:
+        condition: service_healthy
+    restart: unless-stopped
 
 volumes:
   boilerplate-db:
   ollama-models:
+  whisper-models:

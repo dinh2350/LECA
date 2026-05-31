@@ -3,6 +3,7 @@ import { VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import cookieParser from 'cookie-parser';
 import { ZodValidationPipe } from 'nestjs-zod';
 import { AppModule } from './app.module';
 import { AllConfigType } from './config/config.type';
@@ -10,6 +11,8 @@ import { AllConfigType } from './config/config.type';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
   const configService = app.get(ConfigService<AllConfigType>);
+
+  app.use(cookieParser());
 
   app.enableShutdownHooks();
   app.setGlobalPrefix(
@@ -24,6 +27,10 @@ async function bootstrap() {
     .setDescription('API docs')
     .setVersion('1.0')
     .addBearerAuth()
+    .addApiKey(
+      { type: 'apiKey', name: 'x-leca-agent-key', in: 'header' },
+      'agent-key',
+    )
     .addGlobalParameters({
       in: 'header',
       required: false,

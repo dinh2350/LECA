@@ -31,6 +31,7 @@ declare global {
 const languageToCode: Record<LanguageCode, string> = {
   en: 'en_US',
   uk: 'uk_UA',
+  vi: 'vi_VN',
 };
 
 const useCodeFromLanguage = () => {

@@ -1,6 +1,29 @@
 import ResponsiveAppBar from '@/components/app-bar';
 import AuthProvider from '@/services/auth/auth-provider';
 import '../globals.css';
+import { Bricolage_Grotesque, Lora, JetBrains_Mono } from 'next/font/google';
+
+const bricolage = Bricolage_Grotesque({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-bricolage',
+  display: 'swap',
+});
+
+const lora = Lora({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  style: ['normal', 'italic'],
+  variable: '--font-lora',
+  display: 'swap',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-jetbrains',
+  display: 'swap',
+});
 import { dir } from 'i18next';
 import '@/services/i18n/config';
 import { languages } from '@/services/i18n/config';
@@ -16,6 +39,7 @@ import ReactQueryDevtools from '@/services/react-query/react-query-devtools';
 import GoogleAuthProvider from '@/services/social-auth/google/google-auth-provider';
 import FacebookAuthProvider from '@/services/social-auth/facebook/facebook-auth-provider';
 import ConfirmDialogProvider from '@/components/confirm-dialog/confirm-dialog-provider';
+import GuestSessionProvider from '@/services/guest-session/guest-session-provider';
 
 type Props = {
   params: Promise<{ language: string }>;
@@ -45,7 +69,12 @@ export default async function RootLayout(props: {
   const { children } = props;
 
   return (
-    <html lang={language} dir={dir(language)} suppressHydrationWarning>
+    <html
+      lang={language}
+      dir={dir(language)}
+      suppressHydrationWarning
+      className={`${bricolage.variable} ${lora.variable} ${jetbrainsMono.variable}`}
+    >
       <body suppressHydrationWarning>
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen={false} />
@@ -53,19 +82,21 @@ export default async function RootLayout(props: {
             <StoreLanguageProvider>
               <ConfirmDialogProvider>
                 <AuthProvider>
-                  <GoogleAuthProvider>
-                    <FacebookAuthProvider>
-                      <LeavePageProvider>
-                        <ResponsiveAppBar />
-                        {children}
-                        <ToastContainer
-                          position="bottom-left"
-                          richColors
-                          closeButton
-                        />
-                      </LeavePageProvider>
-                    </FacebookAuthProvider>
-                  </GoogleAuthProvider>
+                  <GuestSessionProvider>
+                    <GoogleAuthProvider>
+                      <FacebookAuthProvider>
+                        <LeavePageProvider>
+                          <ResponsiveAppBar />
+                          {children}
+                          <ToastContainer
+                            position="bottom-left"
+                            richColors
+                            closeButton
+                          />
+                        </LeavePageProvider>
+                      </FacebookAuthProvider>
+                    </GoogleAuthProvider>
+                  </GuestSessionProvider>
                 </AuthProvider>
               </ConfirmDialogProvider>
             </StoreLanguageProvider>

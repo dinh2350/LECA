@@ -25,6 +25,15 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { MongooseConfigService } from './database/mongoose-config.service';
 import { DatabaseConfig } from './database/config/database-config.type';
 import { PrismaModule } from './database/prisma.module';
+import { RedisModule } from './redis/redis.module';
+import redisConfig from './redis/redis.config';
+import { ConversationsModule } from './conversations/conversations.module';
+import { AssessmentsModule } from './assessments/assessments.module';
+import { ScenariosModule } from './scenarios/scenarios.module';
+import livekitConfig from './livekit/livekit.config';
+import agentConfig from './agent/agent.config';
+import { LiveKitModule } from './livekit/livekit.module';
+import { ConversationSessionsModule } from './conversation-sessions/conversation-sessions.module';
 
 // <database-block>
 const infrastructureDatabaseModule = (databaseConfig() as DatabaseConfig)
@@ -48,10 +57,14 @@ const infrastructureDatabaseModule = (databaseConfig() as DatabaseConfig)
         facebookConfig,
         googleConfig,
         appleConfig,
+        redisConfig,
+        livekitConfig,
+        agentConfig,
       ],
       envFilePath: ['.env'],
     }),
     infrastructureDatabaseModule,
+    RedisModule,
     I18nModule.forRootAsync({
       useFactory: (configService: ConfigService<AllConfigType>) => ({
         fallbackLanguage: configService.getOrThrow('app.fallbackLanguage', {
@@ -85,6 +98,11 @@ const infrastructureDatabaseModule = (databaseConfig() as DatabaseConfig)
     MailModule,
     HomeModule,
     EmailModule,
+    ConversationsModule,
+    AssessmentsModule,
+    ScenariosModule,
+    LiveKitModule,
+    ConversationSessionsModule,
   ],
 })
 export class AppModule {}

@@ -2,7 +2,13 @@
 
 import Link from '@/components/link';
 import { useTranslation } from '@/services/i18n/client';
-import { FolderOpen, LayoutDashboard, Mail, Users } from 'lucide-react';
+import {
+  ClipboardList,
+  FolderOpen,
+  LayoutDashboard,
+  Mail,
+  Users,
+} from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
@@ -29,6 +35,12 @@ const NAV_ITEMS = [
     href: '/admin-panel/email',
     labelKey: 'common:navigation.email' as const,
     icon: Mail,
+    exact: false,
+  },
+  {
+    href: '/admin-panel/scenarios',
+    labelKey: 'common:navigation.scenarioReview' as const,
+    icon: ClipboardList,
     exact: false,
   },
 ];

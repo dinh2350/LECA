@@ -39,8 +39,18 @@ export default function ConfirmEmail() {
   }, [fetchConfirmEmail, router, enqueueSnackbar, t]);
 
   return (
-    <div className="max-w-lg mx-auto flex items-center justify-center p-8">
-      <div className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--color-accent)] border-t-transparent" />
+    <div
+      style={{
+        minHeight: 'calc(100vh - 64px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <div
+        className="h-8 w-8 animate-spin rounded-full border-2 border-t-transparent"
+        style={{ borderColor: 'var(--amber)', borderTopColor: 'transparent' }}
+      />
     </div>
   );
 }

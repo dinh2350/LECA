@@ -20,7 +20,7 @@ model File {
 }
 
 model Role {
-  id    Int    @id
+  id    Int     @id
   name  String?
   users User[]
 
@@ -28,7 +28,7 @@ model Role {
 }
 
 model Status {
-  id    Int    @id
+  id    Int     @id
   name  String?
   users User[]
 
@@ -69,4 +69,330 @@ model Session {
 
   @@index([userId])
   @@map("session")
+}
+
+// ============================================================
+// LECA TABLES
+// All UUIDs via gen_random_uuid(). All timestamps in UTC.
+// ============================================================
+
+model Organization {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name      String   @db.VarChar(255)
+  slug      String   @unique @db.VarChar(100)
+  plan      String   @default("self_hosted") @db.VarChar(20)
+  maxUsers  Int?     @map("max_users")
+  ltiKey    String?  @map("lti_key") @db.VarChar(255)
+  ltiSecret String?  @map("lti_secret") @db.VarChar(255)
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+
+  lecaUsers LecaUser[]
+  classes   Class[]
+
+  @@map("organizations")
+}
+
+model LecaUser {
+  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String?   @map("organization_id") @db.Uuid
+  email          String    @unique @db.VarChar(255)
+  passwordHash   String?   @map("password_hash") @db.VarChar(255)
+  displayName    String    @map("display_name") @db.VarChar(100)
+  nativeLanguage String?   @map("native_language") @db.Char(5)
+  englishLevel   String?   @map("english_level") @db.VarChar(3)
+  role           String    @default("learner") @db.VarChar(20)
+  timezone       String?   @db.VarChar(50)
+  isActive       Boolean   @default(true) @map("is_active")
+  lastActiveAt   DateTime? @map("last_active_at") @db.Timestamp(0)
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt      DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+
+  organization         Organization?         @relation(fields: [organizationId], references: [id], onDelete: SetNull)
+  devices              Device[]
+  taughtClasses        Class[]
+  classEnrollments     ClassEnrollment[]
+  authoredScenarios    Scenario[]            @relation("ScenarioAuthor")
+  scenarioReviews      ScenarioReview[]
+  scenarioRatings      ScenarioRating[]
+  levelAssessments     LevelAssessment[]
+  conversationSessions ConversationSession[]
+  pronunciationScores  PronunciationScore[]
+  userVocabulary       UserVocabulary[]
+  dailyUserStats       DailyUserStat[]
+
+  @@index([organizationId], map: "idx_users_org")
+  @@index([role], map: "idx_users_role")
+  @@index([isActive, lastActiveAt], map: "idx_users_active")
+  @@map("users")
+}
+
+model Device {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String    @map("user_id") @db.Uuid
+  platform   String    @db.VarChar(10)
+  pushToken  String?   @unique @map("push_token")
+  appVersion String?   @map("app_version") @db.VarChar(20)
+  lastSeenAt DateTime? @map("last_seen_at") @db.Timestamp(0)
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamp(0)
+
+  user LecaUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "idx_devices_user")
+  @@map("devices")
+}
+
+model Class {
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  organizationId String?  @map("organization_id") @db.Uuid
+  teacherId      String   @map("teacher_id") @db.Uuid
+  name           String   @db.VarChar(255)
+  joinCode       String   @unique @map("join_code") @db.Char(8)
+  targetLevel    String?  @map("target_level") @db.VarChar(3)
+  isActive       Boolean  @default(true) @map("is_active")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt      DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+
+  organization         Organization?         @relation(fields: [organizationId], references: [id], onDelete: SetNull)
+  teacher              LecaUser              @relation(fields: [teacherId], references: [id])
+  classEnrollments     ClassEnrollment[]
+  conversationSessions ConversationSession[]
+
+  @@index([teacherId], map: "idx_classes_teacher")
+  @@index([organizationId], map: "idx_classes_org")
+  @@map("classes")
+}
+
+model ClassEnrollment {
+  classId    String   @map("class_id") @db.Uuid
+  userId     String   @map("user_id") @db.Uuid
+  enrolledAt DateTime @default(now()) @map("enrolled_at") @db.Timestamp(0)
+
+  class Class    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  user  LecaUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([classId, userId])
+  @@index([userId], map: "idx_enrollments_user")
+  @@map("class_enrollments")
+}
+
+model ScenarioPack {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name          String   @db.VarChar(255)
+  slug          String   @unique @db.VarChar(100)
+  domain        String   @db.VarChar(50)
+  description   String?
+  difficultyMin String?  @map("difficulty_min") @db.VarChar(3)
+  difficultyMax String?  @map("difficulty_max") @db.VarChar(3)
+  isFeatured    Boolean  @default(false) @map("is_featured")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+
+  scenarios Scenario[]
+
+  @@map("scenario_packs")
+}
+
+model Scenario {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  packId        String?  @map("pack_id") @db.Uuid
+  authorId      String?  @map("author_id") @db.Uuid
+  forkOf        String?  @map("fork_of") @db.Uuid
+  title         String   @db.VarChar(255)
+  description   String?
+  aiRole        String   @map("ai_role")
+  context       String
+  difficulty    String   @db.VarChar(3)
+  situationType String   @map("situation_type") @db.VarChar(10)
+  tags          String[]
+  status        String   @default("draft") @db.VarChar(20)
+  ratingAvg     Decimal? @map("rating_avg") @db.Decimal(3, 2)
+  ratingCount   Int      @default(0) @map("rating_count")
+  useCount      Int      @default(0) @map("use_count")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt     DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+
+  pack                 ScenarioPack?         @relation(fields: [packId], references: [id], onDelete: SetNull)
+  author               LecaUser?             @relation("ScenarioAuthor", fields: [authorId], references: [id], onDelete: SetNull)
+  forkedFrom           Scenario?             @relation("ScenarioForks", fields: [forkOf], references: [id], onDelete: SetNull)
+  forks                Scenario[]            @relation("ScenarioForks")
+  scenarioPhrases      ScenarioPhrase[]
+  scenarioReviews      ScenarioReview[]
+  scenarioRatings      ScenarioRating[]
+  conversationSessions ConversationSession[]
+
+  @@index([packId], map: "idx_scenarios_pack")
+  @@index([authorId], map: "idx_scenarios_author")
+  @@index([status, difficulty], map: "idx_scenarios_status_diff")
+  @@index([situationType], map: "idx_scenarios_situation")
+  @@map("scenarios")
+}
+
+model ScenarioPhrase {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  scenarioId      String   @map("scenario_id") @db.Uuid
+  phrase          String
+  exampleSentence String   @map("example_sentence")
+  audioUrl        String?  @map("audio_url")
+  difficulty      String?  @db.VarChar(3)
+  displayOrder    Int      @default(0) @map("display_order") @db.SmallInt
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamp(0)
+
+  scenario       Scenario         @relation(fields: [scenarioId], references: [id], onDelete: Cascade)
+  userVocabulary UserVocabulary[]
+
+  @@index([scenarioId, displayOrder], map: "idx_phrases_scenario")
+  @@map("scenario_phrases")
+}
+
+model ScenarioReview {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  scenarioId String   @map("scenario_id") @db.Uuid
+  reviewerId String   @map("reviewer_id") @db.Uuid
+  decision   String   @db.VarChar(20)
+  notes      String?
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamp(0)
+
+  scenario Scenario @relation(fields: [scenarioId], references: [id], onDelete: Cascade)
+  reviewer LecaUser @relation(fields: [reviewerId], references: [id], onDelete: Cascade)
+
+  @@unique([scenarioId, reviewerId])
+  @@index([scenarioId], map: "idx_reviews_scenario")
+  @@map("scenario_reviews")
+}
+
+model ScenarioRating {
+  scenarioId String   @map("scenario_id") @db.Uuid
+  userId     String   @map("user_id") @db.Uuid
+  rating     Int      @db.SmallInt
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamp(0)
+
+  scenario Scenario @relation(fields: [scenarioId], references: [id], onDelete: Cascade)
+  user     LecaUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([scenarioId, userId])
+  @@index([userId], map: "idx_ratings_user")
+  @@map("scenario_ratings")
+}
+
+model LevelAssessment {
+  id                 String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId             String   @map("user_id") @db.Uuid
+  assessedLevel      String   @map("assessed_level") @db.VarChar(3)
+  fluencyScore       Decimal? @map("fluency_score") @db.Decimal(5, 2)
+  pronunciationScore Decimal? @map("pronunciation_score") @db.Decimal(5, 2)
+  vocabularyScore    Decimal? @map("vocabulary_score") @db.Decimal(5, 2)
+  assessedAt         DateTime @default(now()) @map("assessed_at") @db.Timestamp(0)
+
+  user LecaUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, assessedAt(sort: Desc)], map: "idx_assessments_user_time")
+  @@map("level_assessments")
+}
+
+model ConversationSession {
+  id                 String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId             String    @map("user_id") @db.Uuid
+  scenarioId         String?   @map("scenario_id") @db.Uuid
+  classId            String?   @map("class_id") @db.Uuid
+  livekitRoomId      String?   @map("livekit_room_id") @db.VarChar(255)
+  mode               String    @default("free_talk") @db.VarChar(20)
+  status             String    @default("active") @db.VarChar(20)
+  durationSeconds    Int?      @map("duration_seconds")
+  totalWords         Int?      @map("total_words")
+  fluencyScore       Decimal?  @map("fluency_score") @db.Decimal(5, 2)
+  pronunciationScore Decimal?  @map("pronunciation_score") @db.Decimal(5, 2)
+  vocabularyScore    Decimal?  @map("vocabulary_score") @db.Decimal(5, 2)
+  wordsPerMinute     Decimal?  @map("words_per_minute") @db.Decimal(6, 2)
+  correctionRate     Decimal?  @map("correction_rate") @db.Decimal(5, 4)
+  startedAt          DateTime  @default(now()) @map("started_at") @db.Timestamp(0)
+  endedAt            DateTime? @map("ended_at") @db.Timestamp(0)
+  createdAt          DateTime  @default(now()) @map("created_at") @db.Timestamp(0)
+
+  user                LecaUser             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scenario            Scenario?            @relation(fields: [scenarioId], references: [id], onDelete: SetNull)
+  class               Class?               @relation(fields: [classId], references: [id], onDelete: SetNull)
+  turns               ConversationTurn[]
+  pronunciationScores PronunciationScore[]
+
+  @@index([userId, startedAt(sort: Desc)], map: "idx_sessions_user_time")
+  @@index([scenarioId], map: "idx_sessions_scenario")
+  @@index([classId], map: "idx_sessions_class")
+  @@index([status], map: "idx_sessions_status")
+  @@map("conversation_sessions")
+}
+
+model ConversationTurn {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  sessionId  String   @map("session_id") @db.Uuid
+  speaker    String   @db.VarChar(10)
+  transcript String
+  audioUrl   String?  @map("audio_url")
+  feedback   Json?
+  turnIndex  Int      @map("turn_index") @db.SmallInt
+  durationMs Int?     @map("duration_ms")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamp(0)
+
+  session             ConversationSession  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  pronunciationScores PronunciationScore[]
+
+  @@unique([sessionId, turnIndex])
+  @@index([sessionId, turnIndex], map: "idx_turns_session")
+  @@map("turns")
+}
+
+model PronunciationScore {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  turnId        String   @map("turn_id") @db.Uuid
+  userId        String   @map("user_id") @db.Uuid
+  sessionId     String   @map("session_id") @db.Uuid
+  word          String   @db.VarChar(100)
+  phonemeScores Json     @map("phoneme_scores")
+  overallScore  Decimal  @map("overall_score") @db.Decimal(5, 2)
+  scoredAt      DateTime @default(now()) @map("scored_at") @db.Timestamp(0)
+
+  turn    ConversationTurn    @relation(fields: [turnId], references: [id], onDelete: Cascade)
+  user    LecaUser            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  session ConversationSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([turnId], map: "idx_pron_turn")
+  @@index([userId, scoredAt(sort: Desc)], map: "idx_pron_user")
+  @@index([sessionId], map: "idx_pron_session")
+  @@map("pronunciation_scores")
+}
+
+model UserVocabulary {
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId          String    @map("user_id") @db.Uuid
+  phraseId        String    @map("phrase_id") @db.Uuid
+  timesUsed       Int       @default(0) @map("times_used")
+  timesMissed     Int       @default(0) @map("times_missed")
+  lastPracticedAt DateTime? @map("last_practiced_at") @db.Timestamp(0)
+  nextReviewAt    DateTime? @map("next_review_at") @db.Timestamp(0)
+  createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt       DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamp(0)
+
+  user   LecaUser       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  phrase ScenarioPhrase @relation(fields: [phraseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, phraseId])
+  @@index([userId, nextReviewAt], map: "idx_vocab_user_review")
+  @@map("user_vocabulary")
+}
+
+model DailyUserStat {
+  userId          String   @map("user_id") @db.Uuid
+  statDate        DateTime @map("stat_date") @db.Date
+  sessionCount    Int      @default(0) @map("session_count") @db.SmallInt
+  totalMinutes    Int      @default(0) @map("total_minutes") @db.SmallInt
+  avgFluencyScore Decimal? @map("avg_fluency_score") @db.Decimal(5, 2)
+  avgPronScore    Decimal? @map("avg_pron_score") @db.Decimal(5, 2)
+  wordsPracticed  Int      @default(0) @map("words_practiced")
+
+  user LecaUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, statDate])
+  @@index([statDate, userId], map: "idx_daily_stats_date")
+  @@map("daily_user_stats")
 }
