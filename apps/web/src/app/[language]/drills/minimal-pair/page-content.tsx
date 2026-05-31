@@ -30,6 +30,18 @@ function MinimalPairContent() {
   const [attempts, setAttempts] = useState<WordAttempt[]>([]);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
+  const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current);
+      const r = mediaRecorderRef.current;
+      if (r && r.state !== 'inactive') {
+        r.stop();
+        r.stream.getTracks().forEach((t) => t.stop());
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (!sessionId) {
@@ -77,7 +89,10 @@ function MinimalPairContent() {
       ...prev,
       { word: currentPair.targetWord, score: mockScore },
     ]);
-    setTimeout(() => setCurrentIndex((i) => i + 1), 600);
+    advanceTimerRef.current = setTimeout(
+      () => setCurrentIndex((i) => i + 1),
+      600,
+    );
   };
 
   if (loading) {
