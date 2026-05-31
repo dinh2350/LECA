@@ -79,3 +79,33 @@ export class ScenarioListResponseDto {
   @ApiProperty()
   limit: number;
 }
+
+export class CreateScenarioResponseDto {
+  @ApiProperty()
+  id: string;
+
+  @ApiProperty()
+  status: string;
+
+  @ApiProperty()
+  title: string;
+}
+
+export class MyScenarioItemDto {
+  @ApiProperty() id: string;
+  @ApiProperty() title: string;
+  @ApiProperty() status: string;
+  @ApiProperty() difficulty: string;
+  @ApiProperty() situationType: string;
+  @ApiPropertyOptional() ratingAvg?: number | null;
+  @ApiProperty() ratingCount: number;
+  @ApiProperty() createdAt: Date;
+}
+
+export class PendingReviewResponseDto {
+  @ApiProperty({ type: [ScenarioListItemDto] })
+  data: ScenarioListItemDto[];
+
+  @ApiProperty()
+  total: number;
+}
