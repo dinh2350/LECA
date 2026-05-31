@@ -11,6 +11,7 @@ export type ScenarioPhrase = {
   phrase: string;
   exampleSentence: string;
   audioUrl?: string | null;
+  translation?: string | null;
   difficulty?: string | null;
   displayOrder: number;
 };
@@ -95,6 +96,7 @@ export function useGetScenarioService() {
 export type CreateScenarioPhrasePayload = {
   phrase: string;
   exampleSentence: string;
+  translation?: string;
   difficulty?: string;
 };
 
