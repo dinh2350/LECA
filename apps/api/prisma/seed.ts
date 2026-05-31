@@ -14,7 +14,7 @@ const SCENARIOS: Array<{
   difficulty: string;
   situationType: string;
   tags: string[];
-  phrases: Array<{ phrase: string; exampleSentence: string; difficulty: string }>;
+  phrases: Array<{ phrase: string; exampleSentence: string; difficulty: string; translation?: string }>;
 }> = [
   {
     title: 'Ordering at a Coffee Shop',
@@ -248,16 +248,19 @@ const SCENARIOS: Array<{
         phrase: "I'm calling about an issue with my order",
         exampleSentence: "I'm calling about an issue with my order number 12345.",
         difficulty: 'A2',
+        translation: 'Tôi gọi để báo vấn đề với đơn hàng của mình',
       },
       {
         phrase: 'The item arrived damaged',
         exampleSentence: 'The item arrived damaged — the screen is cracked.',
         difficulty: 'A2',
+        translation: 'Sản phẩm đến bị hỏng',
       },
       {
         phrase: 'I would like a refund / replacement',
         exampleSentence: 'I would like a full refund, please.',
         difficulty: 'A2',
+        translation: 'Tôi muốn được hoàn tiền / đổi hàng',
       },
     ],
   },
@@ -535,6 +538,7 @@ async function main() {
             phrase: p.phrase,
             exampleSentence: p.exampleSentence,
             difficulty: p.difficulty,
+            translation: p.translation,
             displayOrder: i,
           },
         });
