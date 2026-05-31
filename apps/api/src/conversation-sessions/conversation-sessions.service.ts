@@ -17,10 +17,8 @@ import {
 import { CreateSessionResponseDto } from './dto/create-session-response.dto';
 import { RecordTurnsDto } from './dto/record-turns.dto';
 import { SessionSummaryResponseDto } from './dto/session-summary-response.dto';
-import {
-  PhonemeErrorsResponseDto,
-  PHONEME_WORD_PAIRS,
-} from './dto/phoneme-errors-response.dto';
+import { PhonemeErrorsResponseDto } from './dto/phoneme-errors-response.dto';
+import { PHONEME_WORD_PAIRS } from './phoneme-word-pairs.const';
 
 const LEARNER_TOKEN_TTL_SECONDS = 3600;
 
