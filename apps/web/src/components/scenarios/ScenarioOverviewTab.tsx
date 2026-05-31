@@ -1,4 +1,3 @@
-// apps/web/src/components/scenarios/ScenarioOverviewTab.tsx
 'use client';
 
 import { useState } from 'react';
@@ -118,12 +117,10 @@ function StarRatingWidget({
 
 interface ScenarioOverviewTabProps {
   scenario: ScenarioDetail;
-  scenarioId: string;
 }
 
 export default function ScenarioOverviewTab({
   scenario,
-  scenarioId,
 }: ScenarioOverviewTabProps) {
   const diffClass =
     DIFFICULTY_COLOUR[scenario.difficulty] ?? 'bg-white/10 text-white/60';
@@ -187,7 +184,7 @@ export default function ScenarioOverviewTab({
 
       {/* Rating */}
       <StarRatingWidget
-        scenarioId={scenarioId}
+        scenarioId={scenario.id}
         ratingAvg={scenario.ratingAvg}
         ratingCount={scenario.ratingCount}
       />
