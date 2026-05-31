@@ -112,6 +112,88 @@ describe('ScenariosService', () => {
     });
   });
 
+  // ── findOne ───────────────────────────────────────────────────────────────
+
+  describe('findOne', () => {
+    it('should return null when scenario is not found', async () => {
+      mockPrisma.scenario.findFirst.mockResolvedValue(null);
+      const result = await service.findOne('nonexistent-id');
+      expect(result).toBeNull();
+    });
+
+    it('should include translation in returned phrases', async () => {
+      mockPrisma.scenario.findFirst.mockResolvedValue({
+        id: 'scenario-1',
+        title: 'At the Doctor',
+        description: null,
+        difficulty: 'B1',
+        situationType: 'everyday',
+        tags: [],
+        ratingAvg: null,
+        ratingCount: 0,
+        useCount: 0,
+        aiRole: 'A doctor',
+        context: 'Medical consultation',
+        author: { displayName: 'Test Author' },
+        scenarioPhrases: [
+          {
+            id: 'phrase-1',
+            phrase: 'I have a sore throat',
+            exampleSentence: 'I have a sore throat and a slight fever.',
+            audioUrl: null,
+            translation: 'Tôi bị đau họng',
+            difficulty: 'A2',
+            displayOrder: 0,
+          },
+        ],
+      });
+
+      const result = await service.findOne('scenario-1');
+      expect(result).not.toBeNull();
+      expect(result!.phrases[0].translation).toBe('Tôi bị đau họng');
+    });
+  });
+
+  // ── createScenario with translation ──────────────────────────────────────
+
+  describe('createScenario with translation', () => {
+    it('should persist translation when provided in phrase DTO', async () => {
+      mockUsersService.findById.mockResolvedValue({
+        email: 'u@test.com',
+        firstName: 'A',
+        lastName: 'B',
+      });
+      mockPrisma.lecaUser.findUnique.mockResolvedValue({ id: 'leca-1' });
+      mockPrisma.scenario.create.mockResolvedValue({
+        id: 'scenario-1',
+        status: 'in_review',
+        title: 'Test',
+      });
+      mockPrisma.scenarioPhrase.createMany.mockResolvedValue({ count: 1 });
+
+      await service.createScenario(1, {
+        title: 'Test Scenario',
+        aiRole: 'A test AI',
+        context: 'Context for testing',
+        difficulty: 'B1',
+        situationType: 'everyday',
+        phrases: [
+          {
+            phrase: 'Test phrase',
+            exampleSentence: 'This is a test.',
+            translation: 'Đây là bài kiểm tra.',
+          },
+        ],
+      });
+
+      expect(mockPrisma.scenarioPhrase.createMany).toHaveBeenCalledWith({
+        data: [
+          expect.objectContaining({ translation: 'Đây là bài kiểm tra.' }),
+        ],
+      });
+    });
+  });
+
   // ── listMyScenarios ───────────────────────────────────────────────────────
 
   describe('listMyScenarios', () => {
