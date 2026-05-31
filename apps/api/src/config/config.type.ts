@@ -8,6 +8,7 @@ import { GoogleConfig } from '../auth-google/config/google-config.type';
 import { MailConfig } from '../mail/config/mail-config.type';
 import { RedisConfig } from '../redis/redis-config.type';
 import { LiveKitConfig } from '../livekit/livekit-config.type';
+import { AgentConfig } from '../agent/agent-config.type';
 
 export type AllConfigType = {
   app: AppConfig;
@@ -20,4 +21,5 @@ export type AllConfigType = {
   mail: MailConfig;
   redis: RedisConfig;
   livekit: LiveKitConfig;
+  agent: AgentConfig;
 };

@@ -31,6 +31,7 @@ import { ConversationsModule } from './conversations/conversations.module';
 import { AssessmentsModule } from './assessments/assessments.module';
 import { ScenariosModule } from './scenarios/scenarios.module';
 import livekitConfig from './livekit/livekit.config';
+import agentConfig from './agent/agent.config';
 import { LiveKitModule } from './livekit/livekit.module';
 import { ConversationSessionsModule } from './conversation-sessions/conversation-sessions.module';
 
@@ -58,6 +59,7 @@ const infrastructureDatabaseModule = (databaseConfig() as DatabaseConfig)
         appleConfig,
         redisConfig,
         livekitConfig,
+        agentConfig,
       ],
       envFilePath: ['.env'],
     }),
