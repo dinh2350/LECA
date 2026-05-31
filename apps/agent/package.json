@@ -15,7 +15,7 @@
     "@livekit/agents-plugin-silero": "^1.2.4",
     "@n2base/schemas": "workspace:*",
     "livekit-server-sdk": "^2.15.4",
-    "openai": "^4.0.0"
+    "openai": "^6.0.0"
   },
   "devDependencies": {
     "@n2base/tsconfig": "workspace:*",
