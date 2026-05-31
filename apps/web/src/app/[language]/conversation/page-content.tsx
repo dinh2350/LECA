@@ -189,7 +189,7 @@ function MessageBubble({
       </div>
 
       {/* Feedback chip — user turns only, when toggle is on */}
-      {!entry.isAgent && entry.final && showFeedback && (
+      {!entry.isAgent && entry.final && showFeedback && !!entry.feedback && (
         <div
           onClick={() => {
             if (entry.feedback && onFeedbackTap) {
@@ -592,11 +592,21 @@ export default function ConversationPageContent() {
     endedRef.current = true;
     if (session) {
       await endSession(session.sessionId).catch(() => {});
-      router.push(`/${language}/session/${session.sessionId}/summary`);
-    } else {
-      router.push(`/${language}/scenarios`);
     }
+    router.push(
+      session
+        ? `/${language}/session/${session.sessionId}/summary`
+        : `/${language}/scenarios`,
+    );
   }, [session, endSession, router, language]);
+
+  const handleFeedbackTap = useCallback(
+    (transcript: string, feedback: TurnFeedback) => {
+      setActiveFeedbackTranscript(transcript);
+      setActiveFeedback(feedback);
+    },
+    [],
+  );
 
   // ── Loading state ──
   if (loading) {
@@ -634,7 +644,7 @@ export default function ConversationPageContent() {
   return (
     <>
       {/* Key phrases pre-session panel */}
-      {session && !phrasesReady && scenarioPhrases.length > 0 && (
+      {!phrasesReady && scenarioPhrases.length > 0 && (
         <KeyPhrasesPanel
           open={true}
           scenarioTitle={scenarioTitle}
@@ -673,7 +683,7 @@ export default function ConversationPageContent() {
         <LiveKitRoom
           serverUrl={session.livekitUrl}
           token={session.livekitToken}
-          connect={true}
+          connect={phrasesReady}
           audio={false}
           video={false}
           onDisconnected={handleEnd}
@@ -692,10 +702,7 @@ export default function ConversationPageContent() {
           <VoiceRoomContent
             scenarioTitle={scenarioTitle}
             onEnd={handleEnd}
-            onFeedbackTap={(transcript, feedback) => {
-              setActiveFeedbackTranscript(transcript);
-              setActiveFeedback(feedback);
-            }}
+            onFeedbackTap={handleFeedbackTap}
           />
         </LiveKitRoom>
       </div>
