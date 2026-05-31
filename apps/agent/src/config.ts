@@ -7,4 +7,6 @@ export const config = {
   llmBaseUrl: process.env.LLM_BASE_URL ?? 'http://localhost:11434/v1',
   llmModel: process.env.LLM_MODEL ?? 'llama3.2:3b',
   llmApiKey: process.env.LLM_API_KEY ?? 'local',
+  apiUrl: process.env.LECA_API_URL ?? 'http://localhost:3000/api',
+  agentApiKey: process.env.LECA_AGENT_API_KEY ?? 'devagentkey',
 };
