@@ -6,6 +6,7 @@ import {
   RoomServiceClient,
 } from 'livekit-server-sdk';
 import { randomUUID } from 'crypto';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '../database/prisma.service';
 import { UsersService } from '../users/users.service';
 import { AllConfigType } from '../config/config.type';
@@ -14,6 +15,7 @@ import {
   LIVEKIT_ROOM_SERVICE,
 } from '../livekit/livekit.module';
 import { CreateSessionResponseDto } from './dto/create-session-response.dto';
+import { RecordTurnsDto } from './dto/record-turns.dto';
 
 const LEARNER_TOKEN_TTL_SECONDS = 3600;
 
@@ -97,6 +99,32 @@ export class ConversationSessionsService {
         );
       }
     }
+  }
+
+  async recordTurns(
+    sessionId: string,
+    dto: RecordTurnsDto,
+  ): Promise<{ recorded: number }> {
+    const session = await this.prisma.conversationSession.findUnique({
+      where: { id: sessionId },
+    });
+    if (!session) throw new NotFoundException(`Session ${sessionId} not found`);
+
+    for (const turn of dto.turns) {
+      await this.prisma.conversationTurn.create({
+        data: {
+          sessionId,
+          speaker: turn.speaker,
+          transcript: turn.transcript,
+          turnIndex: turn.turnIndex,
+          durationMs: turn.durationMs ?? null,
+          feedback:
+            (turn.feedback as unknown as Prisma.InputJsonValue) ??
+            Prisma.JsonNull,
+        },
+      });
+    }
+    return { recorded: dto.turns.length };
   }
 
   // ── private helpers ──────────────────────────────────────────────────────────

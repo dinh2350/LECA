@@ -2,13 +2,20 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { NotFoundException } from '@nestjs/common';
 import { ConversationSessionsService } from './conversation-sessions.service';
-import { LIVEKIT_ROOM_SERVICE } from '../livekit/livekit.module';
+import {
+  LIVEKIT_DISPATCH_CLIENT,
+  LIVEKIT_ROOM_SERVICE,
+} from '../livekit/livekit.module';
 import { PrismaService } from '../database/prisma.service';
 import { UsersService } from '../users/users.service';
 
 const mockRoomServiceClient = {
   createRoom: jest.fn(),
   deleteRoom: jest.fn(),
+};
+
+const mockDispatchClient = {
+  createDispatch: jest.fn(),
 };
 
 const mockPrisma = {
@@ -18,6 +25,7 @@ const mockPrisma = {
     findUnique: jest.fn(),
     update: jest.fn(),
   },
+  conversationTurn: { create: jest.fn() },
 };
 
 const mockUsersService = {
@@ -48,6 +56,7 @@ describe('ConversationSessionsService', () => {
       providers: [
         ConversationSessionsService,
         { provide: LIVEKIT_ROOM_SERVICE, useValue: mockRoomServiceClient },
+        { provide: LIVEKIT_DISPATCH_CLIENT, useValue: mockDispatchClient },
         { provide: PrismaService, useValue: mockPrisma },
         { provide: UsersService, useValue: mockUsersService },
         { provide: ConfigService, useValue: mockConfigService },
@@ -148,6 +157,53 @@ describe('ConversationSessionsService', () => {
           data: expect.objectContaining({ status: 'ended' }),
         }),
       );
+    });
+  });
+
+  describe('recordTurns', () => {
+    it('should persist each turn with feedback and return the count', async () => {
+      mockPrisma.conversationSession.findUnique.mockResolvedValue({
+        id: 's1',
+        status: 'active',
+      });
+      mockPrisma.conversationTurn.create.mockResolvedValue({});
+      const result = await service.recordTurns('s1', {
+        turns: [
+          {
+            speaker: 'learner',
+            transcript: 'I want coffee',
+            turnIndex: 0,
+            feedback: {
+              fluency: 70,
+              naturalness: 65,
+              vocabulary: 60,
+              explanation: 'Try "I would like a coffee".',
+            },
+          },
+          { speaker: 'agent', transcript: 'Sure! Here you go.', turnIndex: 1 },
+        ],
+      });
+      expect(result).toEqual({ recorded: 2 });
+      expect(mockPrisma.conversationTurn.create).toHaveBeenCalledTimes(2);
+      expect(mockPrisma.conversationTurn.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            sessionId: 's1',
+            speaker: 'learner',
+            turnIndex: 0,
+            feedback: expect.any(Object),
+          }),
+        }),
+      );
+    });
+
+    it('should throw NotFound for an unknown session', async () => {
+      mockPrisma.conversationSession.findUnique.mockResolvedValue(null);
+      await expect(
+        service.recordTurns('nope', {
+          turns: [{ speaker: 'agent', transcript: 'hi', turnIndex: 0 }],
+        }),
+      ).rejects.toThrow();
     });
   });
 });
