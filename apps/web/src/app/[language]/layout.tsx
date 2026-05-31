@@ -1,4 +1,5 @@
 import ResponsiveAppBar from '@/components/app-bar';
+import BottomNav from '@/components/bottom-nav';
 import AuthProvider from '@/services/auth/auth-provider';
 import '../globals.css';
 import { Bricolage_Grotesque, Lora, JetBrains_Mono } from 'next/font/google';
@@ -75,7 +76,7 @@ export default async function RootLayout(props: {
       suppressHydrationWarning
       className={`${bricolage.variable} ${lora.variable} ${jetbrainsMono.variable}`}
     >
-      <body suppressHydrationWarning>
+      <body suppressHydrationWarning className="pb-14">
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen={false} />
           <ThemeProvider>
@@ -87,6 +88,7 @@ export default async function RootLayout(props: {
                       <FacebookAuthProvider>
                         <LeavePageProvider>
                           <ResponsiveAppBar />
+                          <BottomNav />
                           {children}
                           <ToastContainer
                             position="bottom-left"
