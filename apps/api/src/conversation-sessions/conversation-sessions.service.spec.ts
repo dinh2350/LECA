@@ -28,7 +28,6 @@ const mockPrisma = {
   },
   conversationTurn: { create: jest.fn() },
   pronunciationScore: { findMany: jest.fn() },
-  userVocabulary: { findMany: jest.fn() },
 };
 
 const mockUsersService = {
@@ -219,19 +218,30 @@ describe('ConversationSessionsService', () => {
         pronunciationScore: new Prisma.Decimal(61),
         vocabularyScore: new Prisma.Decimal(68),
         durationSeconds: 840,
-        scenario: { title: 'Tech Company Job Interview', phrases: [] },
+        scenario: {
+          title: 'Tech Company Job Interview',
+          scenarioPhrases: [
+            {
+              phrase: 'project management',
+              exampleSentence: 'I have experience with project management.',
+            },
+            {
+              phrase: 'team collaboration',
+              exampleSentence: 'I excel at team collaboration.',
+            },
+          ],
+        },
         turns: [
           { speaker: 'learner', durationMs: 5000, transcript: 'Hello' },
           { speaker: 'agent', durationMs: 3000, transcript: 'Hi there' },
           {
             speaker: 'learner',
             durationMs: 6000,
-            transcript: 'I have experience',
+            transcript: 'I have experience with project management',
           },
         ],
       });
       mockPrisma.pronunciationScore.findMany.mockResolvedValue([]);
-      mockPrisma.userVocabulary.findMany.mockResolvedValue([]);
 
       const result = await service.getSummary(sessionId);
 
@@ -239,6 +249,9 @@ describe('ConversationSessionsService', () => {
       expect(result.speakingMs).toBe(11000);
       expect(result.fluencyScore).toBe(74);
       expect(result.scenarioTitle).toBe('Tech Company Job Interview');
+      expect(result.phrasesUsed).toContain('project management');
+      expect(result.phrasesMissed).toHaveLength(1);
+      expect(result.phrasesMissed[0].phrase).toBe('team collaboration');
     });
 
     it('should throw NotFoundException when session not found', async () => {
@@ -250,6 +263,13 @@ describe('ConversationSessionsService', () => {
   });
 
   describe('getPhonemeErrors', () => {
+    it('should throw NotFoundException when session not found', async () => {
+      mockPrisma.conversationSession.findUnique.mockResolvedValue(null);
+      await expect(service.getPhonemeErrors('bad-id')).rejects.toThrow(
+        NotFoundException,
+      );
+    });
+
     it('should return top phoneme and word pairs when errors exist', async () => {
       mockPrisma.conversationSession.findUnique.mockResolvedValue({
         id: 'sid',

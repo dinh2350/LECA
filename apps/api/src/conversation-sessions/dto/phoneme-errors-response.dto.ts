@@ -1,5 +1,5 @@
 // apps/api/src/conversation-sessions/dto/phoneme-errors-response.dto.ts
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class WordPairDto {
   @ApiProperty({ description: 'The target word the learner should pronounce' })
@@ -16,9 +16,9 @@ export class WordPairDto {
 }
 
 export class PhonemeErrorsResponseDto {
-  @ApiPropertyOptional({
-    description: 'IPA symbol of the most frequently mispronounced phoneme',
+  @ApiProperty({
     nullable: true,
+    description: 'IPA symbol of the most frequently mispronounced phoneme',
   })
   topPhoneme: string | null;
 
