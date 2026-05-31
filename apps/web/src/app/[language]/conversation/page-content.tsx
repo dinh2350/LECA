@@ -18,6 +18,14 @@ import {
   type CreateSessionResponse,
 } from '@/services/api/services/conversation-sessions';
 import HTTP_CODES_ENUM from '@/services/api/types/http-codes';
+import KeyPhrasesPanel from '@/components/key-phrases-panel';
+import PronunciationFeedbackOverlay, {
+  type TurnFeedback,
+} from '@/components/pronunciation-feedback-overlay';
+import {
+  useGetScenarioService,
+  type ScenarioPhrase,
+} from '@/services/api/services/scenarios';
 
 // ─── Constants ────────────────────────────────────────────────
 
@@ -142,14 +150,17 @@ interface TranscriptEntry {
   text: string;
   isAgent: boolean;
   final: boolean;
+  feedback?: TurnFeedback | null;
 }
 
 function MessageBubble({
   entry,
   showFeedback,
+  onFeedbackTap,
 }: {
   entry: TranscriptEntry;
   showFeedback: boolean;
+  onFeedbackTap?: (transcript: string, feedback: TurnFeedback) => void;
 }) {
   return (
     <div
@@ -180,6 +191,11 @@ function MessageBubble({
       {/* Feedback chip — user turns only, when toggle is on */}
       {!entry.isAgent && entry.final && showFeedback && (
         <div
+          onClick={() => {
+            if (entry.feedback && onFeedbackTap) {
+              onFeedbackTap(entry.text, entry.feedback);
+            }
+          }}
           className="inline-flex items-center gap-1.5 mt-1 px-3 py-[3px] rounded-full border cursor-pointer font-mono text-[10px] text-green-400"
           style={{
             background: 'var(--s3)',
@@ -199,10 +215,12 @@ function MessageList({
   entries,
   showFeedback,
   agentState,
+  onFeedbackTap,
 }: {
   entries: TranscriptEntry[];
   showFeedback: boolean;
   agentState: string;
+  onFeedbackTap?: (transcript: string, feedback: TurnFeedback) => void;
 }) {
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -232,6 +250,7 @@ function MessageList({
           key={entry.id}
           entry={entry}
           showFeedback={showFeedback}
+          onFeedbackTap={onFeedbackTap}
         />
       ))}
 
@@ -311,9 +330,11 @@ function useElapsedTimer() {
 function VoiceRoomContent({
   scenarioTitle,
   onEnd,
+  onFeedbackTap,
 }: {
   scenarioTitle: string;
   onEnd: () => void;
+  onFeedbackTap: (transcript: string, feedback: TurnFeedback) => void;
 }) {
   const room = useRoomContext();
   const { localParticipant } = useLocalParticipant();
@@ -448,6 +469,7 @@ function VoiceRoomContent({
         entries={entries}
         showFeedback={showFeedback}
         agentState={agentState}
+        onFeedbackTap={onFeedbackTap}
       />
 
       {/* ── Bottom area ── */}
@@ -526,6 +548,14 @@ export default function ConversationPageContent() {
   // Prevent double-end when onDisconnected and back button fire together
   const endedRef = useRef(false);
 
+  const getScenario = useGetScenarioService();
+  const [scenarioPhrases, setScenarioPhrases] = useState<ScenarioPhrase[]>([]);
+  const [phrasesReady, setPhrasesReady] = useState(false);
+  const [activeFeedback, setActiveFeedback] = useState<TurnFeedback | null>(
+    null,
+  );
+  const [activeFeedbackTranscript, setActiveFeedbackTranscript] = useState('');
+
   useEffect(() => {
     createSession(scenarioId)
       .then(({ status, data }) => {
@@ -541,13 +571,31 @@ export default function ConversationPageContent() {
       .finally(() => setLoading(false));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    if (!scenarioId) {
+      setPhrasesReady(true);
+      return;
+    }
+    getScenario(scenarioId)
+      .then(({ data }) => {
+        if (data?.phrases?.length) {
+          setScenarioPhrases(data.phrases);
+        } else {
+          setPhrasesReady(true);
+        }
+      })
+      .catch(() => setPhrasesReady(true));
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const handleEnd = useCallback(async () => {
     if (endedRef.current) return;
     endedRef.current = true;
     if (session) {
       await endSession(session.sessionId).catch(() => {});
+      router.push(`/${language}/session/${session.sessionId}/summary`);
+    } else {
+      router.push(`/${language}/scenarios`);
     }
-    router.push(`/${language}/scenarios`);
   }, [session, endSession, router, language]);
 
   // ── Loading state ──
@@ -585,6 +633,26 @@ export default function ConversationPageContent() {
   // ── Conversation view ──
   return (
     <>
+      {/* Key phrases pre-session panel */}
+      {session && !phrasesReady && scenarioPhrases.length > 0 && (
+        <KeyPhrasesPanel
+          open={true}
+          scenarioTitle={scenarioTitle}
+          phrases={scenarioPhrases}
+          onStart={() => setPhrasesReady(true)}
+        />
+      )}
+
+      {/* Pronunciation feedback overlay */}
+      <PronunciationFeedbackOverlay
+        feedback={activeFeedback}
+        transcript={activeFeedbackTranscript}
+        onClose={() => {
+          setActiveFeedback(null);
+          setActiveFeedbackTranscript('');
+        }}
+      />
+
       {/* Scoped keyframes injected once */}
       <style>{`
         @keyframes leca-wv {
@@ -621,7 +689,14 @@ export default function ConversationPageContent() {
           style={{ height: '100%' }}
         >
           <RoomAudioRenderer />
-          <VoiceRoomContent scenarioTitle={scenarioTitle} onEnd={handleEnd} />
+          <VoiceRoomContent
+            scenarioTitle={scenarioTitle}
+            onEnd={handleEnd}
+            onFeedbackTap={(transcript, feedback) => {
+              setActiveFeedbackTranscript(transcript);
+              setActiveFeedback(feedback);
+            }}
+          />
         </LiveKitRoom>
       </div>
     </>
