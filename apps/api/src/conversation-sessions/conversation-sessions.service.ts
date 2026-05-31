@@ -16,6 +16,11 @@ import {
 } from '../livekit/livekit.module';
 import { CreateSessionResponseDto } from './dto/create-session-response.dto';
 import { RecordTurnsDto } from './dto/record-turns.dto';
+import { SessionSummaryResponseDto } from './dto/session-summary-response.dto';
+import {
+  PhonemeErrorsResponseDto,
+  PHONEME_WORD_PAIRS,
+} from './dto/phoneme-errors-response.dto';
 
 const LEARNER_TOKEN_TTL_SECONDS = 3600;
 
@@ -125,6 +130,117 @@ export class ConversationSessionsService {
       });
     }
     return { recorded: dto.turns.length };
+  }
+
+  async getSummary(sessionId: string): Promise<SessionSummaryResponseDto> {
+    const session = await this.prisma.conversationSession.findUnique({
+      where: { id: sessionId },
+      include: {
+        scenario: {
+          select: {
+            title: true,
+            scenarioPhrases: {
+              select: { phrase: true, exampleSentence: true },
+            },
+          },
+        },
+        turns: {
+          select: { speaker: true, durationMs: true, transcript: true },
+          orderBy: { turnIndex: 'asc' },
+        },
+      },
+    });
+    if (!session) throw new NotFoundException(`Session ${sessionId} not found`);
+
+    const learnerTurns = session.turns.filter((t) => t.speaker === 'learner');
+    const turnCount = learnerTurns.length;
+    const speakingMs = learnerTurns.reduce(
+      (sum, t) => sum + (t.durationMs ?? 0),
+      0,
+    );
+
+    const allTranscript = learnerTurns
+      .map((t) => t.transcript.toLowerCase())
+      .join(' ');
+    const phrasesUsed: string[] = [];
+    const phrasesMissed: { phrase: string; exampleSentence: string }[] = [];
+    for (const p of session.scenario?.scenarioPhrases ?? []) {
+      if (allTranscript.includes(p.phrase.toLowerCase())) {
+        phrasesUsed.push(p.phrase);
+      } else {
+        phrasesMissed.push({
+          phrase: p.phrase,
+          exampleSentence: p.exampleSentence,
+        });
+      }
+    }
+
+    const pronScores = await this.prisma.pronunciationScore.findMany({
+      where: { sessionId },
+      select: { phonemeScores: true },
+    });
+    const phonemeErrorCounts: Record<string, number> = {};
+    for (const ps of pronScores) {
+      const scores = ps.phonemeScores as Record<string, number>;
+      for (const [phoneme, score] of Object.entries(scores)) {
+        if (score < 60)
+          phonemeErrorCounts[phoneme] = (phonemeErrorCounts[phoneme] ?? 0) + 1;
+      }
+    }
+    const topPhonemeEntry = Object.entries(phonemeErrorCounts).sort(
+      (a, b) => b[1] - a[1],
+    )[0];
+
+    return {
+      sessionId,
+      scenarioTitle: session.scenario?.title ?? undefined,
+      fluencyScore: session.fluencyScore
+        ? Number(session.fluencyScore)
+        : undefined,
+      pronunciationScore: session.pronunciationScore
+        ? Number(session.pronunciationScore)
+        : undefined,
+      vocabularyScore: session.vocabularyScore
+        ? Number(session.vocabularyScore)
+        : undefined,
+      durationSeconds: session.durationSeconds ?? undefined,
+      turnCount,
+      speakingMs,
+      phrasesUsed,
+      phrasesMissed: phrasesMissed.slice(0, 3),
+      topPhonemeError: topPhonemeEntry?.[0] ?? undefined,
+      phonemeErrorCount: topPhonemeEntry?.[1] ?? 0,
+    };
+  }
+
+  async getPhonemeErrors(sessionId: string): Promise<PhonemeErrorsResponseDto> {
+    const session = await this.prisma.conversationSession.findUnique({
+      where: { id: sessionId },
+    });
+    if (!session) throw new NotFoundException(`Session ${sessionId} not found`);
+
+    const pronScores = await this.prisma.pronunciationScore.findMany({
+      where: { sessionId },
+      select: { phonemeScores: true },
+    });
+
+    const errorCounts: Record<string, number> = {};
+    for (const ps of pronScores) {
+      const scores = ps.phonemeScores as Record<string, number>;
+      for (const [phoneme, score] of Object.entries(scores)) {
+        if (score < 60) errorCounts[phoneme] = (errorCounts[phoneme] ?? 0) + 1;
+      }
+    }
+
+    const topEntry = Object.entries(errorCounts).sort((a, b) => b[1] - a[1])[0];
+    if (!topEntry) return { topPhoneme: null, errorCount: 0, wordPairs: [] };
+
+    const [topPhoneme, errorCount] = topEntry;
+    return {
+      topPhoneme,
+      errorCount,
+      wordPairs: PHONEME_WORD_PAIRS[topPhoneme] ?? [],
+    };
   }
 
   // ── private helpers ──────────────────────────────────────────────────────────

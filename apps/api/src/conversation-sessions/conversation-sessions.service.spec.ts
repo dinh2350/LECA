@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { NotFoundException } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { ConversationSessionsService } from './conversation-sessions.service';
 import {
   LIVEKIT_DISPATCH_CLIENT,
@@ -26,6 +27,8 @@ const mockPrisma = {
     update: jest.fn(),
   },
   conversationTurn: { create: jest.fn() },
+  pronunciationScore: { findMany: jest.fn() },
+  userVocabulary: { findMany: jest.fn() },
 };
 
 const mockUsersService = {
@@ -204,6 +207,76 @@ describe('ConversationSessionsService', () => {
           turns: [{ speaker: 'agent', transcript: 'hi', turnIndex: 0 }],
         }),
       ).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  describe('getSummary', () => {
+    it('should return summary with scores and turn count', async () => {
+      const sessionId = 'session-uuid';
+      mockPrisma.conversationSession.findUnique.mockResolvedValue({
+        id: sessionId,
+        fluencyScore: new Prisma.Decimal(74),
+        pronunciationScore: new Prisma.Decimal(61),
+        vocabularyScore: new Prisma.Decimal(68),
+        durationSeconds: 840,
+        scenario: { title: 'Tech Company Job Interview', phrases: [] },
+        turns: [
+          { speaker: 'learner', durationMs: 5000, transcript: 'Hello' },
+          { speaker: 'agent', durationMs: 3000, transcript: 'Hi there' },
+          {
+            speaker: 'learner',
+            durationMs: 6000,
+            transcript: 'I have experience',
+          },
+        ],
+      });
+      mockPrisma.pronunciationScore.findMany.mockResolvedValue([]);
+      mockPrisma.userVocabulary.findMany.mockResolvedValue([]);
+
+      const result = await service.getSummary(sessionId);
+
+      expect(result.turnCount).toBe(2);
+      expect(result.speakingMs).toBe(11000);
+      expect(result.fluencyScore).toBe(74);
+      expect(result.scenarioTitle).toBe('Tech Company Job Interview');
+    });
+
+    it('should throw NotFoundException when session not found', async () => {
+      mockPrisma.conversationSession.findUnique.mockResolvedValue(null);
+      await expect(service.getSummary('bad-id')).rejects.toThrow(
+        NotFoundException,
+      );
+    });
+  });
+
+  describe('getPhonemeErrors', () => {
+    it('should return top phoneme and word pairs when errors exist', async () => {
+      mockPrisma.conversationSession.findUnique.mockResolvedValue({
+        id: 'sid',
+      });
+      mockPrisma.pronunciationScore.findMany.mockResolvedValue([
+        { phonemeScores: { '/z/': 40 } },
+        { phonemeScores: { '/z/': 35 } },
+        { phonemeScores: { '/θ/': 45 } },
+      ]);
+
+      const result = await service.getPhonemeErrors('sid');
+
+      expect(result.topPhoneme).toBe('/z/');
+      expect(result.errorCount).toBe(2);
+      expect(result.wordPairs.length).toBeGreaterThan(0);
+    });
+
+    it('should return null topPhoneme when no pronunciation scores exist', async () => {
+      mockPrisma.conversationSession.findUnique.mockResolvedValue({
+        id: 'sid',
+      });
+      mockPrisma.pronunciationScore.findMany.mockResolvedValue([]);
+
+      const result = await service.getPhonemeErrors('sid');
+
+      expect(result.topPhoneme).toBeNull();
+      expect(result.wordPairs).toEqual([]);
     });
   });
 });
