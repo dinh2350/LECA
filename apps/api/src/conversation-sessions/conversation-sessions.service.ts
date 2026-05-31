@@ -27,6 +27,7 @@ const LEARNER_TOKEN_TTL_SECONDS = 3600;
 @Injectable()
 export class ConversationSessionsService {
   private readonly logger = new Logger(ConversationSessionsService.name);
+  private static readonly PHONEME_ERROR_THRESHOLD = 60;
 
   constructor(
     @Inject(LIVEKIT_ROOM_SERVICE)
@@ -179,36 +180,30 @@ export class ConversationSessionsService {
       where: { sessionId },
       select: { phonemeScores: true },
     });
-    const phonemeErrorCounts: Record<string, number> = {};
-    for (const ps of pronScores) {
-      const scores = ps.phonemeScores as Record<string, number>;
-      for (const [phoneme, score] of Object.entries(scores)) {
-        if (score < 60)
-          phonemeErrorCounts[phoneme] = (phonemeErrorCounts[phoneme] ?? 0) + 1;
-      }
-    }
+    const phonemeErrorCounts = this.countPhonemeErrors(pronScores);
     const topPhonemeEntry = Object.entries(phonemeErrorCounts).sort(
       (a, b) => b[1] - a[1],
     )[0];
 
     return {
       sessionId,
-      scenarioTitle: session.scenario?.title ?? undefined,
-      fluencyScore: session.fluencyScore
-        ? Number(session.fluencyScore)
-        : undefined,
-      pronunciationScore: session.pronunciationScore
-        ? Number(session.pronunciationScore)
-        : undefined,
-      vocabularyScore: session.vocabularyScore
-        ? Number(session.vocabularyScore)
-        : undefined,
-      durationSeconds: session.durationSeconds ?? undefined,
+      scenarioTitle: session.scenario?.title ?? null,
+      fluencyScore:
+        session.fluencyScore != null ? Number(session.fluencyScore) : null,
+      pronunciationScore:
+        session.pronunciationScore != null
+          ? Number(session.pronunciationScore)
+          : null,
+      vocabularyScore:
+        session.vocabularyScore != null
+          ? Number(session.vocabularyScore)
+          : null,
+      durationSeconds: session.durationSeconds ?? null,
       turnCount,
       speakingMs,
       phrasesUsed,
       phrasesMissed: phrasesMissed.slice(0, 3),
-      topPhonemeError: topPhonemeEntry?.[0] ?? undefined,
+      topPhonemeError: topPhonemeEntry?.[0] ?? null,
       phonemeErrorCount: topPhonemeEntry?.[1] ?? 0,
     };
   }
@@ -224,13 +219,7 @@ export class ConversationSessionsService {
       select: { phonemeScores: true },
     });
 
-    const errorCounts: Record<string, number> = {};
-    for (const ps of pronScores) {
-      const scores = ps.phonemeScores as Record<string, number>;
-      for (const [phoneme, score] of Object.entries(scores)) {
-        if (score < 60) errorCounts[phoneme] = (errorCounts[phoneme] ?? 0) + 1;
-      }
-    }
+    const errorCounts = this.countPhonemeErrors(pronScores);
 
     const topEntry = Object.entries(errorCounts).sort((a, b) => b[1] - a[1])[0];
     if (!topEntry) return { topPhoneme: null, errorCount: 0, wordPairs: [] };
@@ -241,6 +230,21 @@ export class ConversationSessionsService {
       errorCount,
       wordPairs: PHONEME_WORD_PAIRS[topPhoneme] ?? [],
     };
+  }
+
+  private countPhonemeErrors(
+    pronScores: Array<{ phonemeScores: unknown }>,
+  ): Record<string, number> {
+    const counts: Record<string, number> = {};
+    for (const ps of pronScores) {
+      const scores = ps.phonemeScores as Record<string, number>;
+      for (const [phoneme, score] of Object.entries(scores)) {
+        if (score < ConversationSessionsService.PHONEME_ERROR_THRESHOLD) {
+          counts[phoneme] = (counts[phoneme] ?? 0) + 1;
+        }
+      }
+    }
+    return counts;
   }
 
   // ── private helpers ──────────────────────────────────────────────────────────

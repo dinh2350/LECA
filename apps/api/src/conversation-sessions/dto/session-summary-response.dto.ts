@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class MissedPhraseDto {
   @ApiProperty({ description: 'The key phrase from the scenario' })
@@ -14,28 +14,35 @@ export class SessionSummaryResponseDto {
   @ApiProperty({ description: 'UUID of the conversation session' })
   sessionId: string;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
+    nullable: true,
     description: 'Title of the scenario practiced, if applicable',
   })
-  scenarioTitle?: string;
+  scenarioTitle: string | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
+    nullable: true,
     description: 'Fluency score 0–100, null if not computed',
   })
-  fluencyScore?: number;
+  fluencyScore: number | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
+    nullable: true,
     description: 'Pronunciation score 0–100, null if not computed',
   })
-  pronunciationScore?: number;
+  pronunciationScore: number | null;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
+    nullable: true,
     description: 'Vocabulary score 0–100, null if not computed',
   })
-  vocabularyScore?: number;
+  vocabularyScore: number | null;
 
-  @ApiPropertyOptional({ description: 'Total session duration in seconds' })
-  durationSeconds?: number;
+  @ApiProperty({
+    nullable: true,
+    description: 'Total session duration in seconds',
+  })
+  durationSeconds: number | null;
 
   @ApiProperty({ description: 'Number of learner turns in the session' })
   turnCount: number;
@@ -55,10 +62,11 @@ export class SessionSummaryResponseDto {
   })
   phrasesMissed: MissedPhraseDto[];
 
-  @ApiPropertyOptional({
+  @ApiProperty({
+    nullable: true,
     description: 'IPA symbol of the most frequently mispronounced phoneme',
   })
-  topPhonemeError?: string;
+  topPhonemeError: string | null;
 
   @ApiProperty({
     description: 'Number of times the top phoneme was mispronounced',
