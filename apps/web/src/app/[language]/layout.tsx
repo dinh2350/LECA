@@ -36,7 +36,6 @@ import ThemeProvider from '@/components/theme/theme-provider';
 import LeavePageProvider from '@/services/leave-page/leave-page-provider';
 import QueryClientProvider from '@/services/react-query/query-client-provider';
 import queryClient from '@/services/react-query/query-client';
-import ReactQueryDevtools from '@/services/react-query/react-query-devtools';
 import GoogleAuthProvider from '@/services/social-auth/google/google-auth-provider';
 import FacebookAuthProvider from '@/services/social-auth/facebook/facebook-auth-provider';
 import ConfirmDialogProvider from '@/components/confirm-dialog/confirm-dialog-provider';
@@ -78,7 +77,6 @@ export default async function RootLayout(props: {
     >
       <body suppressHydrationWarning className="pb-14">
         <QueryClientProvider client={queryClient}>
-          <ReactQueryDevtools initialIsOpen={false} />
           <ThemeProvider>
             <StoreLanguageProvider>
               <ConfirmDialogProvider>

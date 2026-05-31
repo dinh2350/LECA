@@ -33,14 +33,17 @@ const FB_TOGGLE_KEY = 'leca:feedbackOverlay';
 const PTT_MAX_DURATION_MS = 60_000;
 
 const WAVE_BARS = [
-  { height: 7, delay: 0, duration: 0.3 },
-  { height: 14, delay: 0.05, duration: 0.35 },
-  { height: 22, delay: 0.1, duration: 0.4 },
-  { height: 16, delay: 0.15, duration: 0.38 },
-  { height: 20, delay: 0.2, duration: 0.45 },
-  { height: 18, delay: 0.25, duration: 0.42 },
-  { height: 12, delay: 0.3, duration: 0.36 },
-  { height: 8, delay: 0.35, duration: 0.32 },
+  { height: 4, delay: 0, duration: 0.38 },
+  { height: 9, delay: 0.05, duration: 0.42 },
+  { height: 15, delay: 0.1, duration: 0.36 },
+  { height: 21, delay: 0.15, duration: 0.44 },
+  { height: 27, delay: 0.2, duration: 0.4 },
+  { height: 23, delay: 0.25, duration: 0.38 },
+  { height: 27, delay: 0.3, duration: 0.46 },
+  { height: 21, delay: 0.35, duration: 0.42 },
+  { height: 15, delay: 0.4, duration: 0.36 },
+  { height: 9, delay: 0.45, duration: 0.44 },
+  { height: 4, delay: 0.5, duration: 0.4 },
 ];
 
 const AGENT_STATE_LABEL: Record<string, string> = {
@@ -57,7 +60,7 @@ const AGENT_STATE_LABEL: Record<string, string> = {
 
 function WaveformBars({ active }: { active: boolean }) {
   return (
-    <div className="flex items-center justify-center gap-[2px] h-[22px]">
+    <div className="flex items-center justify-center gap-[3px] h-[30px]">
       {WAVE_BARS.map((bar, i) => (
         <div
           key={i}
@@ -155,10 +158,12 @@ interface TranscriptEntry {
 
 function MessageBubble({
   entry,
+  agentLabel,
   showFeedback,
   onFeedbackTap,
 }: {
   entry: TranscriptEntry;
+  agentLabel: string;
   showFeedback: boolean;
   onFeedbackTap?: (transcript: string, feedback: TurnFeedback) => void;
 }) {
@@ -166,23 +171,28 @@ function MessageBubble({
     <div
       className={`flex flex-col gap-1 ${entry.isAgent ? 'items-start' : 'items-end'}`}
     >
-      <span className="font-mono text-[9px] uppercase tracking-[0.08em] text-white/40">
-        {entry.isAgent ? 'AI Tutor' : 'You'}
+      <span
+        className="font-mono text-[9px] uppercase tracking-[0.08em]"
+        style={{ color: 'var(--cream-m)' }}
+      >
+        {entry.isAgent ? agentLabel : 'You'}
       </span>
 
       <div
         className={[
           'max-w-[82%] px-4 py-3 text-sm leading-relaxed',
           entry.isAgent
-            ? 'bg-[var(--s2)] border border-[var(--leca-border)] text-white/90'
+            ? 'bg-[var(--s2)] border border-[var(--leca-border)]'
             : 'font-display font-semibold text-[#0C0907] text-[13.5px]',
           entry.isAgent
             ? 'rounded-[4px_14px_14px_14px]'
             : 'rounded-[14px_4px_14px_14px]',
-          !entry.final ? 'opacity-45 italic' : '',
+          !entry.final && !entry.text ? 'opacity-45 italic' : '',
         ].join(' ')}
         style={
-          entry.isAgent ? undefined : { background: 'var(--amber, #F0622A)' }
+          entry.isAgent
+            ? { color: 'var(--cream)' }
+            : { background: 'var(--amber, #F0622A)' }
         }
       >
         {entry.text || (entry.isAgent ? '…' : 'Speaking…')}
@@ -202,7 +212,7 @@ function MessageBubble({
             borderColor: 'var(--leca-border)',
           }}
         >
-          ✦ Feedback · Tap to expand
+          • Feedback · Tap to expand
         </div>
       )}
     </div>
@@ -213,11 +223,13 @@ function MessageBubble({
 
 function MessageList({
   entries,
+  agentLabel,
   showFeedback,
   agentState,
   onFeedbackTap,
 }: {
   entries: TranscriptEntry[];
+  agentLabel: string;
   showFeedback: boolean;
   agentState: string;
   onFeedbackTap?: (transcript: string, feedback: TurnFeedback) => void;
@@ -237,7 +249,10 @@ function MessageList({
     >
       {entries.length === 0 && !isWaiting && (
         <div className="flex-1 flex items-center justify-center text-center px-8">
-          <p className="font-mono text-[11px] text-white/30 leading-relaxed">
+          <p
+            className="font-mono text-[11px] leading-relaxed"
+            style={{ color: 'var(--cream-m)' }}
+          >
             Hold the button below to speak.
             <br />
             LECA will respond after you release.
@@ -249,6 +264,7 @@ function MessageList({
         <MessageBubble
           key={entry.id}
           entry={entry}
+          agentLabel={agentLabel}
           showFeedback={showFeedback}
           onFeedbackTap={onFeedbackTap}
         />
@@ -257,10 +273,16 @@ function MessageList({
       {/* Waiting indicator shown while agent is thinking/speaking */}
       {isWaiting && entries.length === 0 && (
         <div className="flex flex-col gap-1 items-start">
-          <span className="font-mono text-[9px] uppercase tracking-[0.08em] text-white/40">
-            AI Tutor
+          <span
+            className="font-mono text-[9px] uppercase tracking-[0.08em]"
+            style={{ color: 'var(--cream-m)' }}
+          >
+            {agentLabel}
           </span>
-          <div className="max-w-[82%] px-4 py-3 text-sm leading-relaxed rounded-[4px_14px_14px_14px] bg-[var(--s2)] border border-[var(--leca-border)] text-white/40 italic">
+          <div
+            className="max-w-[82%] px-4 py-3 text-sm leading-relaxed rounded-[4px_14px_14px_14px] bg-[var(--s2)] border border-[var(--leca-border)] italic"
+            style={{ color: 'var(--cream-m)' }}
+          >
             {AGENT_STATE_LABEL[agentState] ?? agentState}
           </div>
         </div>
@@ -329,10 +351,14 @@ function useElapsedTimer() {
 
 function VoiceRoomContent({
   scenarioTitle,
+  aiRole,
+  difficulty,
   onEnd,
   onFeedbackTap,
 }: {
   scenarioTitle: string;
+  aiRole: string;
+  difficulty: string;
   onEnd: () => void;
   onFeedbackTap: (transcript: string, feedback: TurnFeedback) => void;
 }) {
@@ -366,10 +392,10 @@ function VoiceRoomContent({
 
   // Map LiveKit transcriptions to our format
   const entries: TranscriptEntry[] = transcriptions.map((t) => ({
-    id: t.id,
+    id: t.streamInfo.id,
     text: t.text,
-    isAgent: t.participant?.identity === 'leca-agent',
-    final: t.final,
+    isAgent: t.participantInfo.identity !== localParticipant.identity,
+    final: true,
   }));
 
   const turnCount = entries.filter((e) => !e.isAgent && e.final).length;
@@ -414,7 +440,7 @@ function VoiceRoomContent({
     onEnd();
   }, [handleStop, onEnd]);
 
-  const stateLabel = AGENT_STATE_LABEL[agentState] ?? agentState;
+  const agentLabel = aiRole ? aiRole.toUpperCase() : 'AI TUTOR';
   const pttDisabled = !connected || micDenied;
 
   return (
@@ -431,7 +457,13 @@ function VoiceRoomContent({
             hour12: false,
           })}
         </span>
-        <span className="text-red-400">🔴 Live</span>
+        <span className="flex items-center gap-1.5 font-mono text-[11px] text-white/70">
+          <span
+            className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+            style={{ background: '#E85050' }}
+          />
+          Live
+        </span>
       </div>
 
       {/* ── Header ── */}
@@ -439,7 +471,8 @@ function VoiceRoomContent({
         <button
           onClick={handleBack}
           aria-label="Back"
-          className="text-xl text-white/60 hover:text-white/90 transition-colors leading-none"
+          className="text-xl leading-none transition-colors"
+          style={{ color: 'var(--cream-d)' }}
         >
           ←
         </button>
@@ -448,8 +481,11 @@ function VoiceRoomContent({
           <p className="font-display text-sm font-bold text-white truncate">
             {scenarioTitle}
           </p>
-          <p className="font-mono text-[10px] text-white/40 mt-0.5">
-            {stateLabel} · Turn {turnCount}
+          <p
+            className="font-mono text-[10px] mt-0.5"
+            style={{ color: 'var(--cream-m)' }}
+          >
+            {difficulty ? `${difficulty} · ` : ''}Turn {turnCount} of ~8
           </p>
         </div>
 
@@ -467,6 +503,7 @@ function VoiceRoomContent({
       {/* ── Messages ── */}
       <MessageList
         entries={entries}
+        agentLabel={agentLabel}
         showFeedback={showFeedback}
         agentState={agentState}
         onFeedbackTap={onFeedbackTap}
@@ -489,7 +526,10 @@ function VoiceRoomContent({
           />
 
           {/* Hint */}
-          <p className="font-mono text-[10px] text-white/40">
+          <p
+            className="font-mono text-[10px]"
+            style={{ color: 'var(--cream-m)' }}
+          >
             {!connected
               ? 'Connecting…'
               : isRecording
@@ -520,7 +560,10 @@ function VoiceRoomContent({
                 style={{ [showFeedback ? 'right' : 'left']: 2 }}
               />
             </button>
-            <span className="font-mono text-[10px] text-white/40">
+            <span
+              className="font-mono text-[10px]"
+              style={{ color: 'var(--cream-m)' }}
+            >
               Show feedback after each turn
             </span>
           </div>
@@ -551,6 +594,8 @@ export default function ConversationPageContent() {
   const getScenario = useGetScenarioService();
   const [scenarioPhrases, setScenarioPhrases] = useState<ScenarioPhrase[]>([]);
   const [phrasesReady, setPhrasesReady] = useState(false);
+  const [aiRole, setAiRole] = useState('AI TUTOR');
+  const [difficulty, setDifficulty] = useState('');
   const [activeFeedback, setActiveFeedback] = useState<TurnFeedback | null>(
     null,
   );
@@ -578,8 +623,14 @@ export default function ConversationPageContent() {
     }
     getScenario(scenarioId)
       .then(({ data }) => {
-        if (data?.phrases?.length) {
-          setScenarioPhrases(data.phrases);
+        if (data) {
+          if (data.aiRole) setAiRole(data.aiRole.toUpperCase());
+          if (data.difficulty) setDifficulty(data.difficulty);
+          if (data.phrases?.length) {
+            setScenarioPhrases(data.phrases);
+          } else {
+            setPhrasesReady(true);
+          }
         } else {
           setPhrasesReady(true);
         }
@@ -701,6 +752,8 @@ export default function ConversationPageContent() {
           <RoomAudioRenderer />
           <VoiceRoomContent
             scenarioTitle={scenarioTitle}
+            aiRole={aiRole}
+            difficulty={difficulty}
             onEnd={handleEnd}
             onFeedbackTap={handleFeedbackTap}
           />
