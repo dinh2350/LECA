@@ -63,7 +63,9 @@ export default function ScenarioDetailPageContent() {
       next.set('tab', tab);
     }
     const qs = next.toString();
-    router.push(qs ? `?${qs}` : '', { scroll: false });
+    router.push(qs ? `?${qs}` : `/${language}/scenarios/${id}`, {
+      scroll: false,
+    });
   }
 
   function startConversation() {
