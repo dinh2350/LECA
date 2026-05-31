@@ -203,7 +203,7 @@ describe('ConversationSessionsService', () => {
         service.recordTurns('nope', {
           turns: [{ speaker: 'agent', transcript: 'hi', turnIndex: 0 }],
         }),
-      ).rejects.toThrow();
+      ).rejects.toThrow(NotFoundException);
     });
   });
 });
