@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   HttpCode,
   HttpStatus,
   Param,
@@ -26,6 +27,8 @@ import { ConversationSessionsService } from './conversation-sessions.service';
 import { CreateSessionDto } from './dto/create-session.dto';
 import { CreateSessionResponseDto } from './dto/create-session-response.dto';
 import { RecordTurnsDto } from './dto/record-turns.dto';
+import { SessionSummaryResponseDto } from './dto/session-summary-response.dto';
+import { PhonemeErrorsResponseDto } from './dto/phoneme-errors-response.dto';
 import { AgentApiKeyGuard } from './guards/agent-api-key.guard';
 
 @ApiTags('Conversation Sessions')
@@ -67,5 +70,29 @@ export class ConversationSessionsController {
     @Body() dto: RecordTurnsDto,
   ): Promise<{ recorded: number }> {
     return this.service.recordTurns(id, dto);
+  }
+
+  /** Get post-session summary: scores, turns, vocab gaps, phoneme errors. */
+  @Get(':id/summary')
+  @UseGuards(AuthGuard('jwt'))
+  @HttpCode(HttpStatus.OK)
+  @ApiOkResponse({ type: SessionSummaryResponseDto })
+  @ApiNotFoundResponse({ description: 'Session not found' })
+  getSummary(
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<SessionSummaryResponseDto> {
+    return this.service.getSummary(id);
+  }
+
+  /** Get top phoneme error and word pairs for a minimal pair drill. */
+  @Get(':id/phoneme-errors')
+  @UseGuards(AuthGuard('jwt'))
+  @HttpCode(HttpStatus.OK)
+  @ApiOkResponse({ type: PhonemeErrorsResponseDto })
+  @ApiNotFoundResponse({ description: 'Session not found' })
+  getPhonemeErrors(
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<PhonemeErrorsResponseDto> {
+    return this.service.getPhonemeErrors(id);
   }
 }
