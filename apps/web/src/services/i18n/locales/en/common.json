@@ -10,6 +10,7 @@
     "users": "Users & Roles",
     "fileManager": "File Manager",
     "email": "Email",
+    "scenarioReview": "Scenario Review",
     "logout": "Logout"
   },
   "formInputs": {
