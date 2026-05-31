@@ -289,6 +289,183 @@ const SCENARIOS: Array<{
       },
     ],
   },
+  // ── Education ─────────────────────────────────────────────────────────────
+  {
+    title: 'University Enrollment',
+    description: 'Navigate the enrollment process at a university admissions office',
+    aiRole: 'A university admissions officer',
+    context:
+      'You are an admissions officer. A prospective student is inquiring about enrollment, required documents, deadlines, and available programmes. Answer clearly and guide them step by step.',
+    difficulty: 'B1',
+    situationType: 'education',
+    tags: ['university', 'academic', 'enrollment'],
+    phrases: [
+      { phrase: "I'm interested in applying for", exampleSentence: "I'm interested in applying for the Computer Science programme.", difficulty: 'B1' },
+      { phrase: 'What documents do I need to submit?', exampleSentence: 'What documents do I need to submit with my application?', difficulty: 'B1' },
+      { phrase: 'What is the application deadline?', exampleSentence: 'What is the application deadline for the autumn intake?', difficulty: 'A2' },
+      { phrase: 'Are there any scholarships available?', exampleSentence: 'Are there any scholarships available for international students?', difficulty: 'B1' },
+      { phrase: 'Could you send me more information about', exampleSentence: 'Could you send me more information about the tuition fees?', difficulty: 'B1' },
+    ],
+  },
+  {
+    title: 'Academic Supervision Meeting',
+    description: 'Discuss your research progress with your thesis supervisor',
+    aiRole: 'A supportive but demanding university thesis supervisor',
+    context:
+      'You are a thesis supervisor having a monthly check-in with your postgraduate student. Ask about research progress, literature review, methodology decisions, and next milestones. Give constructive feedback.',
+    difficulty: 'C1',
+    situationType: 'education',
+    tags: ['research', 'academic', 'postgraduate'],
+    phrases: [
+      { phrase: 'My research is currently focused on', exampleSentence: 'My research is currently focused on natural language processing for low-resource languages.', difficulty: 'C1' },
+      { phrase: 'I have been reviewing the literature on', exampleSentence: 'I have been reviewing the literature on transformer architectures.', difficulty: 'C1' },
+      { phrase: 'One challenge I am encountering is', exampleSentence: 'One challenge I am encountering is the limited availability of annotated data.', difficulty: 'B2' },
+      { phrase: 'I would like your advice on', exampleSentence: 'I would like your advice on choosing between quantitative and qualitative methods.', difficulty: 'B2' },
+      { phrase: 'My next milestone is to', exampleSentence: 'My next milestone is to complete the data collection by the end of next month.', difficulty: 'B1' },
+    ],
+  },
+  // ── Technology ────────────────────────────────────────────────────────────
+  {
+    title: 'Tech Support Call',
+    description: 'Report a technical issue and follow troubleshooting instructions',
+    aiRole: 'A patient technical support agent for a software company',
+    context:
+      "You are a tech support agent. A customer is calling about an issue (app won't open, can't log in, data won't sync). Ask diagnostic questions, guide them through steps, and escalate if needed.",
+    difficulty: 'A2',
+    situationType: 'technology',
+    tags: ['IT', 'support', 'troubleshooting'],
+    phrases: [
+      { phrase: 'My app is not working', exampleSentence: 'My app is not working — it crashes every time I open it.', difficulty: 'A2' },
+      { phrase: 'I have already tried', exampleSentence: 'I have already tried restarting the device.', difficulty: 'A2' },
+      { phrase: 'Can you walk me through', exampleSentence: 'Can you walk me through the steps to reset my password?', difficulty: 'B1' },
+      { phrase: "The error message says", exampleSentence: "The error message says 'Connection timed out'.", difficulty: 'A2' },
+      { phrase: 'How long will it take to fix?', exampleSentence: 'How long will it take to fix this issue?', difficulty: 'A2' },
+    ],
+  },
+  {
+    title: 'Software Demo Presentation',
+    description: 'Present a software product to a potential enterprise client',
+    aiRole: 'A sceptical but open-minded potential enterprise client',
+    context:
+      'You are an enterprise client attending a 30-minute software demo. Ask detailed questions about features, security, integration, pricing, and support. Challenge vague answers.',
+    difficulty: 'B2',
+    situationType: 'technology',
+    tags: ['sales', 'SaaS', 'presentations', 'business'],
+    phrases: [
+      { phrase: 'Let me walk you through the key features', exampleSentence: 'Let me walk you through the key features of our platform.', difficulty: 'B2' },
+      { phrase: 'How does this integrate with', exampleSentence: 'How does this integrate with our existing CRM system?', difficulty: 'B2' },
+      { phrase: 'What are your security certifications?', exampleSentence: 'What are your security certifications — do you have SOC 2?', difficulty: 'C1' },
+      { phrase: 'Could you give us a ballpark figure for', exampleSentence: 'Could you give us a ballpark figure for the annual licence cost?', difficulty: 'B2' },
+      { phrase: 'What does the onboarding process look like?', exampleSentence: 'What does the onboarding process look like for a team of 50 users?', difficulty: 'B1' },
+    ],
+  },
+  // ── Social ────────────────────────────────────────────────────────────────
+  {
+    title: 'Dinner Party Invitation',
+    description: 'Invite a colleague to a dinner party and discuss arrangements',
+    aiRole: 'A friendly colleague who would love to attend',
+    context:
+      'You are a colleague of the learner. They are inviting you to a dinner party. Ask about the date, time, dress code, what to bring, dietary requirements, and how to get there.',
+    difficulty: 'A2',
+    situationType: 'social',
+    tags: ['social', 'invitations', 'daily-life'],
+    phrases: [
+      { phrase: 'I was wondering if you would like to come to', exampleSentence: 'I was wondering if you would like to come to a small dinner party at my place.', difficulty: 'B1' },
+      { phrase: "It's going to be on", exampleSentence: "It's going to be on Saturday the 15th at 7 pm.", difficulty: 'A2' },
+      { phrase: 'Feel free to bring', exampleSentence: 'Feel free to bring a bottle of wine if you like.', difficulty: 'A2' },
+      { phrase: 'Do you have any dietary requirements?', exampleSentence: 'Do you have any dietary requirements I should know about?', difficulty: 'B1' },
+      { phrase: 'I really look forward to seeing you', exampleSentence: 'I really look forward to seeing you there!', difficulty: 'A2' },
+    ],
+  },
+  // ── Travel ────────────────────────────────────────────────────────────────
+  {
+    title: 'Airport Check-In',
+    description: 'Check in for a flight, handle baggage, and get boarding information',
+    aiRole: 'An airline check-in agent at an international airport',
+    context:
+      'You are a check-in agent. Verify the passenger booking, ask about baggage, assign their seat, explain luggage limits, and advise on gate and boarding time.',
+    difficulty: 'A2',
+    situationType: 'travel',
+    tags: ['travel', 'airport', 'flying'],
+    phrases: [
+      { phrase: "I'm checking in for flight", exampleSentence: "I'm checking in for flight VN123 to London.", difficulty: 'A1' },
+      { phrase: 'Could I have a window seat?', exampleSentence: 'Could I have a window seat, please?', difficulty: 'A1' },
+      { phrase: 'How many bags can I check in?', exampleSentence: 'How many bags can I check in without extra charge?', difficulty: 'A2' },
+      { phrase: 'What time does boarding start?', exampleSentence: 'What time does boarding start and which gate is it?', difficulty: 'A2' },
+      { phrase: 'I have a connecting flight to', exampleSentence: 'I have a connecting flight to Paris — will my bag be transferred automatically?', difficulty: 'B1' },
+    ],
+  },
+  {
+    title: 'Visa Application Interview',
+    description: 'Practise answering a visa consular officer at an embassy',
+    aiRole: 'A visa consular officer at an embassy',
+    context:
+      'You are a consular officer conducting a short visa interview. Ask about the purpose of the visit, duration, accommodation, financial means, ties to the home country, and travel history.',
+    difficulty: 'B2',
+    situationType: 'travel',
+    tags: ['visa', 'travel', 'official'],
+    phrases: [
+      { phrase: 'The purpose of my visit is to', exampleSentence: 'The purpose of my visit is to attend an academic conference in London.', difficulty: 'B1' },
+      { phrase: 'I plan to stay for', exampleSentence: 'I plan to stay for two weeks.', difficulty: 'A2' },
+      { phrase: 'I have strong ties to my home country because', exampleSentence: 'I have strong ties to my home country because I own a business there.', difficulty: 'B2' },
+      { phrase: 'I have sufficient funds to cover my expenses', exampleSentence: 'I have sufficient funds to cover my expenses — I can provide bank statements.', difficulty: 'B2' },
+      { phrase: 'This is my first visit to', exampleSentence: 'This is my first visit to the United Kingdom.', difficulty: 'A2' },
+    ],
+  },
+  // ── Banking ───────────────────────────────────────────────────────────────
+  {
+    title: 'Opening a Bank Account',
+    description: 'Open a personal bank account and understand available services',
+    aiRole: 'A bank customer service representative',
+    context:
+      'You are a bank representative. A new customer wants to open a current account. Explain account types, required documents, fees, online banking features, and debit card setup.',
+    difficulty: 'B1',
+    situationType: 'banking',
+    tags: ['finance', 'banking', 'daily-life'],
+    phrases: [
+      { phrase: "I'd like to open a bank account", exampleSentence: "I'd like to open a current account, please.", difficulty: 'A2' },
+      { phrase: 'What documents do I need?', exampleSentence: 'What documents do I need to bring?', difficulty: 'A2' },
+      { phrase: 'Are there any monthly fees?', exampleSentence: 'Are there any monthly fees for this account?', difficulty: 'B1' },
+      { phrase: 'How does the online banking work?', exampleSentence: 'How does the online banking work — can I transfer money internationally?', difficulty: 'B1' },
+      { phrase: 'How long does it take to get a debit card?', exampleSentence: 'How long does it take to receive a debit card after opening the account?', difficulty: 'A2' },
+    ],
+  },
+  // ── Entertainment ─────────────────────────────────────────────────────────
+  {
+    title: 'Cinema Ticket Booking',
+    description: 'Book cinema tickets and choose seats at the box office',
+    aiRole: 'A cinema box-office attendant',
+    context:
+      'You are a cinema attendant. Help the customer choose a film, select a showing time, pick seats, and pay. Offer any promotions or loyalty programmes.',
+    difficulty: 'A1',
+    situationType: 'entertain',
+    tags: ['leisure', 'cinema', 'daily-life'],
+    phrases: [
+      { phrase: 'Two tickets for', exampleSentence: 'Two tickets for the 7 pm showing of Interstellar, please.', difficulty: 'A1' },
+      { phrase: 'Are there any seats in the middle?', exampleSentence: 'Are there any seats available in the middle of the cinema?', difficulty: 'A1' },
+      { phrase: "What's on this weekend?", exampleSentence: "What's on this weekend — any new releases?", difficulty: 'A1' },
+      { phrase: 'Do you have a student discount?', exampleSentence: 'Do you have a student discount?', difficulty: 'A2' },
+      { phrase: 'What time does it finish?', exampleSentence: 'What time does the film finish?', difficulty: 'A1' },
+    ],
+  },
+  // ── Social (2nd) ──────────────────────────────────────────────────────────
+  {
+    title: 'Flat-Share Viewing',
+    description: 'View a room to rent in a shared flat and ask the right questions',
+    aiRole: 'A current tenant showing a room in their shared flat',
+    context:
+      'You are a tenant in a 3-bedroom flat. A prospective new flatmate has come to view the room. Show them around, explain house rules, bills, and neighbours. Answer their questions honestly.',
+    difficulty: 'B1',
+    situationType: 'social',
+    tags: ['housing', 'renting', 'daily-life'],
+    phrases: [
+      { phrase: "How much is the rent per month?", exampleSentence: "How much is the rent per month, including bills?", difficulty: 'A2' },
+      { phrase: 'Are bills included?', exampleSentence: 'Are bills included in the rent, or do we split them separately?', difficulty: 'B1' },
+      { phrase: 'What are the house rules?', exampleSentence: 'What are the house rules about guests and noise?', difficulty: 'A2' },
+      { phrase: 'How long is the notice period?', exampleSentence: 'How long is the notice period if I decide to move out?', difficulty: 'B1' },
+      { phrase: 'When would the room be available from?', exampleSentence: 'When would the room be available from?', difficulty: 'A2' },
+    ],
+  },
 ];
 
 async function main() {
