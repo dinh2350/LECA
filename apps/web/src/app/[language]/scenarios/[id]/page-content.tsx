@@ -29,11 +29,9 @@ export default function ScenarioDetailPageContent() {
   const getScenario = useGetScenarioService();
 
   const id = typeof params.id === 'string' ? params.id : (params.id?.[0] ?? '');
-  const tabParam = searchParams.get('tab') as Tab | null;
+  const tabParam = searchParams.get('tab');
   const activeTab: Tab =
-    tabParam && ['overview', 'vocabulary', 'drill'].includes(tabParam)
-      ? tabParam
-      : 'overview';
+    tabParam === 'vocabulary' || tabParam === 'drill' ? tabParam : 'overview';
 
   const [scenario, setScenario] = useState<ScenarioDetail | null>(null);
   const [loading, setLoading] = useState(true);
@@ -42,7 +40,9 @@ export default function ScenarioDetailPageContent() {
 
   useEffect(() => {
     if (!id) return;
+    let cancelled = false;
     getScenario(id).then(({ status, data }) => {
+      if (cancelled) return;
       if (status === HTTP_CODES_ENUM.OK && data) {
         setScenario(data);
       } else {
@@ -50,16 +50,20 @@ export default function ScenarioDetailPageContent() {
       }
       setLoading(false);
     });
-  }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
+    return () => {
+      cancelled = true;
+    };
+  }, [id]); // eslint-disable-line react-hooks/exhaustive-deps -- getScenario identity changes with language but route changes on language switch, so no double-fetch
 
   function setTab(tab: Tab) {
-    const url = new URL(window.location.href);
+    const next = new URLSearchParams(searchParams.toString());
     if (tab === 'overview') {
-      url.searchParams.delete('tab');
+      next.delete('tab');
     } else {
-      url.searchParams.set('tab', tab);
+      next.set('tab', tab);
     }
-    router.push(url.pathname + (url.search || ''), { scroll: false });
+    const qs = next.toString();
+    router.push(qs ? `?${qs}` : '', { scroll: false });
   }
 
   function startConversation() {
