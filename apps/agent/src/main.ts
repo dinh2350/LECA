@@ -10,8 +10,10 @@ import {
 import * as openai from '@livekit/agents-plugin-openai';
 import * as silero from '@livekit/agents-plugin-silero';
 import { fileURLToPath } from 'node:url';
+import OpenAI from 'openai';
 import { LecaAgent, type AgentOptions } from './agent.js';
 import { config } from './config.js';
+import type { ChatFn } from './feedback.js';
 
 export default defineAgent({
   // prewarm: runs once at process startup — loads Silero VAD model into RAM
@@ -29,9 +31,20 @@ export default defineAgent({
       scenarioId?: string | null;
     };
 
+    const llmClient = new OpenAI({ baseURL: config.llmBaseUrl, apiKey: config.llmApiKey });
+    const chat: ChatFn = async (prompt) => {
+      const r = await llmClient.chat.completions.create({
+        model: config.llmModel,
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.2,
+      });
+      return r.choices[0]?.message?.content ?? '';
+    };
+
     const agentOptions: AgentOptions = {
       sessionId: metadata.sessionId ?? ctx.job.id,
       scenarioId: metadata.scenarioId ?? null,
+      chat,
     };
 
     const session = new voice.AgentSession({

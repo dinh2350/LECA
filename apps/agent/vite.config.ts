@@ -9,7 +9,7 @@ export default defineConfig({
       fileName: () => 'main.js',
     },
     rollupOptions: {
-      external: [/^node:/, /^@livekit\//, /^livekit-server-sdk/, /^node_modules/],
+      external: [/^node:/, /^@livekit\//, /^livekit-server-sdk/, /^node_modules/, /^@n2base\//],
     },
     outDir: 'dist',
     emptyOutDir: true,
