@@ -14,6 +14,9 @@ export class ScenarioPhraseDto {
   audioUrl?: string | null;
 
   @ApiPropertyOptional()
+  translation?: string | null;
+
+  @ApiPropertyOptional()
   difficulty?: string | null;
 
   @ApiProperty()

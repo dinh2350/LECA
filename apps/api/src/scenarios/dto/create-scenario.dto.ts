@@ -25,6 +25,15 @@ export class CreateScenarioPhraseDto {
   @MaxLength(500)
   exampleSentence: string;
 
+  @ApiPropertyOptional({
+    description: 'Native language translation',
+    maxLength: 500,
+  })
+  @IsOptional()
+  @IsString()
+  @MaxLength(500)
+  translation?: string;
+
   @ApiPropertyOptional({ enum: ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'] })
   @IsOptional()
   @IsIn(['A1', 'A2', 'B1', 'B2', 'C1', 'C2'])
